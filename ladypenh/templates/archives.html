@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block main %}
+<div class="row">
+  <div class="column grid_12">
+    {% for article in articles %}
+    <p class="arch big center">
+      <a href="/article{{ article.numid }}.html">{{ article.date|date:"l M j Y" }} - {{ article.title }}</a>
+    </p>
+    <br/>
+    {% endfor %}
+    <p class="center">Older editorials and stuff are lost forever in the internet hyperspace...</p>
+  </div>
+</div>
+{% endblock %}

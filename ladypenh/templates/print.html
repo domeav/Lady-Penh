@@ -1,0 +1,29 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+  <link rel="shortcut icon" href="/images/favicon.png" type="image/x-icon"/>
+  <title>Lady Penh printable weekly listing</title>
+</head>
+<body>
+  <div style="width: 700px; margin: auto; text-align: center;">
+    <img src="{{ MEDIA_URL }}ladypenh/images/printtitle.png"/>
+    <h3>(A bird eye's view of what's going on in Phnom Penh)</h3>
+    <div style="text-align: left;">
+      {% for event in events %}
+      {% ifchanged event.date %}
+      <div style="font-variant: small-caps; font-size: big; font-weight: bold; border: 1px solid black;">{{ event.date|date:"l F j" }}</div>  
+      {% endifchanged %}
+      <div><strong>{{ event.time|time:"H:i" }} - {{ event.title }} / {{ event.venue.name }}</strong></div>
+      <ul>
+        <li>{{ event.shortdesc }}</li>
+        <li>{{ event.venue.address }}{% if event.organizer %} / organized by {{ event.organizer }}{% endif %}</li>
+      </ul>
+      {% endfor %}
+    </div>
+    <h2>Visit <a href="http://ladypenh.com">ladypenh.com</a> for more info and more events!</h2>
+  </div>
+</body>
+</html>

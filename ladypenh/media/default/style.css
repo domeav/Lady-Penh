@@ -1,0 +1,99 @@
+body {
+       margin: 20px 0 20px 0;
+       font-size: 12px;
+       line-height: 150%;
+       font-family: verdana, sans-serif;
+       background-color: #240a05;
+       color: #f2f2f2;
+       }
+
+p { margin: 0; padding: 5px 0; }
+
+a , a:link , a:visited { color: #00a000; } 
+
+h2 { font-weight: bold; color: #ffcc00; font-size: 14px; font-variant: small-caps; margin: 0; padding: 0;}
+
+h3 { color: #ffcc00; }
+
+img { border-style: none; }
+
+.grid_1 { width:40px; }
+.grid_2 { width:100px; }
+.grid_3 { width:160px; }
+.grid_4 { width:220px; }
+.grid_5 { width:280px; }
+.grid_6 { width:340px; }
+.grid_7 { width:400px; }
+.grid_8 { width:460px; }
+.grid_9 { width:520px; }
+.grid_10 { width:580px; }
+.grid_11 { width:640px; }
+.grid_12 { width:700px; }
+
+/*.nested_grid_6 { width:360px; }*/
+
+.column {
+  float: left;
+  margin: 0 10px;
+  overflow: hidden;
+  display: inline;
+}
+.row {
+  width: 740px;
+  margin: 0 auto;
+  overflow: hidden;
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+.nested_column {
+  float: left;
+  margin: 0 0px;
+  overflow: hidden;
+  display: inline;
+}
+
+#menu a , #menu a:link , #menu a:visited { color: #ffcc00; } 
+
+#program table { text-align: left; }
+
+#daybrowser { color: #006000; font-family: Georgia, serif; margin: 8px 6px;}
+
+#editorial .imgcontainer, #editorial img { float: left; margin: 5px 15px 5px 0; }
+#editorial .imgcontainer img { float: none; margin: 0 }
+#editorial .credits { text-align: center; color: #777; line-height: 130%; font-size: 9px; }
+
+#openx a, #openx a:link, #openx a:visited, #sources a, #sources a:link, #sources a:visited { color: white; } 
+
+.arch a , .arch a:link , .arch a:visited { color: #ffcc00; } 
+
+.bigred { font-size: 22px;}
+a.bigred, a.bigred:link, a.bigred:visited {color: #CC0000;}
+
+.bold { font-weight: bold; }
+
+.bul { color: #c00; }
+
+.center { text-align: center; }
+
+.evicon { width: 45px; }
+
+.grey { color: #777; }
+
+.highlight { color: #ffcc00; }
+
+.reverse { text-align: center; background-color: #ffcc00; color: black; -moz-border-radius: 8px; -webkit-border-radius: 8px; border-radius: 8px; padding: 10px 0;}
+.reverse table { padding: 0 10px; }
+
+.illus { float: right; margin: 5px 0px 5px 5px; }
+
+.selected { background-color: white; }
+
+.big { font-size: 15px; }
+.small { font-size: 11px; }
+.xxsmall { font-size: 9px; }
+
+.stretched { line-height: 130%; }
+
+.subtitle { font-size: 14px; font-variant: small-caps;  }
+
+.pointer { cursor: pointer;}

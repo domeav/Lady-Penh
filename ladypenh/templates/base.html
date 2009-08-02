@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
+  <link rel="shortcut icon" href="{{ MEDIA_URL }}ladypenh/{{ theme_name }}/favicon.png" type="image/x-icon"/>
+  <link rel="alternate" type="application/atom+xml" href="/feed/atom" title="Phnom Penh events of the day"/>
+  <title>Lady Penh: What to do in Phnom Penh</title>
+  <link rel="stylesheet" type="text/css" media="screen" href="{{ MEDIA_URL }}combined-ltr.css" />
+  <script src="{{ MEDIA_URL }}combined-en.js" type="text/javascript"></script>
+  <script type='text/javascript' src='http://ladypenh.com/openx/www/delivery/spcjs.php?id=1&amp;target=_blank&amp;block=1&amp;withtext=1'></script>
+</head>
+<body>
+  <div class="row">
+    <div class="column grid_5">
+      <img src="{{ MEDIA_URL }}ladypenh/{{ theme_name }}/logo.png" alt="Lady Penh: what to do in Phnom Penh?"/>
+    </div>
+    <div class="center grey column grid_4">
+        <p>
+          Howdy! We're Lady Penh: all about what's going on in Phnom Penh
+          - the greatest thing in Cambodia since prahok.
+        </p>
+    </div>
+    <div id="menu" class="big center column grid_3">
+      <a href="/index.html">Front page</a><br/>
+      <a href="/about.html">About us</a><br/>
+      <a href="/friends.html">Friends</a><br/>
+      <a href="/archives.html">Archives</a><br/>
+    </div>
+  </div>
+  {% block main %}
+  Here is the beef.
+  {% endblock %}
+  <div class="row">
+    <div class="center grey stretched xxsmall column grid_12">
+      Made with <a target="_blank" href="http://gnu.org">free software</a>!<br/>
+      Unhappy Windows users in PP, click <a target="_blank" href="http://www.tropicalicecube.net/">here</a><br/>
+      &copy; Lady Penh team, team@ladypenh.com<br/><br/>
+      <p id="sources">
+        Get your daily fix of LP events:
+        <a href="http://phnompenhpost.com">Phnom Penh Post</a> |
+        <a href="http://cambodia.ka-set.info/">Ka-Set</a> |
+        <a href="http://khmerbird.com">Khmerbird</a> |
+        <a href="http://www.facebook.com/group.php?gid=84337083455">Facebook</a> |
+        <a href="http://twitter.com/ladypenh">Twitter</a> |
+        <a href="/print.html" target="_blank">Print</a> |
+        <a href="http://feedburner.google.com/fb/a/mailverify?uri=LadyPenhEventsOfTheDay&amp;loc=en_US">Mailing list</a>
+      </p>
+    </div>
+    <div id="stamp" style="display: none;">{% now "r" %}</div>
+  </div>
+</body>
+</html>

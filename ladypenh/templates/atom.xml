@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <id>http://ladypenh.com/feed/atom</id>
+  <title>Phnom Penh events of the day by LadyPenh.com</title>
+  <updated>{% now "Y-m-d\T00:00:00\Z" %}</updated>
+  <link rel="self" href="http://ladypenh.com/feed/atom" type="application/atom+xml"/>
+  <author>
+    <name>The LadyPenh Team</name>
+    <uri>http://ladypenh.com</uri>
+    <email>team@ladypenh.com</email>
+  </author>
+  {% for event in events %}
+  <entry>
+    <title>{{ event.time|time:"H:i" }} - {{ event.title }} / {{ event.venue.name }}</title>
+    <id>http://ladypenh.com/index.html?openday={{ today }}&amp;openevent={{ event.numid }}</id>
+    <link href="http://ladypenh.com/index.html?openday={{ today }}&amp;openevent={{ event.numid }}"/>
+    <published>{{ today|date:"Y-m-d" }}T00:00:{{ forloop.counter }}Z</published>
+    <summary>{{ event.shortdesc }} / At {{ event.venue.address }} {% if event.organizer %}/ By {{ event.organizer }}{% endif %}</summary>
+  </entry>
+  {% endfor %}
+</feed>

@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
+  <link rel="shortcut icon" href="/images/favicon.png" type="image/x-icon"/>
+  <title>Lady Penh overview</title>
+</head>
+<body>
+  {% for event in events %}
+  <div>
+    {% ifchanged event.date %}
+    {% if not forloop.first %}
+    </table>
+    {% endif %}
+    <h2>{{ event.date|date:"l F j" }}</h2>
+    <table border="1" width="100%">
+      <tr>
+        <td>TIME</td>
+        <td>TYPE</td>
+        <td>TITLE</td>
+        <td>WHERE</td>
+        <td>SHORT DESC</td>
+        <td>ADDRESS</td>
+      </tr>
+      {% endifchanged %}
+      <tr>
+        <td>{{ event.time|time:"H:i" }}</td>
+        <td>{{ event.type }}</td>
+        <td>
+          {{ event.title }}
+        </td>
+        <td>At {{ event.venue.name }}{% if event.organizer %}, organized by {{ event.organizer }}{% endif %}</td>
+        <td>{{ event.shortdesc }}</td>
+        <td>{{ event.venue.address }}</td>
+      </tr>
+      {% if forloop.last %}  
+    </table>
+    {% endif %}
+  </div>
+  {% endfor %}
+</body>
+</html>

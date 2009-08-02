@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load markup %}
+{% block main %}
+{% if article %}
+<div class="row">
+  <div class="column grid_12" id="editorial">
+    <div class="imgcontainer">
+      <img src="/image/{{ article.picname }}"/>
+      <div class="credits">{{ article.piccredits|markdown }}</div>
+    </div>          
+    <h2>{{ article.title }}</h2>
+    {{ article.header|markdown }}
+    {% if article.content %}    
+    {{ article.content|markdown }}
+    {% endif %}
+  </div>
+  <div style="text-align: right;">
+    <a href="http://www.addthis.com/bookmark.php?v=250" onmouseover="return addthis_open(this, '', 'http://ladypenh.com/article{{ article.numid }}.html', '{{ article.title }}')" onmouseout="addthis_close()" onclick="return addthis_sendto()"><img src="http://s7.addthis.com/static/btn/lg-share-en.gif" width="125" height="16" alt="Bookmark and Share" style="border:0"/></a><script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js?pub=xa-4a3b17ef30493795"></script>
+  </div>
+  <script>
+    var idcomments_acct = '543f53a1eb340c4ceeec5107ba9893eb';
+    var idcomments_post_id;
+    var idcomments_post_url = {% if article.legacy_comment_url %}"{{ article.legacy_comment_url }}"{% else %}"http://ladypenh.com/article{{ article.numid }}.html"{% endif %};
+  </script>
+  <span id="IDCommentsPostTitle" style="display:none"></span>
+  <script type='text/javascript' src='http://www.intensedebate.com/js/genericCommentWrapperV2.js'></script>
+
+</div>
+{% endif %}
+{% endblock %}
