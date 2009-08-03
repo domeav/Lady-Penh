@@ -19,7 +19,7 @@
   </div>
   <script>
     var idcomments_acct = '543f53a1eb340c4ceeec5107ba9893eb';
-    var idcomments_post_id;
+    var idcomments_post_id = {% if article.legacy_comment_url %}"{{ article.legacy_comment_url }}"{% else %}"http://ladypenh.com/article{{ article.numid }}.html"{% endif %};
     var idcomments_post_url = {% if article.legacy_comment_url %}"{{ article.legacy_comment_url }}"{% else %}"http://ladypenh.com/article{{ article.numid }}.html"{% endif %};
   </script>
   <span id="IDCommentsPostTitle" style="display:none"></span>
