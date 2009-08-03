@@ -62,7 +62,7 @@ img { border-style: none; }
 #editorial .imgcontainer img { float: none; margin: 0 }
 #editorial .credits { text-align: center; color: #777; line-height: 130%; font-size: 9px; }
 
-#openx a, #openx a:link, #openx a:visited, #sources a, #sources a:link, #sources a:visited { color: white; } 
+#openx a, #openx a:link, #openx a:visited { color: white; } 
 
 .arch a , .arch a:link , .arch a:visited { color: #ffcc00; } 
 
