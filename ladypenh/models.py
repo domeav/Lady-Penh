@@ -21,7 +21,7 @@ class Venue(db.Model):
 
 class Event(db.Model):
     def __unicode__(self):
-        return "%s, %s, %s" % (self.title, self.organizer, str(self.date))
+        return "%s %s, %s (%s) @ %s" % (str(self.date), str(self.time), self.title, self.type, self.venue.name)
     numid = db.IntegerProperty()
     type = db.StringProperty(required=True, choices=set(['cinema', 'circus', 'concert', 'conference', 'exhibition', 'game', 'party', 'sleep', 'live_show', 'videogames', 'visit', 'workshop']))
     venue = db.ReferenceProperty(Venue, required=True)
