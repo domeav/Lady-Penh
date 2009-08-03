@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.http import HttpResponseRedirect, HttpResponse
 from django.utils.translation import ugettext as _
+from django.views.decorators.cache import cache_control
 from ragendja.template import render_to_response
 from ladypenh.models import ImageFile
 import helpers
@@ -69,12 +70,14 @@ def create_admin_user(request):
 mime_extensions = {'jpg': 'image/jpeg',
                    'png': 'image/png'}
 
+@cache_control(public=True, max_age=3600*24*60*60)
 def image(request, name):
     mime = mime_extensions[name.split('.')[-1]]
     images = ImageFile.gql("WHERE name = :1", name).fetch(1)
     if len(images) == 0:
-        mime = mime_extensions['png']
-        images = ImageFile.gql("WHERE name = :1", 'notfound.png').fetch(1)
+        if name != "notfound.png":
+            return HttpResponseRedirect('/image/notfound.png')
+        return HttpResponse("Image not found.", mimetype="text/html")
     return HttpResponse(images[0].blob, mimetype=mime)
     
 
