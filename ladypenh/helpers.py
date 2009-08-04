@@ -26,9 +26,11 @@ def get_event_by_id(id):
     
 
 def get_days(dayspan=0):
-    startday = datetime.now().date()
+    # hack to use Cambodia's tz (everything is UTC on GAE)
+    now = datetime.now() + timedelta(hours=7)
+    startday = now.date()
     if dayspan != 0:
-        startday += timedelta(days=dayspan)
+        startday += timedelta(days=dayspan)    
     days = [startday]
     for i in range(6):
         days.append(days[0] + timedelta(days=i+1))

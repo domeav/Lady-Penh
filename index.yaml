@@ -22,7 +22,7 @@ indexes:
 # automatically uploaded to the admin console when you next deploy
 # your application using appcfg.py.
 
-# Used 10 times in query history.
+# Unused in query history -- copied from input.
 - kind: ladypenh_event
   properties:
   - name: date
@@ -30,43 +30,43 @@ indexes:
   - name: date
   - name: time
 
-# Used 8 times in query history.
+# Unused in query history -- copied from input.
 - kind: ladypenh_event
   properties:
   - name: date
   - name: date
   - name: time
 
-# Used 38 times in query history.
+# Used 2 times in query history.
 - kind: ladypenh_event
   properties:
   - name: date
   - name: time
 
-# Used 22 times in query history.
+# Unused in query history -- copied from input.
 - kind: ladypenh_event
   properties:
   - name: date
   - name: time
   - name: date
 
-# Used 20 times in query history.
-- kind: ladypenh_event
-  properties:
-  - name: date
-    direction: desc
-  - name: time
-
-# Used 20 times in query history.
+# Unused in query history -- copied from input.
 - kind: ladypenh_event
   properties:
   - name: date
     direction: desc
   - name: time
+
+# Unused in query history -- copied from input.
+- kind: ladypenh_event
+  properties:
+  - name: date
+    direction: desc
+  - name: time
   - name: date
     direction: desc
 
-# Used 4 times in query history.
+# Unused in query history -- copied from input.
 - kind: ladypenh_event
   properties:
   - name: title
@@ -76,7 +76,7 @@ indexes:
   - name: date
     direction: desc
 
-# Used 4 times in query history.
+# Unused in query history -- copied from input.
 - kind: ladypenh_event
   properties:
   - name: venue
@@ -86,7 +86,7 @@ indexes:
   - name: date
     direction: desc
 
-# Used 15 times in query history.
+# Used 2 times in query history.
 - kind: ladypenh_oneliner
   properties:
   - name: dayspan
