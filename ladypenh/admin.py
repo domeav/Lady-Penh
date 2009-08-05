@@ -11,6 +11,7 @@ admin.site.register(OneLiner, OneLinerAdmin)
 
 class ArticleAdmin(admin.ModelAdmin):
     exclude = ('numid', 'legacy_comment_url')
+    ordering = ('-date',)
     def save_model(self, request, obj, form, change):
         obj.save()
         if not obj.numid:
