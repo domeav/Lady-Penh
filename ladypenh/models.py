@@ -31,7 +31,6 @@ class Event(db.Model):
     time = db.TimeProperty(default="20:00", required=True)    
     description = db.TextProperty(required=True)
     shortdesc = db.TextProperty(required=True)
-    pic = db.BlobProperty() # trick to directly create a ImageFile entry
     picname = db.StringProperty()
     picheight = db.IntegerProperty()
     picwidth = db.IntegerProperty()

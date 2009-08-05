@@ -1,7 +1,9 @@
 from django.contrib import admin
+from django.forms import ModelForm, FileField
 from ladypenh.models import ImageFile, Venue, Event, OneLiner, Article
 from google.appengine.api import images
 import string
+
 
 class OneLinerAdmin(admin.ModelAdmin):    
     pass
@@ -16,8 +18,16 @@ class ArticleAdmin(admin.ModelAdmin):
             obj.save()
 admin.site.register(Article, ArticleAdmin)
 
+class EventForm(ModelForm):
+    class Meta:
+        model = Event
+    pic = FileField(required=False)
+
+
 class EventAdmin(admin.ModelAdmin):
-    exclude = ('numid', 'picname', 'picheight', 'picwidth')
+    form = EventForm
+    fields = ['type', 'venue', 'organizer', 'title', 'date', 'time', 'description',
+              'shortdesc', 'pic', 'haslargepic', 'highlight', 'status']
     list_display = ('date', 'time', 'title', 'venue')
     list_display_links = ('title',)
     list_filter = ('venue',)
@@ -28,21 +38,22 @@ class EventAdmin(admin.ModelAdmin):
         validchars = "-_.%s%s" % (string.ascii_letters, string.digits)
         s = ''.join(c for c in filename if c in validchars)
         return "%s_%s" % (str(date), s)
-    def save_model(self, request, obj, form, change):
-        if obj.pic:
-            obj.picname = self.format_picname(request.FILES['pic'].name, obj.date)
+    def save_model(self, request, obj, form, change):        
+        if 'pic' in request.FILES:
+            pic = request.FILES['pic']
+            blob = pic.read()
+            obj.picname = self.format_picname(pic.name, obj.date)
             if obj.haslargepic:
                 largepath = "event/large/%s" % obj.picname
-                largeobj = ImageFile(name=largepath, blob=obj.pic)
+                largeobj = ImageFile(name=largepath, blob=blob)
                 largeobj.put()
-            thumb = images.Image(obj.pic)
+            thumb = images.Image(blob)
             thumb.resize(width=120)
             thumbpath = "event/thumb/%s" % obj.picname
             thumbobj = ImageFile(name=thumbpath, blob=thumb.execute_transforms())
             thumbobj.put()
             obj.picheight = thumb.height
             obj.picwidth = thumb.width
-            obj.pic = None
         obj.save()
         if not obj.numid:
             obj.numid = obj.key().id()
