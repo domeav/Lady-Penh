@@ -51,10 +51,6 @@ class OneLiner(db.Model):
 class Article(db.Model):
     def __unicode__(self):
         return self.title
-    def put(self):
-        super(Article, self).put()
-        self.numid = self.key().id()
-        super(Article, self).put()
     numid = db.IntegerProperty()
     date = db.DateProperty(default=date.today, required=True)
     title = db.StringProperty(required=True)

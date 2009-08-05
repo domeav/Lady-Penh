@@ -9,6 +9,11 @@ admin.site.register(OneLiner, OneLinerAdmin)
 
 class ArticleAdmin(admin.ModelAdmin):
     exclude = ('numid', 'legacy_comment_url')
+    def save_model(self, request, obj, form, change):
+        obj.save()
+        if not obj.numid:
+            obj.numid = obj.key().id()
+            obj.save()
 admin.site.register(Article, ArticleAdmin)
 
 class EventAdmin(admin.ModelAdmin):
