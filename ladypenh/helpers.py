@@ -3,6 +3,11 @@ from ragendja.dbutils import get_object_list
 from datetime import datetime, timedelta
 
 
+def today(dayspan=0):
+    # hack to use Cambodia's tz (everything is UTC on GAE)
+    now = datetime.now() + timedelta(hours=7, days=dayspan)
+    return now.date()
+
 def get_article(day):
     articlelist = Article.gql("WHERE date <= :1 ORDER BY date desc", day).fetch(1)
     if len(articlelist) == 0:
@@ -26,12 +31,7 @@ def get_event_by_id(id):
     
 
 def get_days(dayspan=0):
-    # hack to use Cambodia's tz (everything is UTC on GAE)
-    now = datetime.now() + timedelta(hours=7)
-    startday = now.date()
-    if dayspan != 0:
-        startday += timedelta(days=dayspan)    
-    days = [startday]
+    days = [today(dayspan)]
     for i in range(6):
         days.append(days[0] + timedelta(days=i+1))
     return days
@@ -55,7 +55,7 @@ def get_daysinfo_and_highlights(days):
             event.daydiff = (event.date - days[0]).days
             highlights.append(event)
         events[event.date].append(event)
-    oneliners_results = OneLiner.gql("WHERE dayspan <= :1 AND dayspan > :2 ORDER BY dayspan, time", days[6], days[0]).fetch(1000)
+    oneliners_results = OneLiner.gql("ORDER BY title").fetch(1000)
     for oneliner in oneliners_results:
         for day in days:
             if oneliner.daystart <= day and oneliner.dayend >= day:

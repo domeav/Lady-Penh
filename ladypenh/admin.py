@@ -3,17 +3,8 @@ from ladypenh.models import ImageFile, Venue, Event, OneLiner, Article
 from google.appengine.api import images
 import string
 
-def date_to_datetime(d, dayspan=0):
-    d += timedelta(dayspan)
-    return datetime(d.year, d.month, d.day)
-
 class OneLinerAdmin(admin.ModelAdmin):    
-    exclude = ('dayspan',)
-    def save_model(self, request, obj, form, change):
-        # as of 30/07/09, I have to do this - see http://appengine-cookbook.appspot.com/attachment/?id=ahJhcHBlbmdpbmUtY29va2Jvb2tyEQsSCkF0dGFjaG1lbnQY0ygM
-        # and I can't just store dates in my list because they are supposed to be converted to datetime before being stored
-        obj.dayspan = [date_to_datetime(obj.daystart), date_to_datetime(obj.dayend, 1)]
-        obj.save()
+    pass
 admin.site.register(OneLiner, OneLinerAdmin)
 
 class ArticleAdmin(admin.ModelAdmin):

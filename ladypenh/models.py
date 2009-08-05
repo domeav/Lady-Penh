@@ -45,8 +45,6 @@ class OneLiner(db.Model):
     daycode = db.IntegerProperty(default=0, required=True) #1 mon, 135 mon wed fri, -1 everyday but monday, 0 everyday
     daystart = db.DateProperty(default=date.today, required=True)
     dayend = db.DateProperty(default=date.today, required=True)
-    dayspan = db.ListProperty(datetime)
-    time = db.TimeProperty()
     title = db.StringProperty(required=True)
     event = db.ReferenceProperty(Event)
 
