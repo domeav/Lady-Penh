@@ -50,6 +50,8 @@ def event(request, id):
                                dict(theme_name=helpers.get_theme(helpers.today()),
                                     event=helpers.get_event_by_id(id)))
 
+def robots(request):
+    return HttpResponse("", mimetype="text/plain")
 
 # needed every time in dev env. to allow access to the admin interface
 def create_admin_user(request):

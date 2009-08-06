@@ -18,6 +18,7 @@ urlpatterns += patterns('ladypenh.views',
     (r'^overview.html$', 'overview'),
     (r'^tomorrow_overview.html$', 'overview', {'dayspan': 1}),
 
+    (r'^robots.txt$', 'robots'),
     (r'^image/(?P<name>.+)$', 'image'),
     (r'^about.html$', 'about'),
     (r'^friends.html$', 'friends'),
