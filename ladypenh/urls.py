@@ -26,5 +26,6 @@ urlpatterns += patterns('ladypenh.views',
     (r'^article(?P<id>\d+).html$', 'article'),
     (r'^event/(?P<id>\d+).html$', 'event'),
     (r'^ijustwanttheprogramthanks.html$', 'index', {'edito': False}),
-    (r'^', 'index'),
+    (r'^index.html$', 'index'),
+    (r'^$', 'index'),
 )

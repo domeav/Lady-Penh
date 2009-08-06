@@ -22,10 +22,17 @@ indexes:
 # automatically uploaded to the admin console when you next deploy
 # your application using appcfg.py.
 
-# Used 19 times in query history.
+# Used 5 times in query history.
 - kind: ladypenh_event
   properties:
   - name: date
+  - name: time
+
+# Used 8 times in query history.
+- kind: ladypenh_event
+  properties:
+  - name: date
+    direction: desc
   - name: time
 
 # Used 4 times in query history.
@@ -34,10 +41,13 @@ indexes:
   - name: date
     direction: desc
   - name: time
+  - name: date
+    direction: desc
 
-# Used 8 times in query history.
+# Used 12 times in query history.
 - kind: ladypenh_event
   properties:
+  - name: venue
   - name: date
     direction: desc
   - name: time

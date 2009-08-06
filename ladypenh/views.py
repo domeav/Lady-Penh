@@ -73,10 +73,6 @@ mime_extensions = {'jpg': 'image/jpeg',
 def image(request, name):
     mime = mime_extensions[name.split('.')[-1].lower()]
     images = ImageFile.gql("WHERE name = :1", name).fetch(1)
-    if len(images) == 0:
-        if name != "notfound.png":
-            return HttpResponseRedirect('/image/notfound.png')
-        return HttpResponse("Image not found.", mimetype="text/html")
     return HttpResponse(images[0].blob, mimetype=mime)
     
 
