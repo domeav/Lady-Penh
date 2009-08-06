@@ -65,6 +65,7 @@
                 {% if event.picname %}
                 {% if event.haslargepic %}
                 <a href="javascript:winpop('/image/event/large/{{ event.picname }}')"><img class="illus" src="/image/event/thumb/{{ event.picname }}" height="{{ event.picheight }}" width="{{ event.picwidth }}"/></a>
+                <noscript><a href="/image/event/large/{{ event.picname }}">large</a></noscript>
                 {% else %}
                 <img class="illus" src="/image/event/thumb/{{ event.picname }}" height="{{ event.picheight }}" width="{{ event.picwidth }}"/>
                 {% endif %}
