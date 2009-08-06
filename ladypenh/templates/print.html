@@ -6,6 +6,11 @@
   <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
   <link rel="shortcut icon" href="{{ MEDIA_URL }}ladypenh/default/favicon.png" type="image/x-icon"/>
   <title>Lady Penh printable weekly listing</title>
+  <style type="text/css">
+    .day {font-variant: small-caps; font-size: big; font-weight: bold; border: 1px solid black; padding: 2px;}
+    .maininfo {font-size:12px;}
+    .details {font-size:10px;}
+  </style>
 </head>
 <body>
   <div style="width: 700px; margin: auto; text-align: center;">
@@ -14,13 +19,10 @@
     <div style="text-align: left;">
       {% for event in events %}
       {% ifchanged event.date %}
-      <div style="font-variant: small-caps; font-size: big; font-weight: bold; border: 1px solid black;">{{ event.date|date:"l F j" }}</div>  
+      <div class="day">{{ event.date|date:"l F j" }}</div>  
       {% endifchanged %}
-      <div><strong>{{ event.time|time:"H:i" }} - {{ event.title }} / {{ event.venue.name }}</strong></div>
-      <ul>
-        <li>{{ event.shortdesc }}</li>
-        <li>{{ event.venue.address }}{% if event.organizer %} / organized by {{ event.organizer }}{% endif %}</li>
-      </ul>
+      <div class="maininfo"><strong>{{ event.time|time:"H:i" }} - {{ event.title }} / {{ event.venue.name }}</strong> ({{ event.venue.address }}{% if event.organizer %} / organized by {{ event.organizer }}{% endif %})</div>
+      <div class="details">{{ event.shortdesc }}</div>
       {% endfor %}
     </div>
     <h2>Visit <a href="http://ladypenh.com">ladypenh.com</a> for more info and more events!</h2>
