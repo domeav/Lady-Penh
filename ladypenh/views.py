@@ -4,6 +4,7 @@ from django.utils.translation import ugettext as _
 from django.views.decorators.cache import cache_control
 from ragendja.template import render_to_response
 from ladypenh.models import ImageFile
+from datetime import datetime
 import helpers
 
 ## feed pages
@@ -69,11 +70,16 @@ mime_extensions = {'jpg': 'image/jpeg',
                    'png': 'image/png',
                    'gif': 'image/gif'}
 
+#treat images as immutable
+defaultdate = datetime(year=1998, month=6, day=22)
+
 @cache_control(public=True, max_age=3600*24*60*60)
 def image(request, name):
     mime = mime_extensions[name.split('.')[-1].lower()]
     images = ImageFile.gql("WHERE name = :1", name).fetch(1)
-    return HttpResponse(images[0].blob, mimetype=mime)
+    response = HttpResponse(images[0].blob, mimetype=mime)
+    response['Last-Modified'] = defaultdate.strftime("%a, %d %b %Y %H:%M:%S GMT")
+    return response
     
 
 def index(request, edito=True):
