@@ -33,7 +33,7 @@ class EventAdmin(admin.ModelAdmin):
     list_display_links = ('title',)
     list_filter = ('venue',)
     ordering = ('-date', 'time')
-    save_as = True
+    #save_as = True / fields not displayed are not copied
     save_on_top = True
     def format_picname(self, filename, date):
         validchars = "-_.%s%s" % (string.ascii_letters, string.digits)
