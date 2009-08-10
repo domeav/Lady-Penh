@@ -32,7 +32,7 @@ class EventAdmin(admin.ModelAdmin):
         (None, {'fields': ('type', 'venue', 'organizer', 'title', 'date', 'time', 'description',
                            'shortdesc', 'pic', 'haslargepic', 'highlight', 'status')}),
         ('internal', {'fields': ('picname', 'picheight', 'picwidth'), 'classes': ('collapsed',)}))
-    list_display = ('date', 'time', 'title', 'venue')
+    list_display = ('date', 'time', 'title', 'venue', 'numid')
     list_display_links = ('title',)
     list_filter = ('venue',)
     ordering = ('-date', 'time')

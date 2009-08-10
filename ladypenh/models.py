@@ -46,7 +46,7 @@ class OneLiner(db.Model):
     daystart = db.DateProperty(default=date.today, required=True)
     dayend = db.DateProperty(default=date.today, required=True)
     title = db.StringProperty(required=True)
-    event = db.ReferenceProperty(Event)
+    #event = db.ReferenceProperty(Event)
 
 class Article(db.Model):
     def __unicode__(self):

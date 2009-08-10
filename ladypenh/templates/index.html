@@ -97,7 +97,6 @@
               {% for oneliner in oneliners %}
               <div class="small">
                 {{ oneliner.title|markdown }}
-                {% if oneliner.event %}(<a href="javascript:winpop('/event/{{ oneliner.event.numid }}.html')">ref</a>){% endif %}
               </div>
               {% endfor %}
               <div class="small"><a href="mailto:events@ladypenh.com">Report an event!</a></div>
