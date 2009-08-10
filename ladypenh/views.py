@@ -6,6 +6,8 @@ from ragendja.template import render_to_response
 from ladypenh.models import ImageFile
 from datetime import datetime
 import helpers
+import mimetypes
+
 
 ## feed pages
 def feed_atom(request):
@@ -68,16 +70,12 @@ def create_admin_user(request):
     return HttpResponseRedirect('/')
 
 
-mime_extensions = {'jpg': 'image/jpeg',
-                   'png': 'image/png',
-                   'gif': 'image/gif'}
-
 #treat images as immutable
 defaultdate = datetime(year=1998, month=6, day=22)
 
 @cache_control(public=True, max_age=3600*24*60*60)
 def image(request, name):
-    mime = mime_extensions[name.split('.')[-1].lower()]
+    mime = mimetypes.guess_type(name)[0]
     images = ImageFile.gql("WHERE name = :1", name).fetch(1)
     response = HttpResponse(images[0].blob, mimetype=mime)
     response['Last-Modified'] = defaultdate.strftime("%a, %d %b %Y %H:%M:%S GMT")
