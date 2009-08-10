@@ -4,15 +4,35 @@ from ladypenh.models import ImageFile, Venue, Event, OneLiner, Article
 from google.appengine.api import images
 import string
 
+def format_picname(filename, date):
+    validchars = "-_.%s%s" % (string.ascii_letters, string.digits)
+    s = ''.join(c for c in filename if c in validchars)
+    return "%s_%s" % (str(date), s)
+
 
 class OneLinerAdmin(admin.ModelAdmin):    
     pass
 admin.site.register(OneLiner, OneLinerAdmin)
 
+class ArticleForm(ModelForm):
+    class Meta:
+        model = Article
+    pic = FileField(required=False)
+
 class ArticleAdmin(admin.ModelAdmin):
-    exclude = ('numid', 'legacy_comment_url')
+    form = ArticleForm
+    fields = ('date', 'title', 'header', 'pic', 'piccredits', 'content')
     ordering = ('-date',)
+    list_display = ('date', 'title')
+    list_display_links = ('title',)
     def save_model(self, request, obj, form, change):
+        if 'pic' in request.FILES:
+            pic = request.FILES['pic']
+            picname = format_picname(pic.name, obj.date)
+            picpath = "edito/%s" % picname
+            imgobj = ImageFile(name=picpath, blob=pic.read())
+            imgobj.put()
+            obj.picname = picpath
         obj.save()
         if not obj.numid:
             obj.numid = obj.key().id()
@@ -38,23 +58,21 @@ class EventAdmin(admin.ModelAdmin):
     ordering = ('-date', 'time')
     save_as = True
     save_on_top = True
-    def format_picname(self, filename, date):
-        validchars = "-_.%s%s" % (string.ascii_letters, string.digits)
-        s = ''.join(c for c in filename if c in validchars)
-        return "%s_%s" % (str(date), s)
     def save_model(self, request, obj, form, change):
         if 'pic' in request.FILES:
             pic = request.FILES['pic']
             blob = pic.read()
-            obj.picname = self.format_picname(pic.name, obj.date)
+            obj.picname = format_picname(pic.name, obj.date)
             if obj.haslargepic:
                 largepath = "event/large/%s" % obj.picname
                 largeobj = ImageFile(name=largepath, blob=blob)
                 largeobj.put()
             thumb = images.Image(blob)
-            thumb.resize(width=120)
+            if thumb.width > 120:
+                thumb.resize(width=120)
+                blob = thumb.execute_transforms()
             thumbpath = "event/thumb/%s" % obj.picname
-            thumbobj = ImageFile(name=thumbpath, blob=thumb.execute_transforms())
+            thumbobj = ImageFile(name=thumbpath, blob=blob)
             thumbobj.put()
             obj.picheight = thumb.height
             obj.picwidth = thumb.width

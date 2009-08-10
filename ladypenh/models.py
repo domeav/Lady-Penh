@@ -55,7 +55,7 @@ class Article(db.Model):
     date = db.DateProperty(default=date.today, required=True)
     title = db.StringProperty(required=True)
     header = db.TextProperty(required=True)
-    picname = db.StringProperty(required=True)
+    picname = db.StringProperty()
     piccredits = db.StringProperty(required=True)
     content = db.TextProperty()
     legacy_comment_url = db.StringProperty() #to deal with older install intense debate comments
