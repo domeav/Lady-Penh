@@ -18,6 +18,7 @@ class Venue(db.Model):
     linktext = db.StringProperty()
     linkurl = db.StringProperty()
     mapurl = db.StringProperty()
+    oneshot = db.BooleanProperty(default=False)
 
 class Event(db.Model):
     def __unicode__(self):

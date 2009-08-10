@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.forms import ModelForm, FileField
+from django.forms import ModelForm, FileField, ModelChoiceField
 from ladypenh.models import ImageFile, Venue, Event, OneLiner, Article
 from google.appengine.api import images
 import string
@@ -23,6 +23,7 @@ class EventForm(ModelForm):
     class Meta:
         model = Event
     pic = FileField(required=False)
+    venue = ModelChoiceField(queryset=Venue.gql("WHERE oneshot = FALSE ORDER BY oneshot, name"))
 
 
 class EventAdmin(admin.ModelAdmin):
@@ -59,10 +60,14 @@ class EventAdmin(admin.ModelAdmin):
         if not obj.numid:
             obj.numid = obj.key().id()
             obj.save()
-
 admin.site.register(Event, EventAdmin)
 
 
-for model in [ImageFile, Venue]:
-    admin.site.register(model)
+class VenueAdmin(admin.ModelAdmin):
+    ordering = ('name',)
+admin.site.register(Venue, VenueAdmin)
+
+
+
+admin.site.register(ImageFile)
 
