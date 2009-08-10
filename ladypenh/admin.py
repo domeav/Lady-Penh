@@ -28,19 +28,21 @@ class EventForm(ModelForm):
 
 class EventAdmin(admin.ModelAdmin):
     form = EventForm
-    fields = ['type', 'venue', 'organizer', 'title', 'date', 'time', 'description',
-              'shortdesc', 'pic', 'haslargepic', 'highlight', 'status']
+    fieldsets = (
+        (None, {'fields': ('type', 'venue', 'organizer', 'title', 'date', 'time', 'description',
+                           'shortdesc', 'pic', 'haslargepic', 'highlight', 'status')}),
+        ('internal', {'fields': ('picname', 'picheight', 'picwidth'), 'classes': ('collapsed',)}))
     list_display = ('date', 'time', 'title', 'venue')
     list_display_links = ('title',)
     list_filter = ('venue',)
     ordering = ('-date', 'time')
-    #save_as = True / fields not displayed are not copied
+    save_as = True
     save_on_top = True
     def format_picname(self, filename, date):
         validchars = "-_.%s%s" % (string.ascii_letters, string.digits)
         s = ''.join(c for c in filename if c in validchars)
         return "%s_%s" % (str(date), s)
-    def save_model(self, request, obj, form, change):        
+    def save_model(self, request, obj, form, change):
         if 'pic' in request.FILES:
             pic = request.FILES['pic']
             blob = pic.read()
