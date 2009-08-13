@@ -1,11 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.conf.urls.defaults import *
 
-urlpatterns = patterns('',
-
-)
-
-urlpatterns += patterns('ladypenh.views',
+urlpatterns = patterns('ladypenh.views',
     #(r'^initfuckingadminondevenv$', 'create_admin_user'),
 
 #feeds

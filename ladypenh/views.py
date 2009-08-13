@@ -55,7 +55,7 @@ def event(request, id):
 def robots(request):
     return HttpResponse("", mimetype="text/plain")
 
-# needed every time in dev env. to allow access to the admin interface
+# needed after every reboot in dev env. to allow access to the admin interface
 def create_admin_user(request):
     from django.contrib.auth.models import User
     user = User.get_by_key_name('admin')
