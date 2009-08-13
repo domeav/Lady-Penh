@@ -39,14 +39,18 @@ class ArticleAdmin(admin.ModelAdmin):
             obj.save()
 admin.site.register(Article, ArticleAdmin)
 
+
 class EventForm(ModelForm):
     class Meta:
         model = Event
     pic = FileField(required=False)
-    venue = ModelChoiceField(queryset=Venue.gql("WHERE oneshot = FALSE ORDER BY oneshot, name"))
 
 
 class EventAdmin(admin.ModelAdmin):
+    def get_formset(self, request, obj=None, **kwargs):
+        if obj is not None:
+            self.form.fields['venue'].queryset = Venue.gql("WHERE oneshot = FALSE ORDER BY oneshot, name")
+        return super(EventAdmin, self).get_formset(request, obj, **kwargs)
     form = EventForm
     fieldsets = (
         (None, {'fields': ('type', 'venue', 'organizer', 'title', 'date', 'time', 'description',
