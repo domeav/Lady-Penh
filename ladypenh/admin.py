@@ -47,10 +47,10 @@ class EventForm(ModelForm):
 
 
 class EventAdmin(admin.ModelAdmin):
-    def get_formset(self, request, obj=None, **kwargs):
-        if obj is not None:
-            self.form.fields['venue'].queryset = Venue.gql("WHERE oneshot = FALSE ORDER BY oneshot, name")
-        return super(EventAdmin, self).get_formset(request, obj, **kwargs)
+    def get_form(self, request, obj=None, **kwargs):
+        form = super(EventAdmin, self).get_form(request, obj, **kwargs)
+        form.base_fields['venue'].queryset = Venue.gql("WHERE oneshot = FALSE ORDER BY oneshot, name")
+        return form
     form = EventForm
     fieldsets = (
         (None, {'fields': ('type', 'venue', 'organizer', 'title', 'date', 'time', 'description',
