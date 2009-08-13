@@ -17,16 +17,45 @@
   <div style="text-align: right;">
     <a href="http://www.addthis.com/bookmark.php?v=250" onmouseover="return addthis_open(this, '', 'http://ladypenh.com/article{{ article.numid }}.html', '{{ article.title }}')" onmouseout="addthis_close()" onclick="return addthis_sendto()"><img src="http://s7.addthis.com/static/btn/lg-share-en.gif" width="125" height="16" alt="Bookmark and Share" style="border:0"/></a><script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js?pub=xa-4a3b17ef30493795"></script>
   </div>
-  <script>
-    var idcomments_acct = '543f53a1eb340c4ceeec5107ba9893eb';
-    var idcomments_post_id = {% if article.legacy_comment_url %}"{{ article.legacy_comment_url }}"{% else %}"http://ladypenh.com/article{{ article.numid }}.html"{% endif %};
-    var idcomments_post_url = {% if article.legacy_comment_url %}"{{ article.legacy_comment_url }}"{% else %}"http://ladypenh.com/article{{ article.numid }}.html"{% endif %};
+  <div id="comments">Waiting for the comments to load...</div>
+  <div>
+    <h3>Enter your comment in the box below:</h3>
+    <div id="alert"></div>
+    <textarea cols="60" id="comment">{{ comment }}</textarea><br/>
+    Pseudo <input id="pseudo" value="{{ pseudo }}"/> Password (optional) <input type="password" id="password" value="{{ password }}"/><br/>
+    <script type="text/javascript" src="http://api.recaptcha.net/challenge?k=6Lf2yAcAAAAAADIPnn1z0_b6mrhDAqAP3KEeVefl"></script>
+    <input type="submit" onclick="submit_comment()"/>
+  </div>
+  <script>    
+    function lpcomments_callback(resp){
+      $('alert').innerHTML = resp['alert_text'];
+      $('pseudo').value = resp['pseudo'];
+      $('password').value = resp['password'];
+      $('comment').value = resp['comment'];
+      var comments = resp['comments'];
+      var commentsstring = '<h3>' + comments.length + ' comments so far:' + '</h3>';
+      for (var i=0; i<comments.length; i++){
+        commentsstring += comments[i];
+      }
+      if (comments.length == 0) commentsstring += 'Be the first!'
+      $('comments').innerHTML = commentsstring;
+      Recaptcha.reload();
+    }
+    
+    new Request.JSONP({
+      url: 'http://lp-comments.appspot.com/comments_callback/ladypenh.com/article{{ article.numid }}.html'
+    }).send();
+
+    function submit_comment(){
+      new Request.JSONP({
+        url: 'http://lp-comments.appspot.com/comments_callback/ladypenh.com/article{{ article.numid }}.html',
+        data: {
+          pseudo: $('pseudo').value, password: $('password').value, comment: $('comment').value,
+          recaptcha_challenge_field: $('recaptcha_challenge_field').value,
+          recaptcha_response_field: $('recaptcha_response_field').value}
+      }).send();
+    }
   </script>
-  <span id="IDCommentsPostTitle" style="display:none"></span>
-  <script type='text/javascript' src='http://www.intensedebate.com/js/genericCommentWrapperV2.js'></script>
-  <p>
-    Looks like our comments provider (IntenseDebate) has had a lot of problems lately - some comments obviously were never recorded. <a href="mailto:team@ladypenh.com">Let us know</a> if it happened to you! We're planning to migrate our comments system soon to a new infrastructure to prevent this.
-  </p>
 </div>
 {% endif %}
 {% endblock %}

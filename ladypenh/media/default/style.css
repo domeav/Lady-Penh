@@ -52,6 +52,8 @@ img { border-style: none; }
   display: inline;
 }
 
+#alert { color: red; }
+
 #menu a , #menu a:link , #menu a:visited { color: #ffcc00; } 
 
 #program table { text-align: left; }
