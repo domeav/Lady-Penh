@@ -75,6 +75,9 @@ function getParameter ( queryString, parameterName ) {
    }
 }
 
+function lpcomments_nb_callback(nb){
+    $('commentsnb').appendText('(' + nb + ')')
+}
 
 window.addEvent('domready', function() {
         if (!$('detailsslider')) return;
@@ -86,5 +89,8 @@ window.addEvent('domready', function() {
             slideday(defaultday, true);
         else
             openandselect(openday, openevent);
+        new Request.JSONP({
+              url: 'http://lp-comments.appspot.com/comments_number_callback/ladypenh.com/article' + articlenumid +'.html'
+        }).send();
     });
 

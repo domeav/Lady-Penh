@@ -15,7 +15,7 @@
       {% if article.content %}
       <a href="/article{{ article.numid }}.html">Read complete article and comments!</a>
       {% else %}
-      <a href="/article{{ article.numid }}.html#comments">Read comments / leave us a note!</a><br/>
+      <a href="/article{{ article.numid }}.html#comments">Add/read comments <span id="commentsnb"></span>!</a><br/>
       {% endif %}
     </div>
   </div>
@@ -112,6 +112,7 @@
 </div>
 {% endif %}
 <script type="text/javascript">
+  var articlenumid = '{{ article.numid }}';
   var defaultday = '{{ days.0 }}';
   var daysliders = new Object();
   {% for day in days %}        
