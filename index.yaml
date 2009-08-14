@@ -28,7 +28,7 @@ indexes:
   - name: date
   - name: time
 
-# Used 3 times in query history.
+# Unused in query history -- copied from input.
 - kind: ladypenh_event
   properties:
   - name: date
@@ -54,7 +54,7 @@ indexes:
   - name: date
     direction: desc
 
-# Used 2 times in query history.
+# Unused in query history -- copied from input.
 - kind: ladypenh_venue
   properties:
   - name: oneshot

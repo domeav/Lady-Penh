@@ -1,5 +1,8 @@
 {% extends "base.html" %}
 {% load markup %}
+{% block head %}
+<script type="text/javascript" src="http://api.recaptcha.net/js/recaptcha_ajax.js"></script>
+{% endblock %}
 {% block main %}
 {% if article %}
 <div class="row">
@@ -15,18 +18,25 @@
     {% endif %}
   </div>
   <div style="text-align: right;">
-    <a href="http://www.addthis.com/bookmark.php?v=250" onmouseover="return addthis_open(this, '', 'http://ladypenh.com/article{{ article.numid }}.html', '{{ article.title }}')" onmouseout="addthis_close()" onclick="return addthis_sendto()"><img src="http://s7.addthis.com/static/btn/lg-share-en.gif" width="125" height="16" alt="Bookmark and Share" style="border:0"/></a><script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js?pub=xa-4a3b17ef30493795"></script>
+    <a href="http://www.addthis.com/bookmark.php?v=250" onmouseover="return addthis_open(this, '', 'http://ladypenh.com/article{{ article.numid }}.html', '{{ article.title }}')" onmouseout="addthis_close()" onclick="return addthis_sendto()"><img src="http://s7.addthis.com/static/btn/lg-share-en.gif" width="125" height="16" alt="Bookmark and Share" style="border:0"/></a>
   </div>
-  <div id="comments">Waiting for the comments to load...</div>
-  <div>
+  <div id="comments"><img class="loadicon" src="{{ MEDIA_URL }}ladypenh/{{ theme_name }}/loading.gif"/><em>Waiting for the comments to load...</em></div>
+  <div style="visibility: hidden;" id="commentform">
     <h3>Enter your comment in the box below:</h3>
-    <div id="alert"></div>
-    <textarea cols="60" id="comment">{{ comment }}</textarea><br/>
-    Pseudo <input id="pseudo" value="{{ pseudo }}"/> Password (optional) <input type="password" id="password" value="{{ password }}"/><br/>
-    <script type="text/javascript" src="http://api.recaptcha.net/challenge?k=6Lf2yAcAAAAAADIPnn1z0_b6mrhDAqAP3KEeVefl"></script>
-    <input type="submit" onclick="submit_comment()"/>
+    <div class="center">    
+      <div id="alert"></div>
+      <p><textarea id="comment" class="grid_12">{{ comment }}</textarea></p>
+      Pseudo <input id="pseudo" value="{{ pseudo }}"/> Password (optional) <input type="password" id="password" value="{{ password }}"/>
+      <p><div id="recaptcha"></div></p>
+      <input id="submit" type="submit" onclick="submit_comment()" value="Submit comment!"/>
+    </div>
   </div>
   <script>    
+    function display_commentform(){
+      $('commentform').style.visibility = 'visible';
+    }
+
+    var firstload = true;
     function lpcomments_callback(resp){
       $('alert').innerHTML = resp['alert_text'];
       $('pseudo').value = resp['pseudo'];
@@ -34,12 +44,19 @@
       $('comment').value = resp['comment'];
       var comments = resp['comments'];
       var commentsstring = '<h3>' + comments.length + ' comments so far:' + '</h3>';
-      for (var i=0; i<comments.length; i++){
-        commentsstring += comments[i];
-      }
+      $each(comments, function(comment){
+        commentsstring += comment;
+      });
       if (comments.length == 0) commentsstring += 'Be the first!'
       $('comments').innerHTML = commentsstring;
-      Recaptcha.reload();
+      if (firstload == true){
+        firstload = false;
+        Recaptcha.create('6Lf2yAcAAAAAADIPnn1z0_b6mrhDAqAP3KEeVefl', 'recaptcha', {
+          theme: 'red',
+          callback: display_commentform
+        });      
+      }
+      else Recaptcha.reload();
     }
     
     new Request.JSONP({

@@ -15,7 +15,7 @@
       {% if article.content %}
       <a href="/article{{ article.numid }}.html">Read complete article and comments!</a>
       {% else %}
-      <a href="/article{{ article.numid }}.html#idc-container">Read comments / leave us a note!</a><br/>
+      <a href="/article{{ article.numid }}.html#comments">Read comments / leave us a note!</a><br/>
       {% endif %}
     </div>
   </div>
@@ -76,7 +76,7 @@
                 {% if event.venue.linktext and event.venue.linkurl %}<p><a target="_blank" href="{{ event.venue.linkurl }}">{{ event.venue.linktext }}</p>{% endif %}
               </div>
               <div class="center">
-                <a href="http://www.addthis.com/bookmark.php?v=250" onmouseover="return addthis_open(this, '', 'http://ladypenh.com/event/{{ event.numid }}.html', '{{ event.title }} / {{ event.date|date:"D. d/m" }}, {{ event.time|time:"H:i" }}')" onmouseout="addthis_close()" onclick="return addthis_sendto()"><img src="http://s7.addthis.com/static/btn/lg-share-en.gif" width="125" height="16" alt="Bookmark and Share" style="border:0"/></a><script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js?pub=xa-4a3b17ef30493795"></script>
+                <a href="http://www.addthis.com/bookmark.php?v=250" onmouseover="return addthis_open(this, '', 'http://ladypenh.com/event/{{ event.numid }}.html', '{{ event.title }} / {{ event.date|date:"D. d/m" }}, {{ event.time|time:"H:i" }}')" onmouseout="addthis_close()" onclick="return addthis_sendto()"><img src="http://s7.addthis.com/static/btn/lg-share-en.gif" width="125" height="16" alt="Bookmark and Share" style="border:0"/></a>
               </div>
               <noscript><a href="/event/{{ event.numid }}.html">permalink</a></noscript>
             </p>
