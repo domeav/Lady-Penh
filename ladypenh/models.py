@@ -24,7 +24,7 @@ class Event(db.Model):
     def __unicode__(self):
         return "%s %s, %s (%s) @ %s" % (str(self.date), str(self.time), self.title, self.type, self.venue.name)
     numid = db.IntegerProperty()
-    type = db.StringProperty(required=True, choices=set(['cinema', 'circus', 'concert', 'conference', 'exhibition', 'game', 'party', 'sports', 'live_show', 'videogames', 'visit', 'workshop']))
+    type = db.StringProperty(required=True, choices=set(['cinema', 'circus', 'concert', 'conference', 'exhibition', 'game', 'party', 'rock', 'sports', 'live_show', 'videogames', 'visit', 'workshop']))
     venue = db.ReferenceProperty(Venue, required=True)
     organizer = db.StringProperty()
     title = db.StringProperty(required=True)
@@ -58,5 +58,4 @@ class Article(db.Model):
     picname = db.StringProperty()
     piccredits = db.StringProperty(required=True)
     content = db.TextProperty()
-    legacy_comment_url = db.StringProperty() #to deal with older install intense debate comments
     
