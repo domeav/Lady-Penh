@@ -3,8 +3,8 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.utils.translation import ugettext as _
 from django.views.decorators.cache import cache_control
 from ragendja.template import render_to_response
-from ladypenh.models import ImageFile
-from datetime import datetime
+from ladypenh.models import ImageFile, Event
+from datetime import datetime, date
 import helpers
 import mimetypes
 
@@ -99,3 +99,10 @@ def index(request, edito=True):
                                     highlights=highlights,
                                     theme_name=helpers.get_theme(days[0])))
 
+def dump_events(request):
+    events = Event.gql('WHERE date >= :1', date.today()).fetch(1000)
+    import pickle, StringIO
+    out = StringIO.StringIO()
+    for event in events:
+        pickle.dump(event.make_dic(), out, True)
+    return HttpResponse(out.getvalue(), 'application/octet-stream')
