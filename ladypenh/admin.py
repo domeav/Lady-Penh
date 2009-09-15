@@ -23,7 +23,7 @@ class ArticleAdmin(admin.ModelAdmin):
     form = ArticleForm
     fields = ('date', 'title', 'header', 'pic', 'piccredits', 'content')
     ordering = ('-date',)
-    list_display = ('date', 'title')
+    list_display = ('date', 'title', 'numid')
     list_display_links = ('title',)
     def save_model(self, request, obj, form, change):
         if 'pic' in request.FILES:
