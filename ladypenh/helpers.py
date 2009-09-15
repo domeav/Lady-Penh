@@ -1,4 +1,4 @@
-from ladypenh.models import ImageFile, Venue, Event, OneLiner, Article
+from ladypenh.models import ImageFile, Venue, Event, OneLiner, Article, Tag
 from ragendja.dbutils import get_object_list
 from datetime import datetime, timedelta
 
@@ -14,7 +14,10 @@ def get_article(day):
         return None
     return articlelist[0]
 
-def get_articles(day):
+def get_articles(day, tagstring):
+    if tagstring != None:
+        tag = Tag.gql("WHERE name = :1", tagstring).fetch(1)[0].key()
+        return Article.gql("WHERE date <= :1 AND tags = :2 ORDER BY date desc", day, tag).fetch(1000)
     return Article.gql("WHERE date <= :1 ORDER BY date desc", day).fetch(1000)
 
 def get_article_by_id(id):
@@ -73,3 +76,6 @@ def get_daysinfo_and_highlights(days):
 
 def get_theme(day):
     return "default"
+
+def get_tags():
+    return Tag.gql("ORDER BY name").fetch(1000)

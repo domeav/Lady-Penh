@@ -2,6 +2,7 @@
 from django.utils.translation import ugettext_lazy as _
 from google.appengine.ext import db
 from datetime import datetime, date, time, timedelta
+from ragendja.dbutils import KeyListProperty
 
 
 class ImageFile(db.Model):
@@ -54,6 +55,11 @@ class OneLiner(db.Model):
     title = db.StringProperty(required=True)
     #event = db.ReferenceProperty(Event)
 
+class Tag(db.Model):
+    def __unicode__(self):
+        return self.name
+    name = db.StringProperty(required=True)
+
 class Article(db.Model):
     def __unicode__(self):
         return self.title
@@ -64,4 +70,7 @@ class Article(db.Model):
     picname = db.StringProperty()
     piccredits = db.StringProperty(required=True)
     content = db.TextProperty()
+    tags = KeyListProperty(Tag)
+    
+    
     

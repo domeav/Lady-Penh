@@ -1,5 +1,12 @@
 {% extends "base.html" %}
 {% block main %}
+<p class="big center">
+  Filter by tag: 
+  {% for tag in tags %}
+  <a href="/archives/{{ tag }}.html">{{ tag }}</a>
+  {% endfor %}
+  <a href="/archives.html">All</a>
+</p>
 <div class="row">
   <div class="column grid_12">
     {% for article in articles %}

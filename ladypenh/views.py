@@ -37,10 +37,11 @@ def friends(request):
                                dict(theme_name=helpers.get_theme(helpers.today())))
 
 
-def archives(request):
+def archives(request, tag=None):
     return render_to_response(request, 'ladypenh/archives.html',
                               dict(theme_name=helpers.get_theme(helpers.today()),
-                                   articles=helpers.get_articles(helpers.today())))
+                                   articles=helpers.get_articles(helpers.today(), tag),
+                                   tags=helpers.get_tags()))
 
 def article(request, id):
     return  render_to_response(request, 'ladypenh/article.html',

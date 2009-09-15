@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.forms import ModelForm, FileField, ModelChoiceField
-from ladypenh.models import ImageFile, Venue, Event, OneLiner, Article
+from ladypenh.models import ImageFile, Venue, Event, OneLiner, Article, Tag
 from google.appengine.api import images
 import string
 
@@ -21,7 +21,7 @@ class ArticleForm(ModelForm):
 
 class ArticleAdmin(admin.ModelAdmin):
     form = ArticleForm
-    fields = ('date', 'title', 'header', 'pic', 'piccredits', 'content')
+    fields = ('date', 'title', 'header', 'pic', 'piccredits', 'content', 'tags')
     ordering = ('-date',)
     list_display = ('date', 'title', 'numid')
     list_display_links = ('title',)
@@ -94,4 +94,4 @@ admin.site.register(Venue, VenueAdmin)
 
 
 admin.site.register(ImageFile)
-
+admin.site.register(Tag)
