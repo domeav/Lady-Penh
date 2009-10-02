@@ -21,6 +21,15 @@
   </div>
 </div>
 {% endif %}
+<div class="center" style="height: 90px;">
+  <script type='text/javascript'>
+    bitt.instance = '291';
+    bitt.zone = 'Lady Penh';
+    bitt.location = 'default location';
+    bitt.keywords = [];
+    bitt.bitt('Banner');
+  </script>
+</div>
 {% if highlights %}
 <div class="row" id="nottomiss">
   <div class="column grid_12">
@@ -124,7 +133,11 @@
   {% for i in 4|get_range %}
   <div class="center column grid_3">
     <script type='text/javascript'>
-      OA_show({{ forloop.counter }});
+      bitt.instance = '291';
+      bitt.zone = 'Lady Penh';
+      bitt.location = 'default location';
+      bitt.keywords = [];
+      bitt.bitt('Button');
     </script>
   </div>
   {% endfor %}
