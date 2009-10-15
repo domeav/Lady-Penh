@@ -44,9 +44,11 @@ def archives(request, tag=None):
                                    tags=helpers.get_tags()))
 
 def article(request, id):
+    article, tags = helpers.get_article_by_id(id)
     return  render_to_response(request, 'ladypenh/article.html',
                                dict(theme_name=helpers.get_theme(helpers.today()),
-                                    article=helpers.get_article_by_id(id)))
+                                    article=article,
+                                    tags=tags))
 
 def event(request, id):
     return  render_to_response(request, 'ladypenh/event.html',
@@ -89,15 +91,16 @@ def index(request, edito=True):
     for day in days[2:]:
         daylabels.append((day, day.strftime('%A')))
     daysinfo, highlights = helpers.get_daysinfo_and_highlights(days)
-    article = None
+    article, tags = None, []
     if edito:
-        article = helpers.get_article(days[0])
+        article, tags = helpers.get_article(days[0])
     return  render_to_response(request, 'ladypenh/index.html', 
                                dict(article=article,
                                     days=days,
                                     daylabels=daylabels,
                                     daysinfo=daysinfo,
                                     highlights=highlights,
+                                    tags=tags,
                                     theme_name=helpers.get_theme(days[0])))
 
 def dump_events(request):

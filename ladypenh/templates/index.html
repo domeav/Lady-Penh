@@ -15,8 +15,13 @@
       {% if article.content %}
       <a href="/article{{ article.numid }}.html">Read complete article and comments!</a>
       {% else %}
-      <a href="/article{{ article.numid }}.html#comments">Add/read comments <span id="commentsnb"></span>!</a><br/>
+      <a href="/article{{ article.numid }}.html#comments">Add/read comments <span id="commentsnb"></span>!</a>
       {% endif %}
+      <span class="streched xxsmall">      
+        {% for tag in tags %}
+        <a href="/archives/{{ tag }}.html">{{ tag }}</a>
+        {% endfor %}
+      </span>
     </div>
   </div>
 </div>

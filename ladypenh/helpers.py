@@ -1,5 +1,5 @@
 from ladypenh.models import ImageFile, Venue, Event, OneLiner, Article, Tag
-from ragendja.dbutils import get_object_list
+from ragendja.dbutils import get_object
 from datetime import datetime, timedelta
 
 
@@ -8,11 +8,15 @@ def today(dayspan=0):
     now = datetime.now() + timedelta(hours=7, days=dayspan)
     return now.date()
 
+def get_tags_from_keylist(keylist):
+    return [get_object(Tag, tag) for tag in keylist]
+
 def get_article(day):
     articlelist = Article.gql("WHERE date <= :1 ORDER BY date desc", day).fetch(1)
     if len(articlelist) == 0:
         return None
-    return articlelist[0]
+    article = articlelist[0]
+    return article, get_tags_from_keylist(article.tags)
 
 def get_articles(day, tagstring):
     if tagstring != None:
@@ -24,7 +28,8 @@ def get_article_by_id(id):
     articlelist = Article.gql("WHERE numid = :1", int(id)).fetch(1)
     if len(articlelist) == 0:
         return None
-    return articlelist[0]
+    article = articlelist[0]
+    return article, get_tags_from_keylist(article.tags)
 
 def get_event_by_id(id):
     eventlist = Event.gql("WHERE numid = :1", int(id)).fetch(1)
