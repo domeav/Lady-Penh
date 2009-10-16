@@ -14,7 +14,7 @@ def get_tags_from_keylist(keylist):
 def get_article(day):
     articlelist = Article.gql("WHERE date <= :1 ORDER BY date desc", day).fetch(1)
     if len(articlelist) == 0:
-        return None
+        return None, []
     article = articlelist[0]
     return article, get_tags_from_keylist(article.tags)
 
@@ -27,7 +27,7 @@ def get_articles(day, tagstring):
 def get_article_by_id(id):
     articlelist = Article.gql("WHERE numid = :1", int(id)).fetch(1)
     if len(articlelist) == 0:
-        return None
+        return None, []
     article = articlelist[0]
     return article, get_tags_from_keylist(article.tags)
 

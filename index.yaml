@@ -22,27 +22,23 @@ indexes:
 # automatically uploaded to the admin console when you next deploy
 # your application using appcfg.py.
 
-# Used 5 times in query history.
 - kind: ladypenh_article
   properties:
   - name: tags
   - name: date
     direction: desc
 
-# Used 7 times in query history.
 - kind: ladypenh_event
   properties:
   - name: date
   - name: time
 
-# Unused in query history -- copied from input.
 - kind: ladypenh_event
   properties:
   - name: date
     direction: desc
   - name: time
 
-# Unused in query history -- copied from input.
 - kind: ladypenh_event
   properties:
   - name: date
@@ -51,7 +47,6 @@ indexes:
   - name: date
     direction: desc
 
-# Unused in query history -- copied from input.
 - kind: ladypenh_event
   properties:
   - name: venue
@@ -61,7 +56,6 @@ indexes:
   - name: date
     direction: desc
 
-# Unused in query history -- copied from input.
 - kind: ladypenh_venue
   properties:
   - name: oneshot
