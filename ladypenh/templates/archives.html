@@ -1,5 +1,14 @@
 {% extends "base.html" %}
 {% block main %}
+<div class="center" style="height: 90px;">
+  <script type='text/javascript'>
+    bitt.instance = '291';
+    bitt.zone = 'Lady Penh';
+    bitt.location = 'default location';
+    bitt.keywords = [];
+    bitt.bitt('Banner');
+  </script>
+</div>
 <p class="big center">
   Filter by tag: 
   {% for tag in tags %}
