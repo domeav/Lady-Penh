@@ -66,8 +66,6 @@ img { border-style: none; }
 #editorial .imgcontainer img { float: none; margin: 0 }
 #editorial .credits { text-align: center; color: #777; line-height: 130%; font-size: 9px; }
 
-#openx a, #openx a:link, #openx a:visited { color: white; } 
-
 #recaptcha_area { margin: auto; }
 
 .arch a , .arch a:link , .arch a:visited { color: #ffcc00; } 
