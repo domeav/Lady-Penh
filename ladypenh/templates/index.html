@@ -86,6 +86,7 @@
                 {% endif %}
                 <div class="highlight"><span class="bul">&sup;</span> {{ event.venue.address }}{% if event.venue.mapurl %} (<a target="_blank" href="{{ event.venue.mapurl }}">map</a>){% endif %}</div>
                 <div class="highlight"><span class="bul">&sup;</span> {{ event.date|date:"l M. j" }}, {{event.time|time:"H:i"}}</div>
+                {% if event.until %}<div class="highlight"><span class="bul">&sup;</span> Until {{ event.until }}</div>{% endif %}
                 <p>{{ event.description|markdown }}</p>
                 {% if event.venue.linktext and event.venue.linkurl %}<p><a target="_blank" href="{{ event.venue.linkurl }}">{{ event.venue.linktext }}</p>{% endif %}
               </div>

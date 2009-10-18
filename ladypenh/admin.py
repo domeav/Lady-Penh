@@ -53,7 +53,7 @@ class EventAdmin(admin.ModelAdmin):
         return form
     form = EventForm
     fieldsets = (
-        (None, {'fields': ('type', 'venue', 'organizer', 'title', 'date', 'time', 'description',
+        (None, {'fields': ('type', 'venue', 'organizer', 'title', 'date', 'time', 'until', 'description',
                            'shortdesc', 'pic', 'haslargepic', 'highlight', 'status')}),
         ('internal', {'fields': ('picname', 'picheight', 'picwidth'), 'classes': ('collapsed',)}))
     list_display = ('date', 'time', 'title', 'venue', 'numid')
