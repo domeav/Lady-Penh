@@ -13,13 +13,13 @@
     {{ article.header|markdown }}
     <div>
       {% if article.content %}
-      <a href="/article{{ article.numid }}.html">Read complete article and comments!</a>
+      <a href="/article{{ article.numid }}.html" class="same">Read complete article and comments!</a>
       {% else %}
-      <a href="/article{{ article.numid }}.html#comments">Add/read comments <span id="commentsnb"></span>!</a>
+      <a href="/article{{ article.numid }}.html#comments" class="same">Add/read comments <span id="commentsnb"></span>!</a>
       {% endif %}
       <span class="streched xxsmall">      
         {% for tag in tags %}
-        <a href="/archives/{{ tag }}.html">{{ tag }}</a>
+        <a href="/archives/{{ tag }}.html" class="same">{{ tag }}</a>
         {% endfor %}
       </span>
     </div>
@@ -50,7 +50,7 @@
   </div>          
 </div>
 {% endif %}
-<noscript>You will have hard time browsing Lady Penh without javascript enabled.You may want to see the <a href="/print.html" target="_blank">printable weekly listing</a>.</noscript>
+<noscript>You will have hard time browsing Lady Penh without javascript enabled.You may want to see the <a href="/print.html">printable weekly listing</a>.</noscript>
 {% if daysinfo %}
 <div class="row">
   <div id="program" class="reverse column grid_6">
@@ -84,16 +84,16 @@
                 <img class="illus" src="/image/event/thumb/{{ event.picname }}" height="{{ event.picheight }}" width="{{ event.picwidth }}"/>
                 {% endif %}
                 {% endif %}
-                <div class="highlight"><span class="bul">&sup;</span> {{ event.venue.address }}{% if event.venue.mapurl %} (<a target="_blank" href="{{ event.venue.mapurl }}">map</a>){% endif %}</div>
+                <div class="highlight"><span class="bul">&sup;</span> {{ event.venue.address }}{% if event.venue.mapurl %} (<a href="{{ event.venue.mapurl }}">map</a>){% endif %}</div>
                 <div class="highlight"><span class="bul">&sup;</span> {{ event.date|date:"l M. j" }}, {{event.time|time:"H:i"}}</div>
                 {% if event.until %}<div class="highlight"><span class="bul">&sup;</span> Until {{ event.until }}</div>{% endif %}
                 <p>{{ event.description|markdown }}</p>
-                {% if event.venue.linktext and event.venue.linkurl %}<p><a target="_blank" href="{{ event.venue.linkurl }}">{{ event.venue.linktext }}</p>{% endif %}
+                {% if event.venue.linktext and event.venue.linkurl %}<p><a href="{{ event.venue.linkurl }}">{{ event.venue.linktext }}</p>{% endif %}
               </div>
               <div class="center">
                 <a href="http://www.addthis.com/bookmark.php?v=250" onmouseover="return addthis_open(this, '', 'http://ladypenh.com/event/{{ event.numid }}.html', '{{ event.title }} / {{ event.date|date:"D. d/m" }}, {{ event.time|time:"H:i" }}')" onmouseout="addthis_close()" onclick="return addthis_sendto()"><img src="http://s7.addthis.com/static/btn/lg-share-en.gif" width="125" height="16" alt="Bookmark and Share" style="border:0"/></a>
               </div>
-              <noscript><a href="/event/{{ event.numid }}.html">permalink</a></noscript>
+              <noscript><a href="/event/{{ event.numid }}.html"  class="same">permalink</a></noscript>
             </p>
           </td>
         </tr>

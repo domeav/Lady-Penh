@@ -12,15 +12,15 @@
 <p class="big center">
   Filter by tag: 
   {% for tag in tags %}
-  <a href="/archives/{{ tag }}.html">{{ tag }}</a>
+  <a href="/archives/{{ tag }}.html" class="same">{{ tag }}</a>
   {% endfor %}
-  <a href="/archives.html">All</a>
+  <a href="/archives.html" class="same">All</a>
 </p>
 <div class="row">
   <div class="column grid_12">
     {% for article in articles %}
     <p class="arch big center">
-      <a href="/article{{ article.numid }}.html">{{ article.date|date:"l M j Y" }} - {{ article.title }}</a>
+      <a href="/article{{ article.numid }}.html" class="same">{{ article.date|date:"l M j Y" }} - {{ article.title }}</a>
     </p>
     <br/>
     {% endfor %}

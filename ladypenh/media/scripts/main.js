@@ -79,7 +79,17 @@ function lpcomments_nb_callback(nb){
     $('commentsnb').appendText('(' + nb + ')')
 }
 
+function set_links_targets(){
+  $$('a').each(function(el) { 
+          if (el.hasClass('same')) return;
+          if (el.href.substring(0, 11) == 'javascript:') return;
+          if (el.href.substring(0, 7) == 'mailto:') return;
+          el.setProperty('target', '_blank');    
+  });
+}
+
 window.addEvent('domready', function() {
+        set_links_targets();
         if (!$('detailsslider')) return;
         detailsSlide = new Fx.Slide('detailsslider');
         var queryString = window.top.location.search.substring(1);
