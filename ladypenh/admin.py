@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.forms import ModelForm, FileField, ModelChoiceField
-from ladypenh.models import ImageFile, Venue, Event, OneLiner, Article, Tag
+from ladypenh.models import Friend, ImageFile, Venue, Event, OneLiner, Article, Tag
 from google.appengine.api import images
 import string
 
@@ -95,3 +95,4 @@ admin.site.register(Venue, VenueAdmin)
 
 admin.site.register(ImageFile)
 admin.site.register(Tag)
+admin.site.register(Friend)

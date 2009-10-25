@@ -1,4 +1,4 @@
-from ladypenh.models import Venue, Event, OneLiner, Article, Tag
+from ladypenh.models import Friend, Venue, Event, OneLiner, Article, Tag
 from ragendja.dbutils import get_object
 from datetime import datetime, timedelta
 
@@ -47,6 +47,15 @@ def get_days(dayspan=0):
 def get_events(days):
     events = Event.gql("WHERE date >= :1 and date <= :2 ORDER BY date, time ASC", days[0], days[-1]).fetch(1000)
     return [event for event in events if event.status == 'lp_display']
+
+def get_friends():
+    friends = {}
+    friends_result = Friend.gql("").fetch(1000)
+    for friend in friends_result:
+        if friend.type not in friends:
+            friends[friend.type] = []
+        friends[friend.type].append(friend)
+    return friends
 
 def get_daysinfo_and_highlights(days):
     events = {}

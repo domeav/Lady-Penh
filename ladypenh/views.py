@@ -33,8 +33,10 @@ def about(request):
     return  render_to_response(request, 'ladypenh/about.html',
                                dict(theme_name=helpers.get_theme(helpers.today())))
 def friends(request):
+    friends = helpers.get_friends()
     return  render_to_response(request, 'ladypenh/friends.html',
-                               dict(theme_name=helpers.get_theme(helpers.today())))
+                               dict(friends=friends,
+                                    theme_name=helpers.get_theme(helpers.today())))
 
 
 def archives(request, tag=None):

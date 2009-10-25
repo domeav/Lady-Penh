@@ -74,5 +74,8 @@ class Article(db.Model):
     content = db.TextProperty()
     tags = KeyListProperty(Tag)
     
-    
-    
+class Friend(db.Model):
+    def __unicode__(self):
+        return self.desc
+    type = db.StringProperty(required=True, choices=set(['places', 'people', 'sites', 'bars']))
+    desc = db.TextProperty(required=True)
