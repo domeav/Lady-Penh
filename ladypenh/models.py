@@ -4,12 +4,13 @@ from google.appengine.ext import db
 from datetime import datetime, date, time, timedelta
 from ragendja.dbutils import KeyListProperty
 
-
+# legacy name, but used for all binary files
 class ImageFile(db.Model):
     def __unicode__(self):
         return self.name
     name = db.StringProperty(required=True)
     blob = db.BlobProperty(required=True)
+
 
 class Venue(db.Model):
     def __unicode__(self):

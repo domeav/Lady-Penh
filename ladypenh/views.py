@@ -73,17 +73,16 @@ def create_admin_user(request):
     return HttpResponseRedirect('/')
 
 
-#treat images as immutable
+#treat blobfiles as immutable
 defaultdate = datetime(year=1998, month=6, day=22)
 
 @cache_control(public=True, max_age=3600*24*60*60)
-def image(request, name):
+def blobfile(request, name):
     mime = mimetypes.guess_type(name)[0]
-    images = ImageFile.gql("WHERE name = :1", name).fetch(1)
-    response = HttpResponse(images[0].blob, mimetype=mime)
+    bfiles = ImageFile.gql("WHERE name = :1", name).fetch(1)
+    response = HttpResponse(bfiles[0].blob, mimetype=mime)
     response['Last-Modified'] = defaultdate.strftime("%a, %d %b %Y %H:%M:%S GMT")
-    return response
-    
+    return response    
 
 def index(request, edito=True):
     days = helpers.get_days()

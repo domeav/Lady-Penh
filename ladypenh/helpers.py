@@ -1,4 +1,4 @@
-from ladypenh.models import ImageFile, Venue, Event, OneLiner, Article, Tag
+from ladypenh.models import Venue, Event, OneLiner, Article, Tag
 from ragendja.dbutils import get_object
 from datetime import datetime, timedelta
 
