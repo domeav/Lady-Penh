@@ -13,6 +13,9 @@
   {% block head %}{% endblock %}
 </head>
 <body>
+  {% if logged %}
+  <div class="center"><form action="index.html" method="get">Day offset: (enter a number) <input name="offset" value="{{ offset }}"/><input type="submit"/></form></div>
+  {% endif %}
   <div class="row">
     <div class="column grid_5">
       <a href="/" class="same"><img src="{{ MEDIA_URL }}ladypenh/{{ theme_name }}/logo.png" alt="Lady Penh: what to do in Phnom Penh?"/></a>

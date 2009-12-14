@@ -87,7 +87,10 @@ def blobfile(request, name):
     return response    
 
 def index(request, edito=True):
-    days = helpers.get_days()
+    offset=0
+    if 'offset' in request.GET:
+        offset = int(request.GET['offset'])
+    days = helpers.get_days(offset)
     daylabels = [(days[0], 'Today'), (days[1], 'Tomorrow')]
     for day in days[2:]:
         daylabels.append((day, day.strftime('%A')))
@@ -102,7 +105,9 @@ def index(request, edito=True):
                                     daysinfo=daysinfo,
                                     highlights=highlights,
                                     tags=tags,
-                                    theme_name=helpers.get_theme(days[0])))
+                                    theme_name=helpers.get_theme(days[0]),
+                                    offset=offset,
+                                    logged=request.user.is_authenticated()))
 
 def dump_events(request):
     events = Event.gql('WHERE date >= :1', date.today()).fetch(1000)
