@@ -59,7 +59,7 @@ class EventAdmin(admin.ModelAdmin):
     list_display = ('date', 'time', 'title', 'venue', 'numid')
     list_display_links = ('title',)
     list_filter = ('venue',)
-    ordering = ('-date', 'time')
+    ordering = ('-date', '-time')
     save_as = True
     save_on_top = True
     def save_model(self, request, obj, form, change):
