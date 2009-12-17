@@ -63,6 +63,14 @@ indexes:
   - name: date
     direction: desc
 
+- kind: ladypenh_event
+  properties:
+  - name: venue
+  - name: date
+    direction: desc
+  - name: time
+    direction: desc
+
 - kind: ladypenh_venue
   properties:
   - name: oneshot
