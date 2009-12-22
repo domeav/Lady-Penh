@@ -109,6 +109,30 @@ def index(request, edito=True):
                                     offset=offset,
                                     logged=request.user.is_authenticated()))
 
+def indexlight(request, edito=True):
+    offset=0
+    if 'offset' in request.GET:
+        offset = int(request.GET['offset'])
+    days = helpers.get_days(offset)
+    daylabels = [(days[0], 'Today'), (days[1], 'Tomorrow')]
+    for day in days[2:]:
+        daylabels.append((day, day.strftime('%A')))
+    daysinfo, highlights = helpers.get_daysinfo_and_highlights(days)
+    article, tags = None, []
+    if edito:
+        article, tags = helpers.get_article(days[0])
+    return  render_to_response(request, 'ladypenh/indexlight.html', 
+                               dict(article=article,
+                                    days=days,
+                                    daylabels=daylabels,
+                                    daysinfo=daysinfo,
+                                    highlights=highlights,
+                                    tags=tags,
+                                    theme_name=helpers.get_theme(days[0]),
+                                    offset=offset,
+                                    logged=request.user.is_authenticated()))
+
+
 def dump_events(request):
     events = Event.gql('WHERE date >= :1', date.today()).fetch(1000)
     import pickle, StringIO

@@ -20,9 +20,11 @@ COMBINE_MEDIA = {
         'ladypenh/scripts/mootools.js',
         'ladypenh/scripts/moomore.js',
         'ladypenh/scripts/main.js',
+        'ladypenh/scripts/SqueezeBox.js',
     ),
     'combined-%(LANGUAGE_DIR)s.css': (
         'ladypenh/default/style.css',
+        'ladypenh/css/SqueezeBox.css',
     ),
 }
 

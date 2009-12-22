@@ -82,6 +82,7 @@ function lpcomments_nb_callback(nb){
 function set_links_targets(){
   $$('a').each(function(el) { 
           if (el.hasClass('same')) return;
+          if (el.hasClass('boxed')) return;
           if (el.href.substring(0, 11) == 'javascript:') return;
           if (el.href.substring(0, 7) == 'mailto:') return;
           el.setProperty('target', '_blank');    
@@ -89,6 +90,11 @@ function set_links_targets(){
 }
 
 window.addEvent('domready', function() {
+        SqueezeBox.initialize({
+          size: {x: 350, y: 400}
+        });
+        SqueezeBox.assign($$('a[class=boxed]'));
+
         set_links_targets();
         if (!$('detailsslider')) return;
         detailsSlide = new Fx.Slide('detailsslider');

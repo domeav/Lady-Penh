@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+{% load markup %}
+{% load lp_filters %}
+{% block main %}
+{% if article %}
+<div class="row">
+  <div class="column grid_12" id="editorial">
+    <div class="imgcontainer">
+      <img src="/image/{{ article.picname }}"/>
+      <div class="credits">{{ article.piccredits|markdown }}</div>
+    </div>          
+    <h2>{{ article.title }}</h2>
+    {{ article.header|markdown }}
+    <div>
+      {% if article.content %}
+      <a href="/article{{ article.numid }}.html" class="same">Read complete article and comments!</a>
+      {% else %}
+      <a href="/article{{ article.numid }}.html#comments" class="same">Add/read comments <span id="commentsnb"></span>!</a>
+      {% endif %}
+      <span class="streched xxsmall">      
+        {% for tag in tags %}
+        <a href="/archives/{{ tag }}.html" class="same">{{ tag }}</a>
+        {% endfor %}
+      </span>
+    </div>
+  </div>
+</div>
+{% endif %}
+<div class="center" style="height: 90px;">
+  <script type='text/javascript'>
+    bitt.instance = '291';
+    bitt.zone = 'Lady Penh';
+    bitt.location = 'default location';
+    bitt.keywords = [];
+    bitt.bitt('Banner');
+  </script>
+</div>
+{% if highlights %}
+<div class="row" id="nottomiss">
+  <div class="column grid_12">
+    <img src="{{ MEDIA_URL }}ladypenh/{{ theme_name }}/nottomiss.png" alt="not to miss!"/>
+    {% for event in highlights %}
+    <div class="pointer" 
+         onclick="openandselect('{{ event.date }}', '{{ event.numid }}')">
+      D+{{ event.daydiff }}&nbsp; {{ event.date|date:"D. d/m" }}, {{ event.time|time:"H:i" }}
+      <strong>- {{ event.title }}</strong>,
+      {{ event.venue.name }}
+    </div>
+    {% endfor %}
+  </div>          
+</div>
+{% endif %}
+<noscript>You will have hard time browsing Lady Penh without javascript enabled.You may want to see the <a href="/print.html">printable weekly listing</a>.</noscript>
+{% if daysinfo %}
+<div class="row">
+  <div id="program" class="reverse column grid_6">
+    <img src="{{ MEDIA_URL }}ladypenh/{{ theme_name }}/weekly-selection.png" alt="weekly selection"/>        
+    <div id="daybrowser" class="big bold">
+      {% for day, label in daylabels %}        
+      <span id="tog{{ day }}" class="pointer" onclick="slideday('{{ day }}', true)">{{ label }}</span>
+      {% endfor %}
+    </div>
+    {% for day,events,oneliners in daysinfo %}
+    <div id="day{{ day }}">
+      <table width="100%" cellspacing="0" class="stretched" style="text-align: left;">        
+        {% if events %}        
+        {% for event in events %}
+        <tr class="pointer">
+          <td class="evicon"><img height="35px" width="35px" src="/image/event_type/{{ event.type }}.png" alt="{{ event.type }}"/></td>
+          <td id="ev{{ event.numid }}">
+            <strong><a class="boxed" href="/event/{{ event.numid }}.html">{{ event.title }}</a></strong><br/>
+            {{ event.time|time:"H:i" }} - {{ event.venue.name }}
+          </td>
+        </tr>
+        {% endfor %}
+        {% else %}
+        <tr>
+          <td class="evicon"><img height="35px" width="35px" src="/image/event_type/sleep.png" alt="sleep..."/></td>
+          <td style="width: 340px; clear: left;">
+            Why not sleep tonight for once?
+          </td>
+        </tr>
+        {% endif %}
+        <tr style="display:none;"><td id="ol{{ day }}">
+            <p>
+              <h2>{{ day|date:"l M j" }}: also on that day</h2>
+              {% for oneliner in oneliners %}
+              <div class="small">
+                {{ oneliner.title|markdown }}
+              </div>
+              {% endfor %}
+              <div class="small"><a href="mailto:events@ladypenh.com">Report an event!</a></div>
+            </p>
+        </td></tr>
+      </table>
+    </div>
+    {% endfor %}      
+  </div>
+  <div class="column grid_6">
+    <div id="detailsslider">&nbsp;</div>
+  </div>    
+</div>
+{% endif %}
+<script type="text/javascript">
+  var articlenumid = '{{ article.numid }}';
+  var defaultday = '{{ days.0 }}';
+  var daysliders = new Object();
+  {% for day in days %}        
+  daysliders['{{ day }}'] = new Fx.Slide('day{{ day }}');
+  daysliders['{{ day }}'].hide();
+  {% endfor %}
+</script>
+<div class="row">
+  {% for i in 3|get_range %}
+  <div class="center column grid_4"">
+    <script type='text/javascript'>
+      bitt.instance = '291';
+      bitt.zone = 'Lady Penh';
+      bitt.location = 'default location';
+      bitt.keywords = [];
+      bitt.bitt('220x125');
+    </script>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

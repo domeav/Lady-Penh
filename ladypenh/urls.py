@@ -26,5 +26,6 @@ urlpatterns = patterns('ladypenh.views',
     (r'^event/(?P<id>\d+).html$', 'event'),
     (r'^ijustwanttheprogramthanks.html$', 'index', {'edito': False}),
     (r'^index.html$', 'index'),
+    (r'^indexlight.html$', 'indexlight'),
     (r'^$', 'index'),
 )

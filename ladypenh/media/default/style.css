@@ -11,6 +11,8 @@ p { margin: 0; padding: 5px 0; }
 
 a , a:link , a:visited { color: #00a000; } 
 
+#program a , #program a:link , #program a:visited { color: #000; } 
+
 h2 { font-weight: bold; color: #ffcc00; font-size: 14px; font-variant: small-caps; margin: 0; padding: 0;}
 
 h3 { color: #ffcc00; }
@@ -87,7 +89,7 @@ a.bigred, a.bigred:link, a.bigred:visited {color: #CC0000;}
 
 .loadicon { vertical-align: middle; }
 
-.reverse { text-align: center; background-color: #ffcc00; color: black; -moz-border-radius: 8px; -webkit-border-radius: 8px; border-radius: 8px; padding: 10px 0;}
+.reverse { text-align: center; background-color: #ffcc00; color: black; -moz-border-radius: 8px; -webkit-border-radius: 8px; padding: 10px 0;}
 .reverse table { padding: 0 10px; }
 
 .illus { float: right; margin: 5px 0px 5px 5px; }
