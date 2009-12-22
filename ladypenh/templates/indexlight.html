@@ -40,11 +40,10 @@
   <div class="column grid_12">
     <img src="{{ MEDIA_URL }}ladypenh/{{ theme_name }}/nottomiss.png" alt="not to miss!"/>
     {% for event in highlights %}
-    <div class="pointer" 
-         onclick="openandselect('{{ event.date }}', '{{ event.numid }}')">
-      D+{{ event.daydiff }}&nbsp; {{ event.date|date:"D. d/m" }}, {{ event.time|time:"H:i" }}
+    <div>
+      <a class="boxed" href="/event/{{ event.numid }}.html">D+{{ event.daydiff }}&nbsp; {{ event.date|date:"D. d/m" }}, {{ event.time|time:"H:i" }}
       <strong>- {{ event.title }}</strong>,
-      {{ event.venue.name }}
+      {{ event.venue.name }}</a>
     </div>
     {% endfor %}
   </div>          
