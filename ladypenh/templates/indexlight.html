@@ -84,7 +84,7 @@
             <p>
               <h2>{{ day|date:"l M j" }}: also on that day</h2>
               {% for oneliner in oneliners %}
-              <div class="small">
+              <div class="small oneliner">
                 {{ oneliner.title|markdown }}
               </div>
               {% endfor %}
@@ -122,4 +122,5 @@
   </div>
   {% endfor %}
 </div>
+<noscript><a href="{{ MEDIA_URL }}ladypenh/css/loading.gif"/><a href="{{ MEDIA_URL }}ladypenh/css/closebox.gif"/><a href="{{ MEDIA_URL }}ladypenh/css/closebox.png"/></noscript>
 {% endblock %}

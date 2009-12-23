@@ -84,7 +84,7 @@
                 <img class="illus" src="/image/event/thumb/{{ event.picname }}" height="{{ event.picheight }}" width="{{ event.picwidth }}"/>
                 {% endif %}
                 {% endif %}
-                <div class="highlight"><span class="bul">&sup;</span> {{ event.venue.address }}{% if event.venue.mapurl %} (<a href="{{ event.venue.mapurl }}">map</a>){% endif %}</div>
+                <div class="highlight"><span class="bul">&sup;</span> {{ event.venue.address }}{% if event.venue.mapurl %} (<a href="{{ event.venue.mapurl }}" target="_blank">map</a>){% endif %}</div>
                 <div class="highlight"><span class="bul">&sup;</span> {{ event.date|date:"l M. j" }}, {{event.time|time:"H:i"}}</div>
                 {% if event.until %}<div class="highlight"><span class="bul">&sup;</span> Until {{ event.until }}</div>{% endif %}
                 <p>{{ event.description|markdown }}</p>
@@ -110,7 +110,7 @@
             <p>
               <h2>{{ day|date:"l M j" }}: also on that day</h2>
               {% for oneliner in oneliners %}
-              <div class="small">
+              <div class="small oneliner">
                 {{ oneliner.title|markdown }}
               </div>
               {% endfor %}
@@ -148,4 +148,5 @@
   </div>
   {% endfor %}
 </div>
+<noscript><a href="{{ MEDIA_URL }}ladypenh/css/loading.gif"/><a href="{{ MEDIA_URL }}ladypenh/css/closebox.gif"/><a href="{{ MEDIA_URL }}ladypenh/css/closebox.png"/></noscript>
 {% endblock %}

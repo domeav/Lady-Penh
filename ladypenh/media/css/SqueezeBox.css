@@ -45,7 +45,7 @@
 }
 
 .sbox-loading #sbox-content {
-	background-image: url(spinner.gif);
+	background-image: url(loading.gif);
 	background-repeat: no-repeat;
 	background-position: center;
 }
@@ -53,7 +53,7 @@
 #sbox-content {
 	clear: both;
 	overflow: auto;
-	background-color: ##240a05;
+	background-color: #240a05;
 	height: 100%;
 	width: 100%;
 }

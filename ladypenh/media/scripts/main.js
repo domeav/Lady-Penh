@@ -27,6 +27,17 @@ function slidedetails(tog, content){
     detailsSlide.addEvent('complete', function(e) {
             if (detailsVisible) return;
             $("detailsslider").innerHTML = $(tmpContentDetails).innerHTML;
+            if (tmpContentDetails.substr(0, 2) == 'ol'){
+                ellinks = $("detailsslider").getElements('a');
+                // don't squezzebox the mailto link, so don't loop on the last link
+                for (i=0; i < ellinks.length - 1; i++){
+                    link = ellinks[i];
+                    if (link.getProperty('href').substr(0, 4) == 'http'){
+                        link.setProperty('target', '_blank');
+                    }
+                    else SqueezeBox.assign(link);
+                }
+            }
             detailsVisible = true;
             detailsSlide.slideIn();
         });
@@ -80,22 +91,25 @@ function lpcomments_nb_callback(nb){
 }
 
 function set_links_targets(){
-  $$('a').each(function(el) { 
-          if (el.hasClass('same')) return;
-          if (el.hasClass('boxed')) return;
-          if (el.href.substring(0, 11) == 'javascript:') return;
-          if (el.href.substring(0, 7) == 'mailto:') return;
-          el.setProperty('target', '_blank');    
-  });
+    $$('div.oneliner a').each(function(el){
+            el.setProperty('class', 'boxed');    
+        });
+    $$('a').each(function(el) { 
+            if (el.hasClass('same')) return;
+            if (el.hasClass('boxed')) return;
+            if (el.href.substring(0, 11) == 'javascript:') return;
+            if (el.href.substring(0, 7) == 'mailto:') return;
+            el.setProperty('target', '_blank');    
+        });
 }
 
 window.addEvent('domready', function() {
-        SqueezeBox.initialize({
-          size: {x: 350, y: 400}
-        });
-        SqueezeBox.assign($$('a[class=boxed]'));
-
         set_links_targets();
+        SqueezeBox.initialize({
+          size: {x: 380, y: 400}
+        });
+        SqueezeBox.assign($$('a.boxed'));
+
         if (!$('detailsslider')) return;
         detailsSlide = new Fx.Slide('detailsslider');
         var queryString = window.top.location.search.substring(1);
@@ -105,8 +119,10 @@ window.addEvent('domready', function() {
             slideday(defaultday, true);
         else
             openandselect(openday, openevent);
-        new Request.JSONP({
-              url: 'http://lp-comments.appspot.com/comments_number_callback/ladypenh.com/article' + articlenumid +'.html'
-        }).send();
+        if ($('editorial')){
+            new Request.JSONP({
+                    url: 'http://lp-comments.appspot.com/comments_number_callback/ladypenh.com/article' + articlenumid +'.html'
+                        }).send();
+        }
     });
 
