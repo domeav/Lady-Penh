@@ -35,7 +35,7 @@ function slidedetails(tog, content){
                     if (link.getProperty('href').substr(0, 4) == 'http'){
                         link.setProperty('target', '_blank');
                     }
-                    else SqueezeBox.assign(link);
+                    else SqueezeBox.assign(link, {handler: 'iframe'});
                 }
             }
             detailsVisible = true;
@@ -108,7 +108,7 @@ window.addEvent('domready', function() {
         SqueezeBox.initialize({
           size: {x: 380, y: 400}
         });
-        SqueezeBox.assign($$('a.boxed'));
+        SqueezeBox.assign($$('a.boxed'), {handler: 'iframe'});
 
         if (!$('detailsslider')) return;
         detailsSlide = new Fx.Slide('detailsslider');
