@@ -44,8 +44,11 @@ function slidedetails(tog, content){
 }
 
 function slideday(day, openalso){
-    if (day == selectedDay){
-        slidedetails('', 'ol'+day);
+    $$('td.eventbox').each(function(el){
+            el.removeClass('selected')
+        })
+    if (day == selectedDay){        
+        //slidedetails('', 'ol'+day);
         return;
     }
     if (selectedDay != ""){
@@ -69,6 +72,10 @@ function openandselect(day, event){
     slidedetails(eventDiv, 'details-'+event);
 }
 
+function shownottomiss(day, event){
+    slideday(day, true);
+    $(event).addClass('selected');    
+}
 
 function getParameter ( queryString, parameterName ) {
    var parameterName = parameterName + "=";

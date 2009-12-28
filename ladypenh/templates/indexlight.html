@@ -6,7 +6,7 @@
 <div class="row">
   <div class="column grid_12" id="editorial">
     <div class="imgcontainer">
-      <img src="/image/{{ article.picname }}"/>
+      <img src="/image/{{ article.picname }}" alt="{{ article.picname }}"/>
       <div class="credits">{{ article.piccredits|markdown }}</div>
     </div>          
     <h2>{{ article.title }}</h2>
@@ -40,10 +40,11 @@
   <div class="column grid_12">
     <img src="{{ MEDIA_URL }}ladypenh/{{ theme_name }}/nottomiss.png" alt="not to miss!"/>
     {% for event in highlights %}
-    <div>
-      <a class="boxed" href="/event/{{ event.numid }}.html">D+{{ event.daydiff }}&nbsp; {{ event.date|date:"D. d/m" }}, {{ event.time|time:"H:i" }}
+    <div class="pointer"
+         onclick="shownottomiss('{{ event.date }}', 'ev{{ event.numid }}')">
+      D+{{ event.daydiff }}&nbsp; {{ event.date|date:"D. d/m" }}, {{ event.time|time:"H:i" }}
       <strong>- {{ event.title }}</strong>,
-      {{ event.venue.name }}</a>
+      {{ event.venue.name }}
     </div>
     {% endfor %}
   </div>          
@@ -64,9 +65,9 @@
       <table width="100%" cellspacing="0" class="stretched" style="text-align: left;">        
         {% if events %}        
         {% for event in events %}
-        <tr class="pointer">
+        <tr>
           <td class="evicon"><img height="35px" width="35px" src="/image/event_type/{{ event.type }}.png" alt="{{ event.type }}"/></td>
-          <td id="ev{{ event.numid }}">
+          <td id="ev{{ event.numid }}" class="eventbox">
             <strong><a class="boxed" href="/event/{{ event.numid }}.html">{{ event.title }}</a></strong><br/>
             {{ event.time|time:"H:i" }} - {{ event.venue.name }}
           </td>
@@ -81,7 +82,7 @@
         </tr>
         {% endif %}
         <tr style="display:none;"><td id="ol{{ day }}">
-            <p>
+            <div>
               <h2>{{ day|date:"l M j" }}: also on that day</h2>
               {% for oneliner in oneliners %}
               <div class="small oneliner">
@@ -89,7 +90,7 @@
               </div>
               {% endfor %}
               <div class="small"><a href="mailto:events@ladypenh.com">Report an event!</a></div>
-            </p>
+            </div>
         </td></tr>
       </table>
     </div>
@@ -111,7 +112,7 @@
 </script>
 <div class="row">
   {% for i in 3|get_range %}
-  <div class="center column grid_4"">
+  <div class="center column grid_4">
     <script type='text/javascript'>
       bitt.instance = '291';
       bitt.zone = 'Lady Penh';

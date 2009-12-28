@@ -17,7 +17,7 @@
       <div style="min-height: {{ event.picheight }}px; _height: {{ event.picheight }}px;">
         {% if event.picname %}
         {% if event.haslargepic %}
-        <a href="javascript:winpop('/image/event/large/{{ event.picname }}')"><img class="illus" src="/image/event/thumb/{{ event.picname }}" height="{{ event.picheight }}" width="{{ event.picwidth }}"/></a>
+        <a href="/image/event/large/{{ event.picname }}"><img class="illus" src="/image/event/thumb/{{ event.picname }}" height="{{ event.picheight }}" width="{{ event.picwidth }}"/></a>
         {% else %}
         <img class="illus" src="/image/event/thumb/{{ event.picname }}" height="{{ event.picheight }}" width="{{ event.picwidth }}"/>
         {% endif %}
@@ -33,7 +33,7 @@
     {% else %}
     Sorry, event not found.
     {% endif %}
-    <div class="center"><a href="/" class="same">see all events</a></div>
+    <div class="center"><a href="/">see all events</a></div>
   </div>
 <script type="text/javascript">
   SqueezeBox.assign($$('p.evdesc a'));
