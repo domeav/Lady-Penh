@@ -12,21 +12,21 @@
 <body class="back">
   <div style="width: 340px; text-align: left; margin: auto;">
     {% if event %}
-    <p>
+    <div>
       <h2>{{ event.title }} @&nbsp;{{ event.venue.name }} {% if event.organizer %}by&nbsp;{{ event.organizer }}{% endif %}</h2>              
       <div style="min-height: {{ event.picheight }}px; _height: {{ event.picheight }}px;">
         {% if event.picname %}
         {% if event.haslargepic %}
-        <a href="/image/event/large/{{ event.picname }}"><img class="illus" src="/image/event/thumb/{{ event.picname }}" height="{{ event.picheight }}" width="{{ event.picwidth }}"/></a>
+        <a href="/image/event/large/{{ event.picname }}"><img class="illus" src="/image/event/thumb/{{ event.picname }}" height="{{ event.picheight }}" width="{{ event.picwidth }}" alt="illustration"/></a>
         {% else %}
         <img class="illus" src="/image/event/thumb/{{ event.picname }}" height="{{ event.picheight }}" width="{{ event.picwidth }}"/>
         {% endif %}
         {% endif %}
         <div class="highlight"><span class="bul">&sup;</span> {{ event.venue.address }}{% if event.venue.mapurl %} (<a href="{{ event.venue.mapurl }}" target="_blank">map</a>){% endif %}</div>
         {% ifnotequal event.status "lp_nodate" %}<div class="highlight"><span class="bul">&sup;</span> {{ event.date|date:"l M. j" }}, {{event.time|time:"H:i"}}</div>{% endifnotequal %}
-        <p id="evdesc">{{ event.description|markdown }}</p>
+        <div id="evdesc">{{ event.description|markdown }}</div>
       </div>
-    </p>    
+    </div>    
     <div class="center">
       <a href="http://www.addthis.com/bookmark.php?v=250" onmouseover="return addthis_open(this, '', 'http://ladypenh.com/event/{{ event.numid }}.html', '{{ event.title }} / {{ event.date|date:"D. d/m" }}, {{ event.time|time:"H:i" }}')" onmouseout="addthis_close()" onclick="return addthis_sendto()"><img src="http://s7.addthis.com/static/btn/lg-share-en.gif" width="125" height="16" alt="Bookmark and Share" style="border:0"/></a><script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js?pub=xa-4a3b17ef30493795"></script>
     </div>
