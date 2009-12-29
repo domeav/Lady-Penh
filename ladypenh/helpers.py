@@ -36,7 +36,9 @@ def get_event_by_id(id):
     if len(eventlist) == 0:
         return None
     return eventlist[0]
-    
+
+def get_venue_by_key(key):
+    return get_object(Venue, key)
 
 def get_days(dayspan=0):
     days = [today(dayspan)]

@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
+  <link rel="shortcut icon" href="{{ MEDIA_URL }}ladypenh/{{ theme_name }}/favicon.png" type="image/x-icon"/>
+  <title>{{ venue.name }}</title>
+  <link rel="stylesheet" type="text/css" media="screen" href="{{ MEDIA_URL }}combined-ltr.css" />
+  <script src="{{ MEDIA_URL }}combined-en.js" type="text/javascript"></script>
+  <script type='text/javascript' src='http://server.bittads.com/js/bitt.js'></script>
+</head>
+<body>
+{% load lp_filters %}
+<div style="height: 90px;" class="center">
+  <script type='text/javascript'>
+    bitt.instance = '291';
+    bitt.zone = 'Lady Penh';
+    bitt.location = 'default location';
+    bitt.keywords = [];
+    bitt.bitt('Banner');
+  </script>
+</div>
+<div class="row">
+  <div class="column grid_12">
+    <h1>{{ venue.name }} events this week</h1>
+    <h2>{{venue.address}}</h2>
+  </div>
+</div>
+<div class="row">
+  <div class="column grid_12">
+    Venue description and infos are here!
+  </div>
+</div>
+<div class="row">
+  <div class="column reverse grid_12">
+    Venue events are here!
+  </div>
+</div>
+<div class="row">
+  <div class="column grid_12">
+    Original programs are here!
+  </div>
+</div>
+<div class="row">
+  {% for i in 3|get_range %}
+  <div class="center column grid_4">
+    <script type='text/javascript'>
+      bitt.instance = '291';
+      bitt.zone = 'Lady Penh';
+      bitt.location = 'default location';
+      bitt.keywords = [];
+      bitt.bitt('220x125');
+    </script>
+  </div>
+  {% endfor %}
+</div>
+</body>
+</html>

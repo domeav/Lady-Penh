@@ -57,6 +57,11 @@ def event(request, id):
                                dict(theme_name=helpers.get_theme(helpers.today()),
                                     event=helpers.get_event_by_id(id)))
 
+def venue(request, key):
+    return render_to_response(request, 'ladypenh/venue.html',
+                              dict(theme_name=helpers.get_theme(helpers.today()),
+                                   venue=helpers.get_venue_by_key(key)))
+
 def robots(request):
     return HttpResponse("", mimetype="text/plain")
 
