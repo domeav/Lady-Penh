@@ -15,6 +15,10 @@ handlers:
   static_dir: _generated_media
   secure: optional
 
+- url: /favicon.ico
+  static_files: ladypenh/media/default/favicon.ico
+  upload: ladypenh/media/default/favicon.ico
+
 - url: /.*
   script: common/appenginepatch/main.py
   secure: optional
