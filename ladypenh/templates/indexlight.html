@@ -68,7 +68,12 @@
         <tr>
           <td class="evicon"><img height="35px" width="35px" src="/image/event_type/{{ event.type }}.png" alt="{{ event.type }}"/></td>
           <td id="ev{{ event.numid }}" class="eventbox">
-            <strong><a class="boxed" href="/event/{{ event.numid }}.html">{{ event.title }}</a></strong><br/>
+            {% if event.highlight %}
+            <img src="{{ MEDIA_URL }}ladypenh/{{ theme_name }}/highlight.png" alt="not to miss!" style="vertical-align: middle;"/>
+            {% endif %}
+            <strong><a class="boxed" href="/event/{{ event.numid }}.html">
+                {{ event.title }}
+            </a></strong><br/>
             {{ event.time|time:"H:i" }} - {{ event.venue.name }}
           </td>
         </tr>
