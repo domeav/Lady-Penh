@@ -97,13 +97,13 @@ def image(request, name):
 
 
 @cache_control(public=True, max_age=3600*24*60*60)
-def file(request, key):
-    file = get_object(VenueFile, key)
-    mime = mimetypes.guess_type(file.filename)[0]
-    response = HttpResponse(file.blob, mimetype=mime)
-    response['Content-Disposition'] = 'attachment; filename=%s' % file.filename
+def file(request, filename):
+    mime = mimetypes.guess_type(filename)[0]
+    file = VenueFile.gql("WHERE filename = :1", filename).fetch(1)
+    response = HttpResponse(file[0].blob, mimetype=mime)
     response['Last-Modified'] = defaultdate.strftime("%a, %d %b %Y %H:%M:%S GMT")
     return response    
+
 
 def index(request, edito=True):
     offset=0

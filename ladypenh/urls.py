@@ -15,7 +15,7 @@ urlpatterns = patterns('ladypenh.views',
     (r'^tomorrow_overview.html$', 'overview', {'dayspan': 1}),
 
     (r'^robots.txt$', 'robots'),
-    (r'^file/(?P<key>.+)$', 'file'),
+    (r'^file/(?P<filename>.+)$', 'file'),
     (r'^image/(?P<name>.+)$', 'image'),
     (r'^about.html$', 'about'),
     (r'^friends.html$', 'friends'),

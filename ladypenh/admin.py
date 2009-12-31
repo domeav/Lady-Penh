@@ -3,11 +3,12 @@ from django.forms import ModelForm, FileField, ModelChoiceField
 from ladypenh.models import Friend, ImageFile, Venue, Event, OneLiner, Article, Tag, VenueFile
 from google.appengine.api import images
 import string
+from datetime import datetime
 
 def format_filename(filename, date=''):
     validchars = "-_.%s%s" % (string.ascii_letters, string.digits)
     s = ''.join(c for c in filename if c in validchars)
-    return "%s%s" % (str(date), s)
+    return "%s_%s" % (str(date), s)
 
 
 class OneLinerAdmin(admin.ModelAdmin):    
@@ -94,10 +95,14 @@ admin.site.register(Venue, VenueAdmin)
 
 class VenueFileAdmin(admin.ModelAdmin):
     exclude = ('filename',)
+    def get_form(self, request, obj=None, **kwargs):
+        form = super(VenueFileAdmin, self).get_form(request, obj, **kwargs)
+        form.base_fields['venue'].queryset = Venue.gql("WHERE oneshot = FALSE ORDER BY oneshot, name")
+        return form
     def save_model(self, request, obj, form, change):
         if 'blob' in request.FILES:
             blob = request.FILES['blob']
-            obj.filename = format_filename(blob.name)
+            obj.filename = format_filename(blob.name, datetime.today().date())
         obj.save()
 admin.site.register(VenueFile, VenueFileAdmin)
 

@@ -41,17 +41,19 @@
 </div>
 <div class="row">
   <div id="program" class="column reverse grid_12">
-    {% for event in events %}
-    <strong>D+{{ event.daydiff }}</strong>&nbsp; 
-    {{ event.date|date:"D. d/m" }}, {{ event.time|time:"H:i" }}
-    <img height="35px" width="35px" src="/image/event_type/{{ event.type }}.png" alt="{{ event.type }}"/>
-    {% if event.highlight %}
-    <img src="{{ MEDIA_URL }}ladypenh/{{ theme_name }}/highlight.png" alt="not to miss!" style="vertical-align: middle;"/>
-    {% endif %}
-    <strong><a class="boxed" href="/event/{{ event.numid }}.html">
-        {{ event.title }}
-    </a></strong><br/>
-    {% endfor %}
+    <div class="grid_9" style="text-align: left; margin: auto;">
+      {% for event in events %}
+      <strong>D+{{ event.daydiff }}</strong>&nbsp; 
+      {{ event.date|date:"D. d/m" }}, {{ event.time|time:"H:i" }}
+      <img height="35px" width="35px" src="/image/event_type/{{ event.type }}.png" alt="{{ event.type }}" style="vertical-align: middle;"/>
+      {% if event.highlight %}
+      <img src="{{ MEDIA_URL }}ladypenh/{{ theme_name }}/highlight.png" alt="not to miss!" style="vertical-align: middle;"/>
+      {% endif %}
+      <strong><a class="boxed" href="/event/{{ event.numid }}.html">
+          {{ event.title }}
+      </a></strong><br/>
+      {% endfor %}
+    </div>
     {% if not events %}
     No events have been reported this week yet.
     {% endif %}
@@ -61,7 +63,7 @@
 <div class="row">
   <div class="column grid_12">
     {% for file in files %}
-    <a href="/file/{{ file.key }}">{{ file.name }}</a>
+    <a href="/file/{{ file.filename }}">{{ file.name }}</a>
     {% if file.valid_until %}
     (valid until {{file.valid_until|date:"D. d/m/Y"}})
     {% endif %}
