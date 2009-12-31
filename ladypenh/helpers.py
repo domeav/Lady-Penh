@@ -1,6 +1,7 @@
-from ladypenh.models import Friend, Venue, Event, OneLiner, Article, Tag
+from ladypenh.models import Friend, Venue, Event, OneLiner, Article, Tag, VenueFile
 from ragendja.dbutils import get_object
 from datetime import datetime, timedelta
+from google.appengine.ext import db
 
 
 def today(dayspan=0):
@@ -47,8 +48,31 @@ def get_days(dayspan=0):
     return days
 
 def get_events(days):
-    events = Event.gql("WHERE date >= :1 and date <= :2 ORDER BY date, time ASC", days[0], days[-1]).fetch(1000)
-    return [event for event in events if event.status == 'lp_display']
+    events = Event.gql("WHERE date >= :1 and date <= :2 and status = :3 ORDER BY date, time ASC", 
+                       days[0], days[-1], 'lp_display').fetch(1000)
+    return events
+
+def add_daydiff_attribute(event, day):
+    event.daydiff = (event.date - day).days
+    return event
+
+def get_venue_events(days, venue_key):
+    events = Event.gql("WHERE date >= :1 and date <= :2 and venue = :3 ORDER BY date, time DESC",
+                       days[0], days[-1], db.Key(venue_key)).fetch(1000)
+    return [add_daydiff_attribute(event, days[0]) for event in events]
+
+def check_validity(obj, day, attribute):
+    if attribute not in dir(obj) or not getattr(obj, attribute):
+        return True
+    if getattr(obj, attribute) < day:
+        return False
+    return True
+
+def get_venue_files(days, venue_key):
+    files = VenueFile.gql("WHERE venue = :1 ORDER BY valid_until ASC",
+                          db.Key(venue_key)).fetch(1000)
+    return [file for file in files if check_validity(file, days[0], 'valid_until')]
+    
 
 def get_friends():
     friends = {}
@@ -71,7 +95,7 @@ def get_daysinfo_and_highlights(days):
         if event.status != "lp_display":
             continue
         if event.highlight:
-            event.daydiff = (event.date - days[0]).days
+            add_daydiff_attribute(event, days[0])
             highlights.append(event)
         events[event.date].append(event)
     oneliners_results = OneLiner.gql("ORDER BY title").fetch(1000)

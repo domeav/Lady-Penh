@@ -3,7 +3,8 @@ from django.http import HttpResponseRedirect, HttpResponse
 from django.utils.translation import ugettext as _
 from django.views.decorators.cache import cache_control
 from ragendja.template import render_to_response
-from ladypenh.models import ImageFile, Event
+from ragendja.dbutils import get_object
+from ladypenh.models import ImageFile, Event, VenueFile
 from datetime import datetime, date
 import helpers
 import mimetypes
@@ -58,8 +59,11 @@ def event(request, id):
                                     event=helpers.get_event_by_id(id)))
 
 def venue(request, key):
+    days = helpers.get_days()
     return render_to_response(request, 'ladypenh/venue.html',
                               dict(theme_name=helpers.get_theme(helpers.today()),
+                                   events=helpers.get_venue_events(days, key),
+                                   files=helpers.get_venue_files(days, key),
                                    venue=helpers.get_venue_by_key(key)))
 
 def robots(request):
@@ -84,10 +88,20 @@ def create_admin_user(request):
 defaultdate = datetime(year=1998, month=6, day=22)
 
 @cache_control(public=True, max_age=3600*24*60*60)
-def blobfile(request, name):
+def image(request, name):
     mime = mimetypes.guess_type(name)[0]
     bfiles = ImageFile.gql("WHERE name = :1", name).fetch(1)
     response = HttpResponse(bfiles[0].blob, mimetype=mime)
+    response['Last-Modified'] = defaultdate.strftime("%a, %d %b %Y %H:%M:%S GMT")
+    return response    
+
+
+@cache_control(public=True, max_age=3600*24*60*60)
+def file(request, key):
+    file = get_object(VenueFile, key)
+    mime = mimetypes.guess_type(file.filename)[0]
+    response = HttpResponse(file.blob, mimetype=mime)
+    response['Content-Disposition'] = 'attachment; filename=%s' % file.filename
     response['Last-Modified'] = defaultdate.strftime("%a, %d %b %Y %H:%M:%S GMT")
     return response    
 

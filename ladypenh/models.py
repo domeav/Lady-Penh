@@ -4,12 +4,14 @@ from google.appengine.ext import db
 from datetime import datetime, date, time, timedelta
 from ragendja.dbutils import KeyListProperty
 
-# legacy name, but used for all binary files
+
 class ImageFile(db.Model):
     def __unicode__(self):
         return self.name
     name = db.StringProperty(required=True)
     blob = db.BlobProperty(required=True)
+    
+
 
 
 class Venue(db.Model):
@@ -21,6 +23,19 @@ class Venue(db.Model):
     linkurl = db.StringProperty()
     mapurl = db.StringProperty()
     oneshot = db.BooleanProperty(default=False)
+    details = db.TextProperty()
+
+
+class VenueFile(db.Model):
+    def __unicode__(self):
+        return self.name
+    name = db.StringProperty(required=True)
+    filename = db.StringProperty()
+    blob = db.BlobProperty(required=True)
+    venue = db.ReferenceProperty(Venue, required=True)
+    valid_until = db.DateProperty()
+    
+    
 
 class Event(db.Model):
     def __unicode__(self):

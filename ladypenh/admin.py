@@ -1,13 +1,13 @@
 from django.contrib import admin
 from django.forms import ModelForm, FileField, ModelChoiceField
-from ladypenh.models import Friend, ImageFile, Venue, Event, OneLiner, Article, Tag
+from ladypenh.models import Friend, ImageFile, Venue, Event, OneLiner, Article, Tag, VenueFile
 from google.appengine.api import images
 import string
 
-def format_picname(filename, date):
+def format_filename(filename, date=''):
     validchars = "-_.%s%s" % (string.ascii_letters, string.digits)
     s = ''.join(c for c in filename if c in validchars)
-    return "%s_%s" % (str(date), s)
+    return "%s%s" % (str(date), s)
 
 
 class OneLinerAdmin(admin.ModelAdmin):    
@@ -28,7 +28,7 @@ class ArticleAdmin(admin.ModelAdmin):
     def save_model(self, request, obj, form, change):
         if 'pic' in request.FILES:
             pic = request.FILES['pic']
-            picname = format_picname(pic.name, obj.date)
+            picname = format_filename(pic.name, obj.date)
             picpath = "edito/%s" % picname
             imgobj = ImageFile(name=picpath, blob=pic.read())
             imgobj.put()
@@ -66,7 +66,7 @@ class EventAdmin(admin.ModelAdmin):
         if 'pic' in request.FILES:
             pic = request.FILES['pic']
             blob = pic.read()
-            obj.picname = format_picname(pic.name, obj.date)
+            obj.picname = format_filename(pic.name, obj.date)
             if obj.haslargepic:
                 largepath = "event/large/%s" % obj.picname
                 largeobj = ImageFile(name=largepath, blob=blob)
@@ -92,7 +92,16 @@ class VenueAdmin(admin.ModelAdmin):
 admin.site.register(Venue, VenueAdmin)
 
 
+class VenueFileAdmin(admin.ModelAdmin):
+    exclude = ('filename',)
+    def save_model(self, request, obj, form, change):
+        if 'blob' in request.FILES:
+            blob = request.FILES['blob']
+            obj.filename = format_filename(blob.name)
+        obj.save()
+admin.site.register(VenueFile, VenueFileAdmin)
 
 admin.site.register(ImageFile)
 admin.site.register(Tag)
 admin.site.register(Friend)
+

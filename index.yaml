@@ -58,6 +58,19 @@ indexes:
   properties:
   - name: venue
   - name: date
+  - name: time
+
+- kind: ladypenh_event
+  properties:
+  - name: venue
+  - name: date
+  - name: time
+    direction: desc
+
+- kind: ladypenh_event
+  properties:
+  - name: venue
+  - name: date
     direction: desc
   - name: time
   - name: date
@@ -75,3 +88,8 @@ indexes:
   properties:
   - name: oneshot
   - name: name
+
+- kind: ladypenh_venuefile
+  properties:
+  - name: venue
+  - name: valid_until

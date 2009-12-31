@@ -9,6 +9,7 @@
   <script src="{{ MEDIA_URL }}combined-en.js" type="text/javascript"></script>
   <script type='text/javascript' src='http://server.bittads.com/js/bitt.js'></script>
 </head>
+{% load markup %}
 <body>
 {% load lp_filters %}
 <div style="height: 90px;" class="center">
@@ -28,17 +29,49 @@
 </div>
 <div class="row">
   <div class="column grid_12">
-    Venue description and infos are here!
+    {% if venue.details %}
+    {{ venue.details|markdown }}
+    {% else %}
+    No details for this venue yet. 
+    {% endif %}
+    <span class="small">
+      <a href="mailto:team@ladypenh.com">Contact us</a> to update this information!
+    </span>
   </div>
 </div>
 <div class="row">
-  <div class="column reverse grid_12">
-    Venue events are here!
+  <div id="program" class="column reverse grid_12">
+    {% for event in events %}
+    <strong>D+{{ event.daydiff }}</strong>&nbsp; 
+    {{ event.date|date:"D. d/m" }}, {{ event.time|time:"H:i" }}
+    <img height="35px" width="35px" src="/image/event_type/{{ event.type }}.png" alt="{{ event.type }}"/>
+    {% if event.highlight %}
+    <img src="{{ MEDIA_URL }}ladypenh/{{ theme_name }}/highlight.png" alt="not to miss!" style="vertical-align: middle;"/>
+    {% endif %}
+    <strong><a class="boxed" href="/event/{{ event.numid }}.html">
+        {{ event.title }}
+    </a></strong><br/>
+    {% endfor %}
+    {% if not events %}
+    No events have been reported this week yet.
+    {% endif %}
+    <br/><a href="mailto:events@ladypenh.com">Report an event for this venue!</a>
   </div>
 </div>
 <div class="row">
   <div class="column grid_12">
-    Original programs are here!
+    {% for file in files %}
+    <a href="/file/{{ file.key }}">{{ file.name }}</a>
+    {% if file.valid_until %}
+    (valid until {{file.valid_until|date:"D. d/m/Y"}})
+    {% endif %}
+    <br/>
+    {% endfor %}
+    {% if not files %}No files for this venue yet.{% endif %} 
+    <br/>
+    <span class="small">
+      <a href="mailto:team@ladypenh.com">Send us a file</a> for this venue! (schedule, pic...)
+    </span>
   </div>
 </div>
 <div class="row">
