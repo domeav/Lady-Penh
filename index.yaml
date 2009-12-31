@@ -56,6 +56,12 @@ indexes:
 
 - kind: ladypenh_event
   properties:
+  - name: status
+  - name: date
+  - name: time
+
+- kind: ladypenh_event
+  properties:
   - name: venue
   - name: date
   - name: time
