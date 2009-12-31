@@ -41,19 +41,23 @@
 </div>
 <div class="row">
   <div id="program" class="column reverse grid_12">
-    <div class="grid_9" style="text-align: left; margin: auto;">
+    <table class="grid_7 stretched" cellspacing="0" style="text-align: left; margin: auto;">
       {% for event in events %}
-      <strong>D+{{ event.daydiff }}</strong>&nbsp; 
-      {{ event.date|date:"D. d/m" }}, {{ event.time|time:"H:i" }}
-      <img height="35px" width="35px" src="/image/event_type/{{ event.type }}.png" alt="{{ event.type }}" style="vertical-align: middle;"/>
-      {% if event.highlight %}
-      <img src="{{ MEDIA_URL }}ladypenh/{{ theme_name }}/highlight.png" alt="not to miss!" style="vertical-align: middle;"/>
-      {% endif %}
-      <strong><a class="boxed" href="/event/{{ event.numid }}.html">
-          {{ event.title }}
-      </a></strong><br/>
+      <tr>
+        <td class="evicon"><img height="35px" width="35px" src="/image/event_type/{{ event.type }}.png" alt="{{ event.type }}" style="vertical-align: middle;"/></td>
+        <td>
+          {% if event.highlight %}
+          <img src="{{ MEDIA_URL }}ladypenh/{{ theme_name }}/highlight.png" alt="not to miss!" style="vertical-align: middle;"/>
+          {% endif %}
+          <strong><a class="boxed" href="/event/{{ event.numid }}.html">
+              {{ event.title }}
+          </a></strong><br/>
+          <strong>D+{{ event.daydiff }}</strong>&nbsp; 
+          {{ event.date|date:"D. d/m" }}, {{ event.time|time:"H:i" }}
+        </td>
+      </tr>
       {% endfor %}
-    </div>
+    </table>
     {% if not events %}
     No events have been reported this week yet.
     {% endif %}
