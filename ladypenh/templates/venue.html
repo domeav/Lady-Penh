@@ -40,8 +40,8 @@
   </div>
 </div>
 <div class="row">
-  <div id="program" class="column reverse grid_12">
-    <table class="grid_7 stretched" cellspacing="0" style="text-align: left; margin: auto;">
+  <div id="program" class="column reverse grid_6">
+    <table width="100%" class="stretched" cellspacing="0" style="text-align: left;">
       {% for event in events %}
       <tr>
         <td class="evicon"><img height="35px" width="35px" src="/image/event_type/{{ event.type }}.png" alt="{{ event.type }}" style="vertical-align: middle;"/></td>
@@ -63,9 +63,8 @@
     {% endif %}
     <br/><a href="mailto:events@ladypenh.com">Report an event for this venue!</a>
   </div>
-</div>
-<div class="row">
-  <div class="column grid_12">
+  <div class="column grid_6">
+    <h2>{{ venue.name }} files</h2>
     {% for file in files %}
     <a href="/file/{{ file.filename }}">{{ file.name }}</a>
     {% if file.valid_until %}
