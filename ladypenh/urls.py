@@ -27,6 +27,6 @@ urlpatterns = patterns('ladypenh.views',
     (r'^venue/(?P<key>\w+).html$', 'venue'),                       
     (r'^ijustwanttheprogramthanks.html$', 'indexlight', {'edito': False}),
     (r'^index.html$', 'indexlight'),
-    #(r'^indexlight.html$', 'indexlight'),
+    (r'^(?P<venue>\w+).html$', 'lpvenue'),    
     (r'^$', 'indexlight'),
 )

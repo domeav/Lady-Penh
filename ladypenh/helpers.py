@@ -2,6 +2,7 @@ from ladypenh.models import Friend, Venue, Event, OneLiner, Article, Tag, VenueF
 from ragendja.dbutils import get_object
 from datetime import datetime, timedelta
 from google.appengine.ext import db
+from django.http import Http404
 
 
 def today(dayspan=0):
@@ -41,6 +42,13 @@ def get_event_by_id(id):
 def get_venue_by_key(key):
     return get_object(Venue, key)
 
+def get_venue_by_name(venue):
+    venuelist = Venue.gql("WHERE ladypenh_url = :1", venue).fetch(1)
+    if len(venuelist) == 0:
+        raise Http404
+    return venuelist[0]
+
+
 def get_days(dayspan=0):
     days = [today(dayspan)]
     for i in range(6):
@@ -58,7 +66,7 @@ def add_daydiff_attribute(event, day):
 
 def get_venue_events(days, venue_key):
     events = Event.gql("WHERE date >= :1 and date <= :2 and venue = :3 ORDER BY date, time DESC",
-                       days[0], days[-1], db.Key(venue_key)).fetch(1000)
+                       days[0], days[-1], venue_key).fetch(1000)
     return [add_daydiff_attribute(event, days[0]) for event in events]
 
 def check_validity(obj, day, attribute):
@@ -70,7 +78,7 @@ def check_validity(obj, day, attribute):
 
 def get_venue_files(days, venue_key):
     files = VenueFile.gql("WHERE venue = :1 ORDER BY valid_until ASC",
-                          db.Key(venue_key)).fetch(1000)
+                          venue_key).fetch(1000)
     return [file for file in files if check_validity(file, days[0], 'valid_until')]
     
 

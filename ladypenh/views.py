@@ -6,6 +6,7 @@ from ragendja.template import render_to_response
 from ragendja.dbutils import get_object
 from ladypenh.models import ImageFile, Event, VenueFile
 from datetime import datetime, date
+from google.appengine.ext import db
 import helpers
 import mimetypes
 
@@ -58,8 +59,18 @@ def event(request, id):
                                dict(theme_name=helpers.get_theme(helpers.today()),
                                     event=helpers.get_event_by_id(id)))
 
+def lpvenue(request, venue):
+    days = helpers.get_days()
+    venue = helpers.get_venue_by_name(venue)
+    return render_to_response(request, 'ladypenh/venue.html',
+                              dict(theme_name=helpers.get_theme(helpers.today()),
+                                   events=helpers.get_venue_events(days, venue.key()),
+                                   files=helpers.get_venue_files(days, venue.key()),
+                                   venue=venue))
+
 def venue(request, key):
     days = helpers.get_days()
+    key = db.Key(key)
     return render_to_response(request, 'ladypenh/venue.html',
                               dict(theme_name=helpers.get_theme(helpers.today()),
                                    events=helpers.get_venue_events(days, key),

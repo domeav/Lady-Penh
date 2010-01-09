@@ -24,6 +24,7 @@ class Venue(db.Model):
     mapurl = db.StringProperty()
     oneshot = db.BooleanProperty(default=False)
     details = db.TextProperty()
+    ladypenh_url = db.StringProperty()
 
 
 class VenueFile(db.Model):
