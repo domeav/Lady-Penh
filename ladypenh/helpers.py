@@ -27,17 +27,11 @@ def get_articles(day, tagstring):
     return Article.gql("WHERE date <= :1 ORDER BY date desc", day).fetch(1000)
 
 def get_article_by_id(id):
-    articlelist = Article.gql("WHERE numid = :1", int(id)).fetch(1)
-    if len(articlelist) == 0:
-        return None, []
-    article = articlelist[0]
+    article = get_object(Article, id=int(id))
     return article, get_tags_from_keylist(article.tags)
 
 def get_event_by_id(id):
-    eventlist = Event.gql("WHERE numid = :1", int(id)).fetch(1)
-    if len(eventlist) == 0:
-        return None
-    return eventlist[0]
+    return get_object(Event, id=int(id))
 
 def get_venue_by_key(key):
     return get_object(Venue, key)
