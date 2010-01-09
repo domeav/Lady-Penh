@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.contrib.auth.models import Message
 from django.forms import ModelForm, FileField, ModelChoiceField
 from ladypenh.models import Friend, ImageFile, Venue, Event, OneLiner, Article, Tag, VenueFile
 from google.appengine.api import images
@@ -85,6 +86,11 @@ class EventAdmin(admin.ModelAdmin):
         if not obj.numid:
             obj.numid = obj.key().id()
             obj.save()
+        if obj.date <= datetime.now().date():
+            msg = Message(
+                user=request.user, 
+                message="WARNING: date for %s is today or older! Please make sure the date is ok." % obj.title)
+            msg.save()
 admin.site.register(Event, EventAdmin)
 
 
