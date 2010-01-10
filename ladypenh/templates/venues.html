@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block main %}
+<div class="row">
+  <div class="column grid_12 arch center">
+    {% for venue in venues %}
+    <a href="/venue/{{ venue.key }}.html">{{ venue.name }}</a>
+    {% endfor %}
+    </div>
+</div>
+{% endblock %}

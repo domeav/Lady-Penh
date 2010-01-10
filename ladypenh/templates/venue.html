@@ -24,7 +24,7 @@
 <div class="row">
   <div class="column grid_12">
     <h1>{{ venue.name }} events this week</h1>
-    <h2>{{venue.address}}</h2>
+    <h2>{{venue.address}} {% if venue.mapurl %} (<a href="{{ venue.mapurl }}" target="_blank">map</a>){% endif %}</h2>
   </div>
 </div>
 <div class="row">

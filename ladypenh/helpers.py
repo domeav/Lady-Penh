@@ -43,7 +43,7 @@ def get_venue_by_name(venue):
     return venuelist[0]
 
 def get_venues():
-    return Venue.gql("ORDER BY name").fetch(1000);
+    return Venue.gql("WHERE oneshot = :1 ORDER BY name", False).fetch(1000);
 
 def get_days(dayspan=0):
     days = [today(dayspan)]
