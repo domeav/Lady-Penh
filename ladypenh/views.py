@@ -77,6 +77,11 @@ def venue(request, key):
                                    files=helpers.get_venue_files(days, key),
                                    venue=helpers.get_venue_by_key(key)))
 
+def venues(request):
+    return render_to_response(request, 'ladypenh/venues.html',
+                              dict(theme_name=helpers.get_theme(helpers.today()),
+                                   venues=helpers.get_venues()))
+
 def robots(request):
     return HttpResponse("", mimetype="text/plain")
 

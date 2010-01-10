@@ -42,6 +42,8 @@ def get_venue_by_name(venue):
         raise Http404
     return venuelist[0]
 
+def get_venues():
+    return Venue.gql("ORDER BY name").fetch(1000);
 
 def get_days(dayspan=0):
     days = [today(dayspan)]
