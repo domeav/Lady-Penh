@@ -3,6 +3,23 @@ from ragendja.dbutils import get_object
 from datetime import datetime, timedelta
 from google.appengine.ext import db
 from django.http import Http404
+from google.appengine.api import memcache
+
+
+def use_cache(fn):
+    '''Cache decorator, to be used with django view functions. request object 
+    must be the first argument.'''
+    def cached_execution(request, **args):
+        response = None
+        if not request.user.is_authenticated():
+            response = memcache.get(request.path)
+        if response is not None:
+            return response
+        response = fn(request, **args)
+        memcache.set(request.path, response, 7200)        
+        return response
+    return cached_execution
+        
 
 
 def today(dayspan=0):
