@@ -62,16 +62,21 @@ class Event(db.Model):
     picwidth = db.IntegerProperty()
     haslargepic = db.BooleanProperty(default=False)
     highlight = db.BooleanProperty(default=False)
-    status = db.StringProperty(default="lp_display", required=True, choices=set(["need_moderation", "lp_nodisplay", "lp_display", "lp_nodate"])) #lp_nodate is for little info popups (not exactly events, right)
+    status = db.StringProperty(default="lp_display", required=True, choices=set(["need_moderation", "lp_nodisplay", "lp_display"]))
 
 class OneLiner(db.Model):
     def __unicode__(self):
         return self.title
-    daycode = db.IntegerProperty(default=0, required=True) #1 mon, 135 mon wed fri, -1 everyday but monday, 0 everyday
     daystart = db.DateProperty(default=date.today, required=True)
     dayend = db.DateProperty(default=date.today, required=True)
+    monday = db.BooleanProperty(default=True)
+    tuesday = db.BooleanProperty(default=True)
+    wednesday = db.BooleanProperty(default=True)
+    thursday = db.BooleanProperty(default=True)
+    friday = db.BooleanProperty(default=True)
+    saturday = db.BooleanProperty(default=True)
+    sunday = db.BooleanProperty(default=True)
     title = db.StringProperty(required=True)
-    #event = db.ReferenceProperty(Event)
 
 class Tag(db.Model):
     def __unicode__(self):

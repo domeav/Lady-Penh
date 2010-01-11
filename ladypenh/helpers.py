@@ -87,6 +87,8 @@ def get_friends():
         friends[friend.type].append(friend)
     return friends
 
+weekdays = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
+
 def get_daysinfo_and_highlights(days):
     events = {}
     oneliners = {}
@@ -94,10 +96,8 @@ def get_daysinfo_and_highlights(days):
         events[day] = []
         oneliners[day] = []
     highlights = []
-    query_results = Event.gql("WHERE date >= :1 AND date <= :2 ORDER BY date ASC, time ASC", days[0], days[-1]).fetch(1000)
+    query_results = Event.gql("WHERE date >= :1 AND date <= :2 AND status = :3 ORDER BY date ASC, time ASC", days[0], days[-1], 'lp_display').fetch(1000)
     for event in query_results:
-        if event.status != "lp_display":
-            continue
         if event.highlight:
             add_daydiff_attribute(event, days[0])
             highlights.append(event)
@@ -106,11 +106,7 @@ def get_daysinfo_and_highlights(days):
     for oneliner in oneliners_results:
         for day in days:
             if oneliner.daystart <= day and oneliner.dayend >= day:
-                if oneliner.daycode == 0:
-                    oneliners[day].append(oneliner)
-                    continue
-                isdayin = str(day.isoweekday()) in str(oneliner.daycode)
-                if (oneliner.daycode < 0 and not isdayin) or (oneliner.daycode > 0 and isdayin):
+                if getattr(oneliner, weekdays[day.weekday()]) == True:
                     oneliners[day].append(oneliner)
     daysinfo = []
     for day in days:
