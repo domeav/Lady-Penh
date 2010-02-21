@@ -223,25 +223,29 @@ def btkrawma(request):
                                        pagesize=(w,h),
                                        onPage=graphics)])
 
-    schedule = StringIO()
-    schedule.write('<para face="helvetica" size="10">')
+
+
+    style = getSampleStyleSheet()['Normal']
+    style.fontsize = 10
+    style.spaceAfter = 5
+    style.fontName = 'Helvetica'
+    elements=[]
+
     currentday = None
+    dayschedule = StringIO()    
     for event in events:
         if event.date != currentday:
             if currentday != None:
-                schedule.write('<br/><br/>')    
-            schedule.write('<font color="darkblue" size="11"><b>')
-            schedule.write(event.date.strftime('%a %b %d: '))
-            schedule.write('</b></font>')
+                elements.append(Paragraph(dayschedule.getvalue(),style))
+                dayschedule = StringIO()
+            dayschedule.write('<font color="darkblue" size="11"><b>')
+            dayschedule.write(event.date.strftime('%a %b %d: '))
+            dayschedule.write('</b></font>')
             currentday = event.date
-        schedule.write('<b>%s</b> %s @ %s ' % (event.time.strftime('%H:%M'), 
+        dayschedule.write('<b>%s</b> %s @ %s ' % (event.time.strftime('%H:%M'), 
                                                esc(event.title), 
                                                esc(event.venue.name)))
-    schedule.write('</para>')
-
-    style = getSampleStyleSheet()['Normal']
-    elements=[]
-    elements.append(Paragraph(schedule.getvalue(),style))
+    elements.append(Paragraph(dayschedule.getvalue(),style))        
 
     doc.build(elements)
     return response
