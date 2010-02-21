@@ -62,9 +62,9 @@ def get_venue_by_name(venue):
 def get_venues():
     return Venue.gql("WHERE oneshot = :1 ORDER BY name", False).fetch(1000);
 
-def get_days(dayspan=0):
+def get_days(dayspan=0, nbdays=7):
     days = [today(dayspan)]
-    for i in range(6):
+    for i in range(nbdays - 1):
         days.append(days[0] + timedelta(days=i+1))
     return days
 

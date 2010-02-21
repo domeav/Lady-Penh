@@ -170,3 +170,75 @@ def dump_events(request):
     for event in events:
         pickle.dump(event.make_dic(), out, True)
     return HttpResponse(out.getvalue(), 'application/octet-stream')
+
+
+def btkrawma(request):
+    offset=0
+    if 'offset' in request.GET:
+        offset = int(request.GET['offset'])
+    days = helpers.get_days(offset, 14)
+    events = helpers.get_events(days)
+
+    response = HttpResponse(mimetype='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename=BTKrawma.pdf'
+
+    from reportlab.platypus import BaseDocTemplate, PageTemplate, Paragraph, Frame
+    from reportlab.lib.styles import getSampleStyleSheet
+    from reportlab.lib.units import mm
+    from reportlab.lib.utils import ImageReader
+    from google.appengine.api import images
+    from StringIO import StringIO
+    
+    w,h = 180*mm, 130*mm
+
+    frames=[]
+    frames.append(Frame(20*mm,15*mm,75*mm,110*mm))
+    frames.append(Frame(100*mm,15*mm,75*mm,110*mm))
+
+    class JpegBlobImageReader(ImageReader):
+        def __init__(self, blob):
+            self.fileName = "JPEGBLOB_%d" % id(self)
+            self.fp = StringIO()
+            self.fp.write(blob)
+            self._image = blob
+            self.jpeg_fh = self._jpeg_fh
+            self._data = blob
+            self._dataA = None
+            image = images.Image(blob)
+            self._width = image.width
+            self._height = image.height
+            self._transparent = False 
+
+    def graphics(canvas, document):
+        bfiles = ImageFile.gql("WHERE name = :1", "BTPdfbackground.jpg").fetch(1)
+        img = JpegBlobImageReader(bfiles[0].blob)
+        canvas.drawImage(img, 5*mm, 3*mm, width=168*0.95*mm, height=121*0.95*mm)
+        pass
+
+    doc = BaseDocTemplate(response)              
+    doc.showBoundary=False
+    doc.addPageTemplates([PageTemplate(id='Schedule',
+                                       frames=frames,
+                                       pagesize=(w,h),
+                                       onPage=graphics)])
+
+    schedule = StringIO()
+    schedule.write('<para face="helvetica" size="10">')
+    currentday = None
+    for event in events:
+        if event.date != currentday:
+            if currentday != None:
+                schedule.write('<br/><br/>')    
+            schedule.write('<font color="darkblue" size="11"><b>')
+            schedule.write(event.date.strftime('%a %b %d: '))
+            schedule.write('</b></font>')
+            currentday = event.date
+        schedule.write('<b>%s</b> %s @ %s ' % (event.time.strftime('%H:%M'), event.title, event.venue))
+    schedule.write('</para>')
+
+    style = getSampleStyleSheet()['Normal']
+    elements=[]
+    elements.append(Paragraph(schedule.getvalue(),style))
+
+    doc.build(elements)
+    return response

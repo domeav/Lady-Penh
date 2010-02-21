@@ -4,6 +4,7 @@ from django.conf.urls.defaults import *
 urlpatterns = patterns('ladypenh.views',
     #(r'^initfuckingadminondevenv$', 'create_admin_user'),
     (r'^dump_events$', 'dump_events'),
+    (r'^BTKrawma$', 'btkrawma'),
 #feeds
     (r'^feed/atom$', 'feed_atom'),
     (r'^feed/overview.html$', 'overview'),
