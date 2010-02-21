@@ -187,6 +187,7 @@ def btkrawma(request):
     from reportlab.lib.units import mm
     from reportlab.lib.utils import ImageReader
     from google.appengine.api import images
+    from xml.sax.saxutils import escape as esc
     from StringIO import StringIO
     
     w,h = 180*mm, 130*mm
@@ -233,7 +234,9 @@ def btkrawma(request):
             schedule.write(event.date.strftime('%a %b %d: '))
             schedule.write('</b></font>')
             currentday = event.date
-        schedule.write('<b>%s</b> %s @ %s ' % (event.time.strftime('%H:%M'), event.title, event.venue))
+        schedule.write('<b>%s</b> %s @ %s ' % (event.time.strftime('%H:%M'), 
+                                               esc(event.title), 
+                                               esc(event.venue.name)))
     schedule.write('</para>')
 
     style = getSampleStyleSheet()['Normal']
