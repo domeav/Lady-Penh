@@ -174,6 +174,9 @@ def dump_events(request):
 
 def btkrawma(request):
     offset=0
+    stripgigs = False
+    if 'stripgigs' in request.GET:
+        stripgigs = True
     if 'offset' in request.GET:
         offset = int(request.GET['offset'])
     days = helpers.get_days(offset, 14)
@@ -234,6 +237,8 @@ def btkrawma(request):
     currentday = None
     dayschedule = StringIO()    
     for event in events:
+        if stripgigs and event.type == 'concert':
+            continue
         if event.date != currentday:
             if currentday != None:
                 elements.append(Paragraph(dayschedule.getvalue(),style))
