@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+{% load markup %}
 <feed xmlns="http://www.w3.org/2005/Atom">
   <id>http://ladypenh.com/feed/atom</id>
   <title>Phnom Penh events of the day by LadyPenh.com</title>
@@ -11,11 +12,10 @@
   </author>
   {% for event in events %}
   <entry>
-    <title>{{ event.time|time:"H:i" }} - {{ event.title }} / {{ event.venue.name }}</title>
-    <id>http://ladypenh.com/event/{{ event.numid }}.html</id>
-    <link href="http://ladypenh.com/event/{{ event.numid }}.html"/>
+    <title>{{ event.time|time:"H:i" }} - {{ event.title|markdown|striptags }} @ {{ event.venue.name }}</title>
+    <id>http://ladypenh.com/events/{{ event.date|date:"Y-m-d" }}.html#{{ event.numid }}</id>
+    <link href="http://ladypenh.com/events/{{ event.date|date:"Y-m-d" }}.html"/>
     <published>{{ today|date:"Y-m-d" }}T00:00:{{ forloop.counter }}Z</published>
-    <summary>{{ event.shortdesc }} / At {{ event.venue.address }} {% if event.organizer %}/ By {{ event.organizer }}{% endif %}</summary>
   </entry>
   {% endfor %}
 </feed>

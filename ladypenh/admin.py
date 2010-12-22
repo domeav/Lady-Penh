@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.models import Message
 from django.forms import ModelForm, FileField, ModelChoiceField
-from ladypenh.models import Friend, ImageFile, Venue, Event, OneLiner, Article, Tag, VenueFile
+from ladypenh.models import Friend, ImageFile, Venue, Event, OneLiner, VenueFile
 from google.appengine.api import images
 import string
 from datetime import datetime
@@ -16,32 +16,6 @@ class OneLinerAdmin(admin.ModelAdmin):
     pass
 admin.site.register(OneLiner, OneLinerAdmin)
 
-class ArticleForm(ModelForm):
-    class Meta:
-        model = Article
-    pic = FileField(required=False)
-
-class ArticleAdmin(admin.ModelAdmin):
-    form = ArticleForm
-    fields = ('date', 'title', 'header', 'pic', 'piccredits', 'content', 'tags')
-    ordering = ('-date',)
-    list_display = ('date', 'title', 'numid')
-    list_display_links = ('title',)
-    def save_model(self, request, obj, form, change):
-        if 'pic' in request.FILES:
-            pic = request.FILES['pic']
-            picname = format_filename(pic.name, obj.date)
-            picpath = "edito/%s" % picname
-            imgobj = ImageFile(name=picpath, blob=pic.read())
-            imgobj.put()
-            obj.picname = picpath
-        obj.save()
-        if not obj.numid:
-            obj.numid = obj.key().id()
-            obj.save()
-admin.site.register(Article, ArticleAdmin)
-
-
 class EventForm(ModelForm):
     class Meta:
         model = Event
@@ -55,8 +29,7 @@ class EventAdmin(admin.ModelAdmin):
         return form
     form = EventForm
     fieldsets = (
-        (None, {'fields': ('type', 'venue', 'organizer', 'title', 'date', 'time', 'dayend', 'description',
-                           'shortdesc', 'pic', 'haslargepic', 'highlight', 'status')}),
+        (None, {'fields': ('type', 'venue', 'organizer', 'title', 'date', 'time', 'dayend', 'description', 'pic', 'haslargepic', 'highlight')}),
         ('internal', {'fields': ('picname', 'picheight', 'picwidth'), 'classes': ('collapsed',)}))
     list_display = ('date', 'time', 'title', 'venue', 'numid')
     list_display_links = ('title',)
@@ -113,6 +86,5 @@ class VenueFileAdmin(admin.ModelAdmin):
 admin.site.register(VenueFile, VenueFileAdmin)
 
 admin.site.register(ImageFile)
-admin.site.register(Tag)
 admin.site.register(Friend)
 

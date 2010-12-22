@@ -12,16 +12,11 @@ class ImageFile(db.Model):
     blob = db.BlobProperty(required=True)
     
 
-
-
 class Venue(db.Model):
     def __unicode__(self):
         return self.name
     name = db.StringProperty(required=True)
     address = db.StringProperty(required=True)
-    linktext = db.StringProperty()
-    linkurl = db.StringProperty()
-    mapurl = db.StringProperty()
     oneshot = db.BooleanProperty(default=False)
     details = db.TextProperty()
     ladypenh_url = db.StringProperty()
@@ -40,29 +35,24 @@ class VenueFile(db.Model):
 
 class Event(db.Model):
     def __unicode__(self):
-        return "%s %s, %s (%s) @ %s" % (str(self.date), str(self.time), self.title, self.type, self.venue.name)
-    def make_dic(self):
-        dump = {}
-        for att in ['numid', 'type', 'venue', 'organizer', 'title', 'date', 'time', 'description',
-                    'shortdesc', 'picname', 'highlight', 'status']:
-            dump[att] = unicode(getattr(self, att))
-        return dump
+        name = "(no venue)"
+        if self.venue != None:
+            name = self.venue.name
+        return "%s %s, %s (%s) @ %s" % (str(self.date), str(self.time), self.title, self.type, name)
     numid = db.IntegerProperty()
-    type = db.StringProperty(required=True, choices=set(['cinema', 'circus', 'concert', 'conference', 'exhibition', 'game', 'party', 'rock', 'sports', 'live_show', 'videogames', 'visit', 'workshop']))
-    venue = db.ReferenceProperty(Venue, required=True)
+    type = db.StringProperty(required=True, choices=set(['cinema', 'circus', 'concert', 'conference', 'exhibition', 'game', 'party', 'rock', 'sports', 'live_show', 'videogames', 'visit', 'workshop', 'notification']))
+    venue = db.ReferenceProperty(Venue)
     organizer = db.StringProperty()
     title = db.StringProperty(required=True)
     date = db.DateProperty(default=date.today, required=True)
-    time = db.TimeProperty(default="20:00", required=True)
+    time = db.TimeProperty(default="20:00")
     dayend = db.DateProperty(default=None)
-    description = db.TextProperty(required=True)
-    shortdesc = db.TextProperty(required=True)
+    description = db.TextProperty()
     picname = db.StringProperty()
     picheight = db.IntegerProperty()
     picwidth = db.IntegerProperty()
     haslargepic = db.BooleanProperty(default=False)
     highlight = db.BooleanProperty(default=False)
-    status = db.StringProperty(default="lp_display", required=True, choices=set(["need_moderation", "lp_nodisplay", "lp_display"]))
 
 class OneLiner(db.Model):
     def __unicode__(self):
@@ -82,18 +72,6 @@ class Tag(db.Model):
     def __unicode__(self):
         return self.name
     name = db.StringProperty(required=True)
-
-class Article(db.Model):
-    def __unicode__(self):
-        return self.title
-    numid = db.IntegerProperty()
-    date = db.DateProperty(default=date.today, required=True)
-    title = db.StringProperty(required=True)
-    header = db.TextProperty(required=True)
-    picname = db.StringProperty()
-    piccredits = db.StringProperty(required=True)
-    content = db.TextProperty()
-    tags = KeyListProperty(Tag)
     
 class Friend(db.Model):
     def __unicode__(self):

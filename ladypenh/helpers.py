@@ -1,4 +1,4 @@
-from ladypenh.models import Friend, Venue, Event, OneLiner, Article, Tag, VenueFile
+from ladypenh.models import Friend, Venue, Event, OneLiner, VenueFile
 from ragendja.dbutils import get_object
 from datetime import datetime, timedelta
 from google.appengine.ext import db
@@ -27,26 +27,6 @@ def today(dayspan=0):
     now = datetime.now() + timedelta(hours=7, days=dayspan)
     return now.date()
 
-def get_tags_from_keylist(keylist):
-    return [get_object(Tag, tag) for tag in keylist]
-
-def get_article(day):
-    articlelist = Article.gql("WHERE date <= :1 ORDER BY date desc", day).fetch(1)
-    if len(articlelist) == 0:
-        return None, []
-    article = articlelist[0]
-    return article, get_tags_from_keylist(article.tags)
-
-def get_articles(day, tagstring):
-    if tagstring != None:
-        tag = Tag.gql("WHERE name = :1", tagstring).fetch(1)[0].key()
-        return Article.gql("WHERE date <= :1 AND tags = :2 ORDER BY date desc", day, tag).fetch(1000)
-    return Article.gql("WHERE date <= :1 ORDER BY date desc", day).fetch(1000)
-
-def get_article_by_id(id):
-    article = get_object(Article, id=int(id))
-    return article, get_tags_from_keylist(article.tags)
-
 def get_event_by_id(id):
     return get_object(Event, id=int(id))
 
@@ -69,8 +49,8 @@ def get_days(dayspan=0, nbdays=7):
     return days
 
 def get_events(days):
-    events = Event.gql("WHERE date >= :1 and date <= :2 and status = :3 ORDER BY date, time ASC", 
-                       days[0], days[-1], 'lp_display').fetch(1000)
+    events = Event.gql("WHERE date >= :1 and date <= :2 ORDER BY date, time ASC", 
+                       days[0], days[-1]).fetch(1000)
     return events
 
 def add_daydiff_attribute(event, day):
@@ -113,7 +93,7 @@ def get_daysinfo_and_highlights(days):
         events[day] = []
         oneliners[day] = []
     highlights = []
-    query_results = Event.gql("WHERE date >= :1 AND date <= :2 AND status = :3 ORDER BY date ASC, time ASC", days[0], days[-1], 'lp_display').fetch(1000)
+    query_results = Event.gql("WHERE date >= :1 AND date <= :2 AND ORDER BY date ASC, time ASC", days[0], days[-1]).fetch(1000)
     for event in query_results:
         if event.highlight:
             add_daydiff_attribute(event, days[0])
@@ -134,5 +114,3 @@ def get_daysinfo_and_highlights(days):
 def get_theme(day):
     return "default"
 
-def get_tags():
-    return Tag.gql("ORDER BY name").fetch(1000)

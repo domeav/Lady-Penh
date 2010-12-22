@@ -43,13 +43,6 @@ def friends(request):
                                     theme_name=helpers.get_theme(helpers.today())))
 
 @helpers.use_cache
-def archives(request, tag=None):
-    return render_to_response(request, 'ladypenh/archives.html',
-                              dict(theme_name=helpers.get_theme(helpers.today()),
-                                   articles=helpers.get_articles(helpers.today(), tag),
-                                   tags=helpers.get_tags()))
-
-@helpers.use_cache
 def events(request, date=None):
     day = datetime.now().date()
     try:
@@ -67,13 +60,10 @@ def events(request, date=None):
     return  render_to_response(request, 'ladypenh/day.html',
                                dict(theme_name=helpers.get_theme(helpers.today()),
                                     day=day,
-                                    article=article,
-                                    tags=None,
                                     days=days,
                                     daylabels=daylabels,
                                     highlights=None,
                                     events=helpers.get_events([day]),
-                                    
                                     ))
 
 @helpers.use_cache

@@ -14,7 +14,7 @@
 <div class="row">
   <div class="column grid_12">
     <h1>{{ venue.name }} events this week</h1>
-    <h2>{{venue.address}} {% if venue.mapurl %} (<a href="{{ venue.mapurl }}" target="_blank">map</a>){% endif %}</h2>
+    <h2>{{venue.address}}</h2>
   </div>
 </div>
 <div class="row">
@@ -39,9 +39,9 @@
           {% if event.highlight %}
           <img src="{{ MEDIA_URL }}ladypenh/{{ theme_name }}/highlight.png" alt="not to miss!" style="vertical-align: middle;"/>
           {% endif %}
-          <strong><a class="boxed" href="/event/{{ event.numid }}.html">
-              {{ event.title }}
-          </a></strong><br/>
+          <b class="title"><a class="boxed" href="/events/{{ event.date|date:"Y-m-d" }}.html">
+              {{ event.title|markdown }}
+          </a></b><br/>
           <strong>D+{{ event.daydiff }}</strong>&nbsp; 
           {{ event.date|date:"D. d/m" }}, {{ event.time|time:"H:i" }}
         </td>

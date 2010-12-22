@@ -2,31 +2,6 @@
 {% load markup %}
 {% load lp_filters %}
 {% block main %}
-{# if article #}
-{% if False %}
-<div class="row">
-  <div class="column grid_12" id="editorial">
-    <div class="imgcontainer">
-      <img src="/image/{{ article.picname }}" alt="{{ article.picname }}"/>
-      <div class="credits">{{ article.piccredits|markdown }}</div>
-    </div>          
-    <h2>{{ article.title }}</h2>
-    {{ article.header|markdown }}
-    <div>
-      {% if article.content %}
-      <a href="/article{{ article.numid }}.html">Read complete article and comments!</a>
-      {% else %}
-      <a href="/article{{ article.numid }}.html#comments">Add/read comments <span id="commentsnb"></span>!</a>
-      {% endif %}
-      <span class="streched xxsmall">      
-        {% for tag in tags %}
-        <a href="/archives/{{ tag }}.html">{{ tag }}</a>
-        {% endfor %}
-      </span>
-    </div>
-  </div>
-</div>
-{% endif %}
 <div class="center" style="height: 90px;">
   <script type='text/javascript'>
     bitt.instance = '291';
@@ -75,19 +50,27 @@
 </div>
 {% endif %}
 {% for event in events %}
-<div class="row hasdetails">
+<div class="row {% if event.description %}hasdetails{% endif %}">
   <img alt="{{ event.type }}" src="/image/event_type/{{ event.type }}.png" class="column"/>
   <div class="column event">
-    <p>
+    <p class="title">
       {% if event.highlight %}
       <img src="{{ MEDIA_URL }}ladypenh/{{ theme_name }}/highlight.png" alt="not to miss!" style="vertical-align: middle;"/>
       {% endif %}
       {{ event.time|time:"H:i" }}
-      <b>{{ event.title }}</b>
+   
+      {% if event.description %}
+      <b>{{ event.title|markdown }}</b>
+      {% else %}
+      <span>{{ event.title|markdown }}</span>
+      {% endif %}
+      {% if event.venue %}
       @ <a href="/venue/{{ event.venue.key }}.html">{{ event.venue.name }}</a>
+      {% endif %}
     </p>
   </div>
 </div>
+{% if event.description %}
 <div class="row">
   <div class="column" style="width: 10px;">&nbsp;</div>
   <div class="column evthumb">
@@ -101,7 +84,7 @@
   </div>
   <div class="column evdetails">
       <p>
-	{{ event.description }}
+	{{ event.description|markdown }}
       </p>
       {% if event.organizer %}
       <p>
@@ -116,6 +99,7 @@
 
   </div>
 </div>
+{% endif %}
 {% endfor %}
 
 <script type="text/javascript">
