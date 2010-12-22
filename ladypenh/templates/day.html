@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+{% load markup %}
+{% load lp_filters %}
+{% block main %}
+{# if article #}
+{% if False %}
+<div class="row">
+  <div class="column grid_12" id="editorial">
+    <div class="imgcontainer">
+      <img src="/image/{{ article.picname }}" alt="{{ article.picname }}"/>
+      <div class="credits">{{ article.piccredits|markdown }}</div>
+    </div>          
+    <h2>{{ article.title }}</h2>
+    {{ article.header|markdown }}
+    <div>
+      {% if article.content %}
+      <a href="/article{{ article.numid }}.html">Read complete article and comments!</a>
+      {% else %}
+      <a href="/article{{ article.numid }}.html#comments">Add/read comments <span id="commentsnb"></span>!</a>
+      {% endif %}
+      <span class="streched xxsmall">      
+        {% for tag in tags %}
+        <a href="/archives/{{ tag }}.html">{{ tag }}</a>
+        {% endfor %}
+      </span>
+    </div>
+  </div>
+</div>
+{% endif %}
+<div class="center" style="height: 90px;">
+  <script type='text/javascript'>
+    bitt.instance = '291';
+    bitt.zone = 'Lady Penh';
+    bitt.location = 'default location';
+    bitt.keywords = [];
+    bitt.bitt('Banner');
+  </script>
+</div>
+{% if highlights %}
+<div class="row" id="nottomiss">
+  <div class="column grid_12">
+    <img src="{{ MEDIA_URL }}ladypenh/{{ theme_name }}/nottomiss.png" alt="not to miss!"/>
+    {% for event in highlights %}
+    <div class="pointer"
+         onclick="shownottomiss('{{ event.date }}', 'ev{{ event.numid }}')">
+      D+{{ event.daydiff }}&nbsp; {{ event.date|date:"D. d/m" }}, {{ event.time|time:"H:i" }}
+      <strong>- {{ event.title }}</strong>,
+      {{ event.venue.name }}
+    </div>
+    {% endfor %}
+  </div>          
+</div>
+{% endif %}
+<div class="row">
+  <div class="grid_12">
+    {% for day, label in daylabels %}
+    <a href="/events/{{ day }}.html">{{ label }}</a>
+    {% endfor %}
+  </div>
+</div>
+<div class="row">
+  <div class="grid_12">
+    {{ day|date:"l, F d" }}
+  </div>
+</div>
+
+{% if not events %}
+<div class="row">
+  <img alt="sleep..." src="/image/event_type/sleep.png" class="column"/>
+  <div class="column event">
+    <p>
+      Nothing here: why not sleep tonight for once?
+    </p>
+  </div>
+</div>
+{% endif %}
+{% for event in events %}
+<div class="row hasdetails">
+  <img alt="{{ event.type }}" src="/image/event_type/{{ event.type }}.png" class="column"/>
+  <div class="column event">
+    <p>
+      {% if event.highlight %}
+      <img src="{{ MEDIA_URL }}ladypenh/{{ theme_name }}/highlight.png" alt="not to miss!" style="vertical-align: middle;"/>
+      {% endif %}
+      {{ event.time|time:"H:i" }}
+      <b>{{ event.title }}</b>
+      @ <a href="/venue/{{ event.venue.key }}.html">{{ event.venue.name }}</a>
+    </p>
+  </div>
+</div>
+<div class="row">
+  <div class="column" style="width: 10px;">&nbsp;</div>
+  <div class="column evthumb">
+    {% if event.picname %}
+    {% if event.haslargepic %}
+    <a href="/image/event/large/{{ event.picname }}"><img src="/image/event/thumb/{{ event.picname }}" alt="illustration"/></a>
+    {% else %}
+    <img src="/image/event/thumb/{{ event.picname }}"/>
+    {% endif %}
+    {% endif %}
+  </div>
+  <div class="column evdetails">
+      <p>
+	{{ event.description }}
+      </p>
+      {% if event.organizer %}
+      <p>
+	<b>Organized by:</b> {{ event.organizer }}
+      </p>
+      {% endif %}
+      {% if event.dayend %}
+      <p>
+	<b>Until:</b> {{ event.dayend|date:"F d" }}
+      </p>
+      {% endif %}
+
+  </div>
+</div>
+{% endfor %}
+
+<script type="text/javascript">
+  var articlenumid = '{{ article.numid }}';
+  var defaultday = '{{ days.0 }}';
+</script>
+<div class="row">
+  {% for i in 3|get_range %}
+  <div class="center column grid_4">
+    <script type='text/javascript'>
+      bitt.instance = '291';
+      bitt.zone = 'Lady Penh';
+      bitt.location = 'default location';
+      bitt.keywords = [];
+      bitt.bitt('220x125');
+    </script>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}
