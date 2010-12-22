@@ -1,0 +1,10 @@
+This project began as an experimentation with Google App Engine, but
+it became a quite successful little website (http://ladypenh.com).
+
+Designed to scratch my own itch, so the code base could be vastly
+improved to be useful to anyone wanting to build a similar website.
+
+It's based on the now-defunct app-engine-patch, and should be
+rewritten one of these days.
+
+Licenced under the GPL V3.
