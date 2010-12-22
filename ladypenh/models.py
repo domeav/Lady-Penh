@@ -54,7 +54,7 @@ class Event(db.Model):
     title = db.StringProperty(required=True)
     date = db.DateProperty(default=date.today, required=True)
     time = db.TimeProperty(default="20:00", required=True)
-    until = db.StringProperty()
+    dayend = db.DateProperty(default=None)
     description = db.TextProperty(required=True)
     shortdesc = db.TextProperty(required=True)
     picname = db.StringProperty()

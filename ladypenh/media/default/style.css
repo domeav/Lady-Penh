@@ -1,15 +1,20 @@
+a:link { text-decoration: underline; color: inherit; }
+a:visited { text-decoration: underline; color: inherit; }
+a:active { text-decoration: underline; color: inherit; }
+a:hover { text-decoration: underline; color: inherit; }
+
 body {
        margin: 20px 0 20px 0;
-       font-size: 12px;
+       font-size: 14px;
        line-height: 150%;
        font-family: verdana, sans-serif;
        background-color: #240a05;
        color: #f2f2f2;
        }
 
-p { margin: 0; padding: 5px 0; }
+p { margin: 0; padding: 5px 10px; }
 
-a , a:link , a:visited { color: #00a000; } 
+/*a , a:link , a:visited { color: #00a000; } */
 
 #program a , #program a:link , #program a:visited { color: #000; } 
 #nottomiss a , #nottomiss a:link , #nottomiss a:visited { color: #F2F2F2; text-decoration: none; } 
@@ -82,9 +87,23 @@ a.bigred, a.bigred:link, a.bigred:visited {color: #CC0000;}
 
 .center { text-align: center; }
 
-.evicon { width: 45px; }
+.event 
+{
+  background-color: #ffcc00;; 
+  color: black;
+  width: 645px;
+  min-height: 35px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
 
-.grey { color: #777; }
+.evdetails { color: white; width: 450px; }
+
+.evthumb { width: 200px; }
+
+.grey { color: #999; }
+
+.hasdetails { cursor: pointer; }
 
 .highlight { color: #ffcc00; }
 
@@ -93,7 +112,7 @@ a.bigred, a.bigred:link, a.bigred:visited {color: #CC0000;}
 .reverse { text-align: center; background-color: #ffcc00; color: black; -moz-border-radius: 8px; -webkit-border-radius: 8px; padding: 10px 0;}
 .reverse table { padding: 0 10px; }
 
-.illus { float: right; margin: 5px 0px 5px 5px; }
+/*.illus { float: right; margin: 5px 0px 5px 5px; }*/
 
 .selected { background-color: white; }
 

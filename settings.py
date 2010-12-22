@@ -17,14 +17,12 @@ COMBINE_MEDIA = {
         # See documentation why site_data can be useful:
         # http://code.google.com/p/app-engine-patch/wiki/MediaGenerator
         '.site_data.js',
-        'ladypenh/scripts/mootools.js',
-        'ladypenh/scripts/moomore.js',
+        'ladypenh/scripts/jquery-1.4.2.min.js',
+        'ladypenh/scripts/jquery-ui-1.8.5.custom.min.js',
         'ladypenh/scripts/main.js',
-        'ladypenh/scripts/SqueezeBox.js',
     ),
     'combined-%(LANGUAGE_DIR)s.css': (
         'ladypenh/default/style.css',
-        'ladypenh/css/SqueezeBox.css',
     ),
 }
 

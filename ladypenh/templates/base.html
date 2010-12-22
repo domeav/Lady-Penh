@@ -12,24 +12,23 @@
   {% block head %}{% endblock %}
 </head>
 <body>
-  {% if logged %}
+  {# if logged #}
+  {% if False %}
   <div class="center"><form action="index.html" method="get">Day offset: (enter a number) <input name="offset" value="{{ offset }}"/><input type="submit"/></form></div>
   {% endif %}
   <div class="row">
     <div class="column grid_5">
-      <a href="/" class="same"><img src="{{ MEDIA_URL }}ladypenh/{{ theme_name }}/logo.png" alt="Lady Penh: what to do in Phnom Penh?"/></a>
+      <a href="/"><img src="{{ MEDIA_URL }}ladypenh/{{ theme_name }}/logo.png" alt="Lady Penh: what to do in Phnom Penh?"/></a>
     </div>
-    <div class="center grey column grid_4">
+    <div class="center grey column grid_5">
         <p>
           Howdy! We're Lady Penh: all about what's going on in Phnom Penh
           - the greatest thing in Cambodia since prahok.
         </p>
     </div>
-    <div id="menu" class="big center column grid_3">
-      <a href="/index.html" class="same">Front page</a><br/>
-      <a href="/about.html" class="same">About us</a><br/>
-      <a href="/friends.html" class="same">Friends</a><br/>
-      <a href="/archives.html" class="same">Archives</a><br/>
+    <div id="menu" class="big center column grid_2">
+      <a href="/about.html">About us</a><br/>
+      <a href="/friends.html">Friends</a><br/>
     </div>
   </div>
   {% block main %}
@@ -41,13 +40,10 @@
       &copy; Lady Penh, team@ladypenh.com<br/><br/>
       <p id="sources">
         Get your daily fix of LP events:
-        <a href="http://cambodia.ka-set.info/">Ka-Set</a> |
-        <a href="http://khmerbird.com">Khmerbird</a> |
         <a href="http://www.facebook.com/group.php?gid=84337083455">Facebook</a> |
         <a href="http://twitter.com/ladypenh">Twitter</a> |
         <a href="/print.html">Print</a> |
-        <a href="http://feedburner.google.com/fb/a/mailverify?uri=LadyPenhEventsOfTheDay&amp;loc=en_US">Mailing list</a> |
-        <a href="/venues.html">Venues</a>
+        <a href="http://feedburner.google.com/fb/a/mailverify?uri=LadyPenhEventsOfTheDay&amp;loc=en_US">Mailing list</a>
       </p>
     </div>
     <div id="stamp" style="display: none;">{% now "r" %}</div>

@@ -55,7 +55,7 @@ class EventAdmin(admin.ModelAdmin):
         return form
     form = EventForm
     fieldsets = (
-        (None, {'fields': ('type', 'venue', 'organizer', 'title', 'date', 'time', 'until', 'description',
+        (None, {'fields': ('type', 'venue', 'organizer', 'title', 'date', 'time', 'dayend', 'description',
                            'shortdesc', 'pic', 'haslargepic', 'highlight', 'status')}),
         ('internal', {'fields': ('picname', 'picheight', 'picwidth'), 'classes': ('collapsed',)}))
     list_display = ('date', 'time', 'title', 'venue', 'numid')
@@ -74,8 +74,8 @@ class EventAdmin(admin.ModelAdmin):
                 largeobj = ImageFile(name=largepath, blob=blob)
                 largeobj.put()
             thumb = images.Image(blob)
-            if thumb.width > 120:
-                thumb.resize(width=120)
+            if thumb.width > 200:
+                thumb.resize(width=200)
                 blob = thumb.execute_transforms()
             thumbpath = "event/thumb/%s" % obj.picname
             thumbobj = ImageFile(name=thumbpath, blob=blob)
