@@ -59,10 +59,9 @@ def events(request, date=None):
     article, tags = None, []
     return  render_to_response(request, 'ladypenh/day.html',
                                dict(theme_name=helpers.get_theme(helpers.today()),
-                                    day=day,
-                                    days=days,
+                                    day=day,                               
                                     daylabels=daylabels,
-                                    highlights=None,
+                                    highlights=helpers.get_highlights(days),
                                     events=helpers.get_events([day]),
                                     ))
 

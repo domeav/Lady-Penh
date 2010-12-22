@@ -16,11 +16,16 @@
   <div class="column grid_12">
     <img src="{{ MEDIA_URL }}ladypenh/{{ theme_name }}/nottomiss.png" alt="not to miss!"/>
     {% for event in highlights %}
-    <div class="pointer"
-         onclick="shownottomiss('{{ event.date }}', 'ev{{ event.numid }}')">
-      D+{{ event.daydiff }}&nbsp; {{ event.date|date:"D. d/m" }}, {{ event.time|time:"H:i" }}
-      <strong>- {{ event.title }}</strong>,
-      {{ event.venue.name }}
+    <div>
+      D+{{ event.daydiff }}&nbsp;
+      {{ event.date|date:"D. d/m" }},      
+      {% if event.time %}
+      {{ event.time|time:"H:i" }} - 
+      {% endif %}
+      <a href="/events/{{ event.date }}.html">{{ event.title|markdown|striptags }}</a>
+      {% if event.venue %}
+      @ {{ event.venue.name }}
+      {% endif %}
     </div>
     {% endfor %}
   </div>          
@@ -28,13 +33,19 @@
 {% endif %}
 <div class="row">
   <div class="grid_12">
-    {% for day, label in daylabels %}
-    <a href="/events/{{ day }}.html">{{ label }}</a>
+    {% for d, label in daylabels %}
+    <span class="day">
+      {% ifequal day d %}
+      {{ label }}
+      {% else %}
+      <a href="/events/{{ d }}.html">{{ label }}</a>
+      {% endifequal %}
+    </span>
     {% endfor %}
   </div>
 </div>
 <div class="row">
-  <div class="grid_12">
+  <div class="grid_12 thisday">
     {{ day|date:"l, F d" }}
   </div>
 </div>
@@ -102,10 +113,6 @@
 {% endif %}
 {% endfor %}
 
-<script type="text/javascript">
-  var articlenumid = '{{ article.numid }}';
-  var defaultday = '{{ days.0 }}';
-</script>
 <div class="row">
   {% for i in 3|get_range %}
   <div class="center column grid_4">

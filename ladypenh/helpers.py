@@ -86,6 +86,10 @@ def get_friends():
 
 weekdays = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
 
+def get_highlights(days):
+    events = Event.gql("WHERE date >= :1 AND date <= :2 AND highlight = :3 ORDER BY date ASC, time ASC", days[0], days[-1], True).fetch(1000)
+    return [add_daydiff_attribute(event, days[0]) for event in events]
+
 def get_daysinfo_and_highlights(days):
     events = {}
     oneliners = {}
@@ -93,7 +97,7 @@ def get_daysinfo_and_highlights(days):
         events[day] = []
         oneliners[day] = []
     highlights = []
-    query_results = Event.gql("WHERE date >= :1 AND date <= :2 AND ORDER BY date ASC, time ASC", days[0], days[-1]).fetch(1000)
+    query_results = Event.gql("WHERE date >= :1 AND date <= :2 ORDER BY date ASC, time ASC", days[0], days[-1]).fetch(1000)
     for event in query_results:
         if event.highlight:
             add_daydiff_attribute(event, days[0])

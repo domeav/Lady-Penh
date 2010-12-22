@@ -14,11 +14,6 @@ body {
 
 p { margin: 0; padding: 5px 10px; }
 
-/*a , a:link , a:visited { color: #00a000; } */
-
-#program a , #program a:link , #program a:visited { color: #000; } 
-#nottomiss a , #nottomiss a:link , #nottomiss a:visited { color: #F2F2F2; text-decoration: none; } 
-
 h2 { font-weight: bold; color: #ffcc00; font-size: 14px; font-variant: small-caps; margin: 0; padding: 0;}
 
 h3 { color: #ffcc00; }
@@ -87,6 +82,18 @@ a.bigred, a.bigred:link, a.bigred:visited {color: #CC0000;}
 
 .center { text-align: center; }
 
+.day 
+{ 
+  padding: 3px 10px;
+  font-weight: bold;
+  text-align: center;
+  font-size: 16px;
+  color: #ffcc00;
+  float: left;
+  overflow: hidden;
+  display: inline;
+}
+
 .event 
 {
   background-color: #ffcc00;; 
@@ -117,6 +124,8 @@ a.bigred, a.bigred:link, a.bigred:visited {color: #CC0000;}
 /*.illus { float: right; margin: 5px 0px 5px 5px; }*/
 
 .selected { background-color: white; }
+
+.thisday { font-size: 20px; }
 
 .big { font-size: 15px; }
 .small { font-size: 11px; }
