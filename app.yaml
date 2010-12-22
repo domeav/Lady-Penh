@@ -22,3 +22,6 @@ handlers:
 - url: /.*
   script: common/appenginepatch/main.py
   secure: optional
+
+builtins:
+- remote_api: on
