@@ -21,7 +21,7 @@
       {% ifchanged event.date %}
       <div class="day">{{ event.date|date:"l F j" }}</div>  
       {% endifchanged %}
-      <div class="maininfo"><strong>{{ event.time|time:"H:i" }} - {{ event.title }} / {{ event.venue.name }}</strong> ({{ event.venue.address }}{% if event.organizer %} / organized by {{ event.organizer }}{% endif %})</div>
+      <div class="maininfo"><strong>{{ event.time|time:"H:i" }} - {{ event.title|markdown|striptags }} / {{ event.venue.name }}</strong> ({{ event.venue.address }}{% if event.organizer %} / organized by {{ event.organizer }}{% endif %})</div>
       <div class="details">{{ event.shortdesc }}</div>
       {% endfor %}
     </div>

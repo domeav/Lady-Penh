@@ -15,9 +15,9 @@
       {{ event.time|time:"H:i" }}
       {% endifequal %}
       {% if event.description %}
-      <b>{{ event.title|markdown }}</b>
+      <b>{{ event.title|markdown|removetags:"p" }}</b>
       {% else %}
-      <span>{{ event.title|markdown }}</span>
+      <span>{{ event.title|markdown|removetags:"p" }}</span>
       {% endif %}
       {% if event.venue %}
       @ <a href="/venue/{{ event.venue.key }}.html">{{ event.venue.name }}</a>
@@ -33,7 +33,7 @@
     {% if event.haslargepic %}
     <a href="/image/event/large/{{ event.picname }}"><img src="/image/event/thumb/{{ event.picname }}" alt="illustration"/></a>
     {% else %}
-    <img src="/image/event/thumb/{{ event.picname }}"/>
+    <img src="/image/event/thumb/{{ event.picname }}" alt="event pic"/>
     {% endif %}
     {% endif %}
   </div>
