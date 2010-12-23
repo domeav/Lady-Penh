@@ -49,7 +49,7 @@ def get_days(dayspan=0, nbdays=7):
     return days
 
 def get_events(day):
-    events = Event.gql("WHERE date = :1 ORDER BY date, time ASC", 
+    events = Event.gql("WHERE date = :1 ORDER BY time ASC", 
                        day).fetch(1000)
     # put events with no time defined at the end
     eventslist = []
@@ -65,7 +65,17 @@ def get_reminders(day):
     dayname = day.strftime("%A").lower()
     reminders = Event.gql("WHERE dayend >= :1 AND %s = :2" % dayname,
                           day, True).fetch(1000)
-    return [r for r in reminders if r.date < day]
+    time = []
+    notime = []
+    for r in reminders:
+        if r.date >= day:
+            continue
+        if r.time:
+            time.append(r)
+        else:
+            notime.append(r)
+    time.sort(key=lambda r: r.time)
+    return time + notime
 
 def add_daydiff_attribute(event, day):
     event.daydiff = (event.date - day).days
@@ -74,7 +84,7 @@ def add_daydiff_attribute(event, day):
 def get_venue_events(days, venue_key):
     events = Event.gql("WHERE date >= :1 and date <= :2 and venue = :3 ORDER BY date, time DESC",
                        days[0], days[-1], venue_key).fetch(1000)
-    return [add_daydiff_attribute(event, days[0]) for event in events]
+    return [add_daydiff_attribute(event, days[0]) for event in events]    
 
 def check_validity(obj, day, attribute):
     if attribute not in dir(obj) or not getattr(obj, attribute):
