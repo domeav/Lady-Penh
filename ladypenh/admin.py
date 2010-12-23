@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.models import Message
 from django.forms import ModelForm, FileField, ModelChoiceField
-from ladypenh.models import Friend, ImageFile, Venue, Event, OneLiner, VenueFile
+from ladypenh.models import Friend, ImageFile, Venue, Event, VenueFile
 from google.appengine.api import images
 import string
 from datetime import datetime
@@ -11,10 +11,6 @@ def format_filename(filename, date=''):
     s = ''.join(c for c in filename if c in validchars)
     return "%s_%s" % (str(date), s)
 
-
-class OneLinerAdmin(admin.ModelAdmin):    
-    pass
-admin.site.register(OneLiner, OneLinerAdmin)
 
 class EventForm(ModelForm):
     class Meta:
@@ -29,8 +25,9 @@ class EventAdmin(admin.ModelAdmin):
         return form
     form = EventForm
     fieldsets = (
-        (None, {'fields': ('type', 'venue', 'organizer', 'title', 'date', 'time', 'dayend', 'description', 'pic', 'haslargepic', 'highlight')}),
-        ('internal', {'fields': ('picname',), 'classes': ('collapsed',)}))
+        (None, {'fields': ('highlight', ('date', 'time'), ('type', 'title'), ('venue', 'organizer'), 'description', ('pic', 'haslargepic'),)}),
+        ('Reminders', {'fields': ('dayend', ('monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'),)}),
+        ('Internal', {'fields': ('picname',), 'classes': ('collapsed',)}))
     list_display = ('date', 'time', 'title', 'venue', 'numid')
     list_display_links = ('title',)
     list_filter = ('venue',)

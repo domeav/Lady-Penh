@@ -32,7 +32,6 @@ class VenueFile(db.Model):
     valid_until = db.DateProperty()
     
     
-
 class Event(db.Model):
     def __unicode__(self):
         name = "(no venue)"
@@ -51,25 +50,14 @@ class Event(db.Model):
     picname = db.StringProperty()
     haslargepic = db.BooleanProperty(default=False)
     highlight = db.BooleanProperty(default=False)
+    monday = db.BooleanProperty(default=False)
+    tuesday = db.BooleanProperty(default=False)
+    wednesday = db.BooleanProperty(default=False)
+    thursday = db.BooleanProperty(default=False)
+    friday = db.BooleanProperty(default=False)
+    saturday = db.BooleanProperty(default=False)
+    sunday = db.BooleanProperty(default=False)
 
-class OneLiner(db.Model):
-    def __unicode__(self):
-        return self.title
-    daystart = db.DateProperty(default=date.today, required=True)
-    dayend = db.DateProperty(default=date.today, required=True)
-    monday = db.BooleanProperty(default=True)
-    tuesday = db.BooleanProperty(default=True)
-    wednesday = db.BooleanProperty(default=True)
-    thursday = db.BooleanProperty(default=True)
-    friday = db.BooleanProperty(default=True)
-    saturday = db.BooleanProperty(default=True)
-    sunday = db.BooleanProperty(default=True)
-    title = db.StringProperty(required=True)
-
-class Tag(db.Model):
-    def __unicode__(self):
-        return self.name
-    name = db.StringProperty(required=True)
     
 class Friend(db.Model):
     def __unicode__(self):

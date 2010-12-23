@@ -1,4 +1,4 @@
-from ladypenh.models import Friend, Venue, Event, OneLiner, VenueFile
+from ladypenh.models import Friend, Venue, Event, VenueFile
 from ragendja.dbutils import get_object
 from datetime import datetime, timedelta
 from google.appengine.ext import db
@@ -48,9 +48,9 @@ def get_days(dayspan=0, nbdays=7):
         days.append(days[0] + timedelta(days=i+1))
     return days
 
-def get_events(days):
-    events = Event.gql("WHERE date >= :1 and date <= :2 ORDER BY date, time ASC", 
-                       days[0], days[-1]).fetch(1000)
+def get_events(day):
+    events = Event.gql("WHERE date = :1 ORDER BY date, time ASC", 
+                       day).fetch(1000)
     # put events with no time defined at the end
     eventslist = []
     events_notime = []
@@ -60,6 +60,12 @@ def get_events(days):
         else :
             events_notime.append(event)
     return eventslist + events_notime
+
+def get_reminders(day):
+    dayname = day.strftime("%A").lower()
+    reminders = Event.gql("WHERE dayend >= :1 AND %s = :2" % dayname,
+                          day, True).fetch(1000)
+    return [r for r in reminders if r.date < day]
 
 def add_daydiff_attribute(event, day):
     event.daydiff = (event.date - day).days
@@ -98,29 +104,29 @@ def get_highlights(days):
     events = Event.gql("WHERE date >= :1 AND date <= :2 AND highlight = :3 ORDER BY date ASC, time ASC", days[0], days[-1], True).fetch(1000)
     return [add_daydiff_attribute(event, days[0]) for event in events]
 
-def get_daysinfo_and_highlights(days):
-    events = {}
-    oneliners = {}
-    for day in days:
-        events[day] = []
-        oneliners[day] = []
-    highlights = []
-    query_results = Event.gql("WHERE date >= :1 AND date <= :2 ORDER BY date ASC, time ASC", days[0], days[-1]).fetch(1000)
-    for event in query_results:
-        if event.highlight:
-            add_daydiff_attribute(event, days[0])
-            highlights.append(event)
-        events[event.date].append(event)
-    oneliners_results = OneLiner.gql("ORDER BY title").fetch(1000)
-    for oneliner in oneliners_results:
-        for day in days:
-            if oneliner.daystart <= day and oneliner.dayend >= day:
-                if getattr(oneliner, weekdays[day.weekday()]) == True:
-                    oneliners[day].append(oneliner)
-    daysinfo = []
-    for day in days:
-        daysinfo.append((day, events[day], oneliners[day]))
-    return daysinfo, highlights[:5]
+# def get_daysinfo_and_highlights(days):
+#     events = {}
+#     oneliners = {}
+#     for day in days:
+#         events[day] = []
+#         oneliners[day] = []
+#     highlights = []
+#     query_results = Event.gql("WHERE date >= :1 AND date <= :2 ORDER BY date ASC, time ASC", days[0], days[-1]).fetch(1000)
+#     for event in query_results:
+#         if event.highlight:
+#             add_daydiff_attribute(event, days[0])
+#             highlights.append(event)
+#         events[event.date].append(event)
+#     oneliners_results = OneLiner.gql("ORDER BY title").fetch(1000)
+#     for oneliner in oneliners_results:
+#         for day in days:
+#             if oneliner.daystart <= day and oneliner.dayend >= day:
+#                 if getattr(oneliner, weekdays[day.weekday()]) == True:
+#                     oneliners[day].append(oneliner)
+#     daysinfo = []
+#     for day in days:
+#         daysinfo.append((day, events[day], oneliners[day]))
+#     return daysinfo, highlights[:5]
 
 
 def get_theme(day):

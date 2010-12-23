@@ -108,7 +108,7 @@ a.bigred, a.bigred:link, a.bigred:visited {color: #CC0000;}
 
 .title p { display: inline; padding: 0px; margin: 0px; }
 
-.evdetails { color: white; width: 450px; }
+.evdetails { color: white; width: 450px; margin-top: -10px;}
 
 .evthumb { width: 200px; }
 
@@ -123,11 +123,9 @@ a.bigred, a.bigred:link, a.bigred:visited {color: #CC0000;}
 .reverse { text-align: center; background-color: #ffcc00; color: black; -moz-border-radius: 8px; -webkit-border-radius: 8px; padding: 10px 0;}
 .reverse table { padding: 0 10px; }
 
-/*.illus { float: right; margin: 5px 0px 5px 5px; }*/
-
 .selected { background-color: white; }
 
-.thisday { font-size: 20px; }
+.section { font-size: 20px; margin-top: 20px; margin-bottom: 10px; }
 
 .big { font-size: 15px; }
 .small { font-size: 11px; }

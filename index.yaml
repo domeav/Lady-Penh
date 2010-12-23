@@ -56,9 +56,24 @@ indexes:
 
 - kind: ladypenh_event
   properties:
+  - name: friday
+  - name: dayend
+
+- kind: ladypenh_event
+  properties:
   - name: highlight
   - name: date
   - name: time
+
+- kind: ladypenh_event
+  properties:
+  - name: monday
+  - name: dayend
+
+- kind: ladypenh_event
+  properties:
+  - name: saturday
+  - name: dayend
 
 - kind: ladypenh_event
   properties:
@@ -68,6 +83,21 @@ indexes:
 
 - kind: ladypenh_event
   properties:
+  - name: sunday
+  - name: dayend
+
+- kind: ladypenh_event
+  properties:
+  - name: thursday
+  - name: dayend
+
+- kind: ladypenh_event
+  properties:
+  - name: tuesday
+  - name: dayend
+
+- kind: ladypenh_event
+  properties:
   - name: venue
   - name: date
   - name: time
@@ -95,6 +125,11 @@ indexes:
     direction: desc
   - name: time
     direction: desc
+
+- kind: ladypenh_event
+  properties:
+  - name: wednesday
+  - name: dayend
 
 - kind: ladypenh_venue
   properties:

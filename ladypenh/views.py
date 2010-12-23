@@ -18,7 +18,7 @@ def feed_atom(request):
     "Phnom Penh events of the day"
     today = helpers.today()
     return  render_to_response(request, 'ladypenh/atom.xml',
-                               dict(events=helpers.get_events([today]),
+                               dict(events=helpers.get_events(today),
                                     today=today),
                                mimetype='application/atom+xml; charset=utf8')
 
@@ -62,7 +62,8 @@ def events(request, date=None):
                                     day=day,                               
                                     daylabels=daylabels,
                                     highlights=helpers.get_highlights(days),
-                                    events=helpers.get_events([day]),
+                                    events=helpers.get_events(day),
+                                    reminders=helpers.get_reminders(day)
                                     ))
 
 @helpers.use_cache

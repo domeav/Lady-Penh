@@ -45,7 +45,7 @@
   </div>
 </div>
 <div class="row">
-  <div class="grid_12 thisday">
+  <div class="grid_12 section">
     {{ day|date:"l, F d" }}
   </div>
 </div>
@@ -55,66 +55,26 @@
   <img alt="sleep..." src="/image/event_type/sleep.png" class="column"/>
   <div class="column event">
     <p>
-      Nothing here: why not sleep tonight for once?
+      Nothing here: please <a href="mailto:events@ladypenh.com">send us</a> events if we're missing something!
     </p>
   </div>
 </div>
 {% endif %}
 
 {% for event in events %}
-<div class="row {% if event.description %}hasdetails{% endif %}">
-  <img alt="{{ event.type }}" src="/image/event_type/{{ event.type }}.png" class="column"/>
-  <div class="column event">
-    <div class="title">
-      {% if event.highlight %}
-      <img src="{{ MEDIA_URL }}ladypenh/{{ theme_name }}/highlight.png" alt="not to miss!" style="vertical-align: middle;"/>
-      {% endif %}
-      {{ event.time|time:"H:i" }}
-   
-      {% if event.description %}
-      <b>{{ event.title|markdown }}</b>
-      {% else %}
-      <span>{{ event.title|markdown }}</span>
-      {% endif %}
-      {% if event.venue %}
-      @ <a href="/venue/{{ event.venue.key }}.html">{{ event.venue.name }}</a>
-      {% endif %}
-    </div>
-  </div>
-</div>
-{% if event.description %}
-<div class="row">
-  <div class="column" style="width: 10px;">&nbsp;</div>
-  <div class="column evthumb">
-    {% if event.picname %}
-    {% if event.haslargepic %}
-    <a href="/image/event/large/{{ event.picname }}"><img src="/image/event/thumb/{{ event.picname }}" alt="illustration"/></a>
-    {% else %}
-    <img src="/image/event/thumb/{{ event.picname }}"/>
-    {% endif %}
-    {% endif %}
-  </div>
-  <div class="column evdetails">
-      <p>
-	{{ event.description|markdown }}
-      </p>
-      {% if event.organizer %}
-      <p>
-	<b>Organized by:</b> {{ event.organizer }}
-      </p>
-      {% endif %}
-      {% if event.dayend %}
-      <p>
-	<b>Until:</b> {{ event.dayend|date:"F d" }}
-      </p>
-      {% endif %}
-      <p class="center">
-	<a href="http://www.addthis.com/bookmark.php?v=250" onmouseover="return addthis_open(this, '', 'http://ladypenh.com/events/{{ day }}.html', '{{ event.title }}: {{ event.date|date:"D. d/m" }}, {{ event.time|time:"H:i" }}')" onmouseout="addthis_close()" onclick="return addthis_sendto()"><img src="http://s7.addthis.com/static/btn/lg-share-en.gif" width="125" height="16" alt="Bookmark and Share" style="border:0"/></a>
-	</p>
-  </div>
-</div>
-{% endif %}
+{% include "event.html" %}
 {% endfor %}
+
+{% if reminders %}
+<div class="row">
+  <div class="grid_12 section">
+    Regulars and reminders
+  </div>
+</div>
+{% for event in reminders%}
+{% include "event.html" %}
+{% endfor %}
+{% endif %}
 
 <div class="row">
   {% for i in 3|get_range %}
