@@ -60,11 +60,12 @@
   </div>
 </div>
 {% endif %}
+
 {% for event in events %}
 <div class="row {% if event.description %}hasdetails{% endif %}">
   <img alt="{{ event.type }}" src="/image/event_type/{{ event.type }}.png" class="column"/>
   <div class="column event">
-    <p class="title">
+    <div class="title">
       {% if event.highlight %}
       <img src="{{ MEDIA_URL }}ladypenh/{{ theme_name }}/highlight.png" alt="not to miss!" style="vertical-align: middle;"/>
       {% endif %}
@@ -78,7 +79,7 @@
       {% if event.venue %}
       @ <a href="/venue/{{ event.venue.key }}.html">{{ event.venue.name }}</a>
       {% endif %}
-    </p>
+    </div>
   </div>
 </div>
 {% if event.description %}
@@ -107,7 +108,9 @@
 	<b>Until:</b> {{ event.dayend|date:"F d" }}
       </p>
       {% endif %}
-
+      <p class="center">
+	<a href="http://www.addthis.com/bookmark.php?v=250" onmouseover="return addthis_open(this, '', 'http://ladypenh.com/events/{{ day }}.html', '{{ event.title }}: {{ event.date|date:"D. d/m" }}, {{ event.time|time:"H:i" }}')" onmouseout="addthis_close()" onclick="return addthis_sendto()"><img src="http://s7.addthis.com/static/btn/lg-share-en.gif" width="125" height="16" alt="Bookmark and Share" style="border:0"/></a>
+	</p>
   </div>
 </div>
 {% endif %}
@@ -126,4 +129,5 @@
   </div>
   {% endfor %}
 </div>
+<script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js?pub=xa-4a3b17ef30493795"></script>
 {% endblock %}

@@ -51,7 +51,15 @@ def get_days(dayspan=0, nbdays=7):
 def get_events(days):
     events = Event.gql("WHERE date >= :1 and date <= :2 ORDER BY date, time ASC", 
                        days[0], days[-1]).fetch(1000)
-    return events
+    # put events with no time defined at the end
+    eventslist = []
+    events_notime = []
+    for event in events:
+        if event.time:
+            eventslist.append(event)
+        else :
+            events_notime.append(event)
+    return eventslist + events_notime
 
 def add_daydiff_attribute(event, day):
     event.daydiff = (event.date - day).days

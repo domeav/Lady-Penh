@@ -39,9 +39,12 @@
           {% if event.highlight %}
           <img src="{{ MEDIA_URL }}ladypenh/{{ theme_name }}/highlight.png" alt="not to miss!" style="vertical-align: middle;"/>
           {% endif %}
-          <b class="title"><a class="boxed" href="/events/{{ event.date|date:"Y-m-d" }}.html">
-              {{ event.title|markdown }}
-          </a></b><br/>
+          <b>
+	    <a href="/events/{{ event.date|date:"Y-m-d" }}.html">
+              {{ event.title|markdown|striptags }}
+            </a>
+	  </b>
+	  <br/>
           <strong>D+{{ event.daydiff }}</strong>&nbsp; 
           {{ event.date|date:"D. d/m" }}, {{ event.time|time:"H:i" }}
         </td>

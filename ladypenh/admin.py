@@ -30,7 +30,7 @@ class EventAdmin(admin.ModelAdmin):
     form = EventForm
     fieldsets = (
         (None, {'fields': ('type', 'venue', 'organizer', 'title', 'date', 'time', 'dayend', 'description', 'pic', 'haslargepic', 'highlight')}),
-        ('internal', {'fields': ('picname', 'picheight', 'picwidth'), 'classes': ('collapsed',)}))
+        ('internal', {'fields': ('picname',), 'classes': ('collapsed',)}))
     list_display = ('date', 'time', 'title', 'venue', 'numid')
     list_display_links = ('title',)
     list_filter = ('venue',)
@@ -53,8 +53,6 @@ class EventAdmin(admin.ModelAdmin):
             thumbpath = "event/thumb/%s" % obj.picname
             thumbobj = ImageFile(name=thumbpath, blob=blob)
             thumbobj.put()
-            obj.picheight = thumb.height
-            obj.picwidth = thumb.width
         obj.save()
         if not obj.numid:
             obj.numid = obj.key().id()

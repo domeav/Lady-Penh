@@ -104,7 +104,9 @@ a.bigred, a.bigred:link, a.bigred:visited {color: #CC0000;}
   border-radius: 5px;
 }
 
-.title p { display: inline; }
+.title { padding: 5px 10px; }
+
+.title p { display: inline; padding: 0px; margin: 0px; }
 
 .evdetails { color: white; width: 450px; }
 

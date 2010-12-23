@@ -49,8 +49,6 @@ class Event(db.Model):
     dayend = db.DateProperty(default=None)
     description = db.TextProperty()
     picname = db.StringProperty()
-    picheight = db.IntegerProperty()
-    picwidth = db.IntegerProperty()
     haslargepic = db.BooleanProperty(default=False)
     highlight = db.BooleanProperty(default=False)
 
