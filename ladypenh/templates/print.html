@@ -1,5 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+{% load markup %}
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
@@ -7,25 +8,29 @@
   <link rel="shortcut icon" href="{{ MEDIA_URL }}ladypenh/default/favicon.png" type="image/x-icon"/>
   <title>Lady Penh printable weekly listing</title>
   <style type="text/css">
-    .day {font-variant: small-caps; font-size: big; font-weight: bold; border: 1px solid black; padding: 2px;}
-    .maininfo {font-size:12px;}
-    .details {font-size:10px;}
+    .event { margin-left: 40px; }
   </style>
 </head>
 <body>
   <div style="width: 700px; margin: auto; text-align: center;">
     <img src="{{ MEDIA_URL }}ladypenh/images/printtitle.png"/>
-    <h3>(A bird eye's view of what's going on in Phnom Penh)</h3>
+    <h4>(A bird eye's view of what's going on in Phnom Penh)</h4>
     <div style="text-align: left;">
       {% for event in events %}
       {% ifchanged event.date %}
-      <div class="day">{{ event.date|date:"l F j" }}</div>  
+      <h3>{{ event.date|date:"l F j" }}</h3>
       {% endifchanged %}
-      <div class="maininfo"><strong>{{ event.time|time:"H:i" }} - {{ event.title|markdown|striptags }} / {{ event.venue.name }}</strong> ({{ event.venue.address }}{% if event.organizer %} / organized by {{ event.organizer }}{% endif %})</div>
-      <div class="details">{{ event.shortdesc }}</div>
+      <div class="event">
+	{{ event.time|time:"H:i" }} -
+	{{ event.title|markdown|striptags }}
+	{% if event.venue %}
+	@ {{ event.venue.name }}
+	{% endif %}
+      </div>
+
       {% endfor %}
     </div>
-    <h2>Visit <a href="http://ladypenh.com">ladypenh.com</a> for more info and more events!</h2>
+    <h3>Visit <a href="http://ladypenh.com">ladypenh.com</a> for more info and more events!</h3>
   </div>
 </body>
 </html>

@@ -48,9 +48,14 @@ def get_days(dayspan=0, nbdays=7):
         days.append(days[0] + timedelta(days=i+1))
     return days
 
+# can be called with either a single day, or a list of consecutive days
 def get_events(day):
-    events = Event.gql("WHERE date = :1 ORDER BY time ASC", 
-                       day).fetch(1000)
+    events = None
+    if type(day) == list:
+        # assuming this is a list of days
+        return Event.gql("WHERE date >= :1 and date <= :2 ORDER BY date, time ASC", day[0], day[-1]).fetch(1000)
+
+    events = Event.gql("WHERE date = :1 ORDER BY time ASC", day).fetch(1000)
     # put events with no time defined at the end
     eventslist = []
     events_notime = []
@@ -60,6 +65,7 @@ def get_events(day):
         else :
             events_notime.append(event)
     return eventslist + events_notime
+        
 
 def get_reminders(day):
     dayname = day.strftime("%A").lower()
