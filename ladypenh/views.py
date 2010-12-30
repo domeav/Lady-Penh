@@ -47,7 +47,7 @@ def events(request, date=None):
     day = datetime.now().date()
     try:
         reqday = datetime.strptime(date, "%Y-%m-%d").date()
-        if (reqday - day).days in range(7):
+        if request.user.is_authenticated() or (reqday - day).days in range(7):
             day = reqday
     except:
         # just use today date
