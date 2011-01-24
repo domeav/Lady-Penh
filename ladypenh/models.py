@@ -44,7 +44,7 @@ class Event(db.Model):
     organizer = db.StringProperty()
     title = db.StringProperty(required=True)
     date = db.DateProperty(default=date.today, required=True)
-    time = db.TimeProperty(default="20:00")
+    time = db.TimeProperty(default="19:00")
     dayend = db.DateProperty(default=None)
     description = db.TextProperty()
     picname = db.StringProperty()
@@ -57,6 +57,7 @@ class Event(db.Model):
     friday = db.BooleanProperty(default=False)
     saturday = db.BooleanProperty(default=False)
     sunday = db.BooleanProperty(default=False)
+    hidedayend = db.BooleanProperty(default=False)
 
     
 class Friend(db.Model):

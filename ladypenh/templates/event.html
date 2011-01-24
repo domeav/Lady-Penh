@@ -44,7 +44,7 @@
     <b>Organized by:</b> {{ event.organizer }}
     </p>
     {% endif %}
-    {% if event.dayend %}
+    {% if event.dayend and not event.hidedayend %}
     <p>
       <b>Until:</b> {{ event.dayend|date:"F d" }}
     </p>

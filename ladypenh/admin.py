@@ -26,7 +26,7 @@ class EventAdmin(admin.ModelAdmin):
     form = EventForm
     fieldsets = (
         (None, {'fields': ('highlight', ('date', 'time'), ('type', 'title'), ('venue', 'organizer'), 'description', ('pic', 'haslargepic'),)}),
-        ('Reminders', {'fields': ('dayend', ('monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'),)}),
+        ('Reminders', {'fields': (('dayend', 'hidedayend'), ('monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'),)}),
         ('Internal', {'fields': ('picname',), 'classes': ('collapsed',)}))
     list_display = ('date', 'time', 'title', 'venue', 'numid')
     list_display_links = ('title',)
