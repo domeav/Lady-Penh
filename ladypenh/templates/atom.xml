@@ -15,7 +15,8 @@
     <title>{% if event.time %}{{ event.time|time:"H:i" }} - {% endif %}{{ event.title|markdown|striptags }}{% if event.venue %} @ {{ event.venue.name }}{% endif %}</title>
     <id>http://ladypenh.com/events/{{ event.date|date:"Y-m-d" }}.html#{{ event.numid }}</id>
     <link href="http://ladypenh.com/events/{{ event.date|date:"Y-m-d" }}.html"/>
-    <published>{{ today|date:"Y-m-d" }}T00:00:{{ forloop.counter }}Z</published>
+    <updated>{{ today|date:"Y-m-d" }}T00:00:{{ forloop.counter }}Z</updated>
+    <summary>{{ event.description|markdown|striptags }}</summary>
   </entry>
   {% endfor %}
 </feed>
