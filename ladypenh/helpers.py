@@ -16,7 +16,8 @@ def use_cache(fn):
         if response is not None:
             return response
         response = fn(request, **args)
-        memcache.set(request.path, response, 7200)        
+        if not request.user.is_authenticated():
+            memcache.set(request.path, response, 7200)        
         return response
     return cached_execution
         

@@ -22,6 +22,9 @@
       {% if event.venue %}
       @ <a href="/venue/{{ event.venue.key }}.html">{{ event.venue.name }}</a>
       {% endif %}
+      {% if show_edit_links %}
+      <a href="/admin/ladypenh/event/{{ event.key }}" target="_blank">edit</edit>
+      {% endif %}
     </div>
   </div>
 </div>

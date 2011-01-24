@@ -57,13 +57,17 @@ def events(request, date=None):
     for d in days[2:]:
         daylabels.append((d, d.strftime('%A')))
     article, tags = None, []
+    show_edit_links = False
+    if request.user.is_authenticated():
+        show_edit_links = True
     return  render_to_response(request, 'ladypenh/day.html',
                                dict(theme_name=helpers.get_theme(helpers.today()),
                                     day=day,                               
                                     daylabels=daylabels,
                                     highlights=helpers.get_highlights(days),
                                     events=helpers.get_events(day),
-                                    reminders=helpers.get_reminders(day)
+                                    reminders=helpers.get_reminders(day),
+                                    show_edit_links=show_edit_links
                                     ))
 
 @helpers.use_cache
