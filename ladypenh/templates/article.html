@@ -34,59 +34,6 @@
       bitt.bitt('Banner');
     </script>
   </div>
-  <div id="comments"><img class="loadicon" src="{{ MEDIA_URL }}ladypenh/{{ theme_name }}/loading.gif"/><em>Waiting for the comments to load...</em></div>
-  <div style="visibility: hidden;" id="commentform">
-    <h3>Enter your comment in the box below:</h3>
-    <div class="center">    
-      <div id="alert"></div>
-      <p><textarea id="comment" class="grid_12">{{ comment }}</textarea></p>
-      Pseudo <input id="pseudo" value="{{ pseudo }}"/> Password (optional) <input type="password" id="password" value="{{ password }}"/>
-      <p><div id="recaptcha"></div></p>
-      <input id="submit" type="submit" onclick="submit_comment()" value="Submit comment!"/>
-    </div>
-  </div>
-  <script>    
-    function display_commentform(){
-      $('commentform').style.visibility = 'visible';
-    }
-
-    var firstload = true;
-    function lpcomments_callback(resp){
-      $('alert').innerHTML = resp['alert_text'];
-      $('pseudo').value = resp['pseudo'];
-      $('password').value = resp['password'];
-      $('comment').value = resp['comment'];
-      var comments = resp['comments'];
-      var commentsstring = '<h3>' + comments.length + ' comments so far:' + '</h3>';
-      $each(comments, function(comment){
-        commentsstring += comment;
-      });
-      if (comments.length == 0) commentsstring += 'Be the first!'
-      $('comments').innerHTML = commentsstring;
-      if (firstload == true){
-        firstload = false;
-        Recaptcha.create('6Lf2yAcAAAAAADIPnn1z0_b6mrhDAqAP3KEeVefl', 'recaptcha', {
-          theme: 'red',
-          callback: display_commentform
-        });      
-      }
-      else Recaptcha.reload();
-    }
-    
-    new Request.JSONP({
-      url: 'http://lp-comments.appspot.com/comments_callback/ladypenh.com/article{{ article.numid }}.html'
-    }).send();
-
-    function submit_comment(){
-      new Request.JSONP({
-        url: 'http://lp-comments.appspot.com/comments_callback/ladypenh.com/article{{ article.numid }}.html',
-        data: {
-          pseudo: $('pseudo').value, password: $('password').value, comment: $('comment').value,
-          recaptcha_challenge_field: $('recaptcha_challenge_field').value,
-          recaptcha_response_field: $('recaptcha_response_field').value}
-      }).send();
-    }
-  </script>
 </div>
 {% endif %}
 {% endblock %}

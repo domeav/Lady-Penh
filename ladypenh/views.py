@@ -44,7 +44,7 @@ def friends(request):
 
 @helpers.use_cache
 def events(request, date=None):
-    day = datetime.now().date()
+    today = day = datetime.now().date()
     try:
         reqday = datetime.strptime(date, "%Y-%m-%d").date()
         if request.user.is_authenticated() or (reqday - day).days in range(7):
@@ -60,6 +60,7 @@ def events(request, date=None):
     show_edit_links = False
     if request.user.is_authenticated():
         show_edit_links = True
+    article,tags=helpers.get_article(today)
     return  render_to_response(request, 'ladypenh/day.html',
                                dict(theme_name=helpers.get_theme(helpers.today()),
                                     day=day,                               
@@ -67,7 +68,9 @@ def events(request, date=None):
                                     highlights=helpers.get_highlights(days),
                                     events=helpers.get_events(day),
                                     reminders=helpers.get_reminders(day),
-                                    show_edit_links=show_edit_links
+                                    show_edit_links=show_edit_links,
+                                    article=article,
+                                    tags=tags
                                     ))
 
 @helpers.use_cache
@@ -135,3 +138,17 @@ def flush_cache(request):
     return HttpResponse(memcache.flush_all(), mimetype="text/plain")    
 
 
+@helpers.use_cache
+def archives(request, tag=None):
+    return render_to_response(request, 'ladypenh/archives.html',
+                              dict(theme_name=helpers.get_theme(helpers.today()),
+                                   articles=helpers.get_articles(helpers.today(), tag),
+                                   tags=helpers.get_tags()))
+
+@helpers.use_cache
+def article(request, nid):
+    article, tags = helpers.get_article_by_id(nid)
+    return  render_to_response(request, 'ladypenh/article.html',
+                               dict(theme_name=helpers.get_theme(helpers.today()),
+                                    article=article,
+                                    tags=tags))

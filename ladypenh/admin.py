@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.models import Message
 from django.forms import ModelForm, FileField, ModelChoiceField
-from ladypenh.models import Friend, ImageFile, Venue, Event, VenueFile
+from ladypenh.models import Friend, ImageFile, Venue, Event, VenueFile, Tag, Article
 from google.appengine.api import images
 import string
 from datetime import datetime
@@ -82,4 +82,31 @@ admin.site.register(VenueFile, VenueFileAdmin)
 
 admin.site.register(ImageFile)
 admin.site.register(Friend)
+admin.site.register(Tag)
+
+
+class ArticleForm(ModelForm):
+    class Meta:
+        model = Article
+    pic = FileField(required=False)
+
+class ArticleAdmin(admin.ModelAdmin):
+    form = ArticleForm
+    fields = ('date', 'title', 'header', 'pic', 'piccredits', 'content', 'tags')
+    ordering = ('-date',)
+    list_display = ('date', 'title', 'numid')
+    list_display_links = ('title',)
+    def save_model(self, request, obj, form, change):
+        if 'pic' in request.FILES:
+            pic = request.FILES['pic']
+            picname = format_filename(pic.name, obj.date)
+            picpath = "edito/%s" % picname
+            imgobj = ImageFile(name=picpath, blob=pic.read())
+            imgobj.put()
+            obj.picname = picpath
+        obj.save()
+        if not obj.numid:
+            obj.numid = obj.key().id()
+            obj.save()
+admin.site.register(Article, ArticleAdmin)
 

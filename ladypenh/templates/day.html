@@ -2,6 +2,28 @@
 {% load markup %}
 {% load lp_filters %}
 {% block main %}
+{% if article %}
+<div class="row">
+  <div class="column grid_12" id="editorial">
+    <div class="imgcontainer">
+      <img src="/image/{{ article.picname }}" alt="{{ article.picname }}"/>
+      <div class="credits">{{ article.piccredits|markdown }}</div>
+    </div>          
+    <h2>{{ article.title }}</h2>
+    {{ article.header|markdown }}
+    <div>
+      {% if article.content %}
+      <a href="/article{{ article.numid }}.html">Read complete article</a>
+      {% endif %}
+      <span class="streched xxsmall">      
+        {% for tag in tags %}
+        <a href="/archives/{{ tag }}.html">{{ tag }}</a>
+        {% endfor %}
+      </span>
+    </div>
+  </div>
+</div>
+{% endif %}
 <div class="center" style="height: 90px;">
   <script type='text/javascript'>
     bitt.instance = '291';

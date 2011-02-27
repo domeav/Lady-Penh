@@ -1,4 +1,4 @@
-from ladypenh.models import Friend, Venue, Event, VenueFile
+from ladypenh.models import Friend, Venue, Event, VenueFile, Article, Tag
 from ragendja.dbutils import get_object
 from datetime import datetime, timedelta
 from google.appengine.ext import db
@@ -121,31 +121,32 @@ def get_highlights(days):
     events = Event.gql("WHERE date >= :1 AND date <= :2 AND highlight = :3 ORDER BY date ASC, time ASC", days[0], days[-1], True).fetch(1000)
     return [add_daydiff_attribute(event, days[0]) for event in events]
 
-# def get_daysinfo_and_highlights(days):
-#     events = {}
-#     oneliners = {}
-#     for day in days:
-#         events[day] = []
-#         oneliners[day] = []
-#     highlights = []
-#     query_results = Event.gql("WHERE date >= :1 AND date <= :2 ORDER BY date ASC, time ASC", days[0], days[-1]).fetch(1000)
-#     for event in query_results:
-#         if event.highlight:
-#             add_daydiff_attribute(event, days[0])
-#             highlights.append(event)
-#         events[event.date].append(event)
-#     oneliners_results = OneLiner.gql("ORDER BY title").fetch(1000)
-#     for oneliner in oneliners_results:
-#         for day in days:
-#             if oneliner.daystart <= day and oneliner.dayend >= day:
-#                 if getattr(oneliner, weekdays[day.weekday()]) == True:
-#                     oneliners[day].append(oneliner)
-#     daysinfo = []
-#     for day in days:
-#         daysinfo.append((day, events[day], oneliners[day]))
-#     return daysinfo, highlights[:5]
-
 
 def get_theme(day):
     return "default"
 
+
+def get_article(day):
+    articlelist = Article.gql("WHERE date <= :1 ORDER BY date desc", day).fetch(1)
+    if len(articlelist) == 0:
+        return None, []
+    article = articlelist[0]
+    if (day - article.date).days > 7:
+        return None, []
+    return article, get_tags_from_keylist(article.tags)
+
+def get_articles(day, tagstring):
+    if tagstring != None:
+        tag = Tag.gql("WHERE name = :1", tagstring).fetch(1)[0].key()
+        return Article.gql("WHERE date <= :1 AND tags = :2 ORDER BY date desc", day, tag).fetch(1000)
+    return Article.gql("WHERE date <= :1 ORDER BY date desc", day).fetch(1000)
+
+def get_article_by_id(id):
+    article = get_object(Article, id=int(id))
+    return article, get_tags_from_keylist(article.tags)
+
+def get_tags():
+    return Tag.gql("ORDER BY name").fetch(1000)
+
+def get_tags_from_keylist(keylist):
+    return [get_object(Tag, tag) for tag in keylist]

@@ -65,3 +65,22 @@ class Friend(db.Model):
         return self.desc
     type = db.StringProperty(required=True, choices=set(['places', 'people', 'sites', 'bars']))
     desc = db.TextProperty(required=True)
+
+
+class Tag(db.Model):
+    def __unicode__(self):
+        return self.name
+    name = db.StringProperty(required=True)
+
+
+class Article(db.Model):
+    def __unicode__(self):
+        return self.title
+    numid = db.IntegerProperty()
+    date = db.DateProperty(default=date.today, required=True)
+    title = db.StringProperty(required=True)
+    header = db.TextProperty(required=True)
+    picname = db.StringProperty()
+    piccredits = db.StringProperty(required=True)
+    content = db.TextProperty()
+    tags = KeyListProperty(Tag)
