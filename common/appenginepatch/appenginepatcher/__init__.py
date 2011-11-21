@@ -9,7 +9,7 @@ else:
     try:
         from google.appengine.tools import dev_appserver
         from aecmd import PROJECT_DIR
-        appconfig, unused = dev_appserver.LoadAppConfig(PROJECT_DIR, {})
+        appconfig, unused, from_cache = dev_appserver.LoadAppConfig(PROJECT_DIR, {})
         appid = appconfig.application
     except ImportError:
         appid = None
