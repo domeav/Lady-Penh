@@ -131,7 +131,7 @@ def get_article(day):
     if len(articlelist) == 0:
         return None, []
     article = articlelist[0]
-    if (day - article.date).days > 7:
+    if (day - article.date).days > 2:
         return None, []
     return article, get_tags_from_keylist(article.tags)
 
