@@ -12,6 +12,15 @@
   {% block head %}{% endblock %}
 </head>
 <body>
+  <div class="center" style="height: 90px;">
+    <script type='text/javascript'>
+      bitt.instance = '291';
+      bitt.zone = 'Lady Penh';
+      bitt.location = 'default location';
+      bitt.keywords = [];
+      bitt.bitt('Banner');
+    </script>
+  </div>
   {# if logged #}
   {% if False %}
   <div class="center"><form action="index.html" method="get">Day offset: (enter a number) <input name="offset" value="{{ offset }}"/><input type="submit"/></form></div>
