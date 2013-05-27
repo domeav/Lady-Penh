@@ -33,14 +33,16 @@ def printable_listing(request, dayspan=0):
 @helpers.use_cache
 def about(request):
     return  render_to_response(request, 'ladypenh/about.html',
-                               dict(theme_name=helpers.get_theme(helpers.today())))
+                               dict(theme_name=helpers.get_theme(helpers.today()),
+                                    ads=helpers.get_ads()))
 
 @helpers.use_cache
 def friends(request):
     friends = helpers.get_friends()
     return  render_to_response(request, 'ladypenh/friends.html',
                                dict(friends=friends,
-                                    theme_name=helpers.get_theme(helpers.today())))
+                                    theme_name=helpers.get_theme(helpers.today()),
+                                    ads=helpers.get_ads()))
 
 @helpers.use_cache
 def events(request, date=None):
@@ -70,7 +72,8 @@ def events(request, date=None):
                                     reminders=helpers.get_reminders(day),
                                     show_edit_links=show_edit_links,
                                     article=article,
-                                    tags=tags
+                                    tags=tags,
+                                    ads=helpers.get_ads()
                                     ))
 
 @helpers.use_cache
@@ -81,7 +84,8 @@ def lpvenue(request, venue):
                               dict(theme_name=helpers.get_theme(helpers.today()),
                                    events=helpers.get_venue_events(days, venue.key()),
                                    files=helpers.get_venue_files(days, venue.key()),
-                                   venue=venue))
+                                   venue=venue,
+                                   ads=helpers.get_ads()))
 
 @helpers.use_cache
 def venue(request, key):
@@ -91,7 +95,8 @@ def venue(request, key):
                               dict(theme_name=helpers.get_theme(helpers.today()),
                                    events=helpers.get_venue_events(days, key),
                                    files=helpers.get_venue_files(days, key),
-                                   venue=helpers.get_venue_by_key(key)))
+                                   venue=helpers.get_venue_by_key(key),
+                                   ads=helpers.get_ads()))
 
 @helpers.use_cache
 def robots(request):
@@ -143,7 +148,8 @@ def archives(request, tag=None):
     return render_to_response(request, 'ladypenh/archives.html',
                               dict(theme_name=helpers.get_theme(helpers.today()),
                                    articles=helpers.get_articles(helpers.today(), tag),
-                                   tags=helpers.get_tags()))
+                                   tags=helpers.get_tags(),
+                                   ads=helpers.get_ads()))
 
 @helpers.use_cache
 def article(request, nid):
@@ -151,4 +157,5 @@ def article(request, nid):
     return  render_to_response(request, 'ladypenh/article.html',
                                dict(theme_name=helpers.get_theme(helpers.today()),
                                     article=article,
-                                    tags=tags))
+                                    tags=tags,
+                                    ads=helpers.get_ads()))

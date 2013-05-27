@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.models import Message
 from django.forms import ModelForm, FileField, ModelChoiceField
-from ladypenh.models import Friend, ImageFile, Venue, Event, VenueFile, Tag, Article
+from ladypenh.models import Friend, ImageFile, Venue, Event, VenueFile, Tag, Article, AdImageLink
 from google.appengine.api import images
 import string
 from datetime import datetime
@@ -83,6 +83,7 @@ admin.site.register(VenueFile, VenueFileAdmin)
 admin.site.register(ImageFile)
 admin.site.register(Friend)
 admin.site.register(Tag)
+admin.site.register(AdImageLink)
 
 
 class ArticleForm(ModelForm):

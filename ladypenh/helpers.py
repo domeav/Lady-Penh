@@ -1,4 +1,4 @@
-from ladypenh.models import Friend, Venue, Event, VenueFile, Article, Tag
+from ladypenh.models import Friend, Venue, Event, VenueFile, Article, Tag, AdImageLink
 from ragendja.dbutils import get_object
 from datetime import datetime, timedelta
 from google.appengine.ext import db
@@ -27,6 +27,15 @@ def today(dayspan=0):
     # hack to use Cambodia's tz (everything is UTC on GAE)
     now = datetime.now() + timedelta(hours=7, days=dayspan)
     return now.date()
+
+
+def get_ads():
+    adList = AdImageLink.gql("").fetch(1000)
+    ads = {}
+    for ad in adList:
+        ads[ad.name] = ad
+    return ads
+
 
 def get_event_by_id(id):
     return get_object(Event, id=int(id))

@@ -10,6 +10,14 @@ class ImageFile(db.Model):
         return self.name
     name = db.StringProperty(required=True)
     blob = db.BlobProperty(required=True)
+
+
+class AdImageLink(db.Model):
+    def __unicode__(self):
+        return self.name
+    name = db.StringProperty(required=True)
+    image = db.ReferenceProperty(ImageFile, required=True)
+    link = db.StringProperty(default='')
     
 
 class Venue(db.Model):

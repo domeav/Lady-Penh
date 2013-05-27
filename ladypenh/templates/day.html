@@ -90,17 +90,27 @@
 {% endif %}
 
 <div class="row">
-  {% for i in 3|get_range %}
+  {% if ads.small1 %}
   <div class="center column grid_4">
-    <script type='text/javascript'>
-      bitt.instance = '291';
-      bitt.zone = 'Lady Penh';
-      bitt.location = 'default location';
-      bitt.keywords = [];
-      bitt.bitt('220x125');
-    </script>
+    <a href="{{ ads.small1.link }}">
+      <img src="/image/{{ ads.small1.image.name }}" alt="small1"/>
+    </a>
   </div>
-  {% endfor %}
+  {% endif %}
+  {% if ads.small2 %}
+  <div class="center column grid_4">
+    <a href="{{ ads.small2.link }}">
+      <img src="/image/{{ ads.small2.image.name }}" alt="small2"/>
+    </a>
+  </div>
+  {% endif %}
+  {% if ads.small3 %}
+  <div class="center column grid_4">
+    <a href="{{ ads.small3.link }}">
+      <img src="/image/{{ ads.small3.image.name }}" alt="small3"/>
+    </a>
+  </div>
+  {% endif %}
 </div>
 <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js?pub=xa-4a3b17ef30493795"></script>
 {% endblock %}

@@ -25,5 +25,6 @@ urlpatterns = patterns('ladypenh.views',
     (r'^venue/(?P<key>[\w-]+).html$', 'venue'),                       
     (r'^index.html$', 'events'),
     (r'^(?P<venue>\w+).html$', 'lpvenue'),    
+    (r'^None$', 'events'),
     (r'^$', 'events'),
 )
