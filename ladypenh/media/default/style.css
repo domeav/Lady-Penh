@@ -136,3 +136,28 @@ a.bigred, a.bigred:link, a.bigred:visited {color: #CC0000;}
 .subtitle { font-size: 14px; font-variant: small-caps;  }
 
 .pointer { cursor: pointer;}
+
+@media all and (max-width: 1200px) {
+  .ad_left { display: none; }
+}
+
+.ad_left {
+    position:fixed;
+    left:0;
+    right:0;
+    margin-left:auto;
+    margin-right:auto;
+    width: 1280px;
+    top: 180px;
+}
+
+.ad_right {
+    position:fixed;
+    left:0;
+    right:0;
+    margin-left:auto;
+    margin-right:auto;
+    width: 1220px;
+    top: 180px;
+    text-align: right;
+}
