@@ -137,10 +137,6 @@ a.bigred, a.bigred:link, a.bigred:visited {color: #CC0000;}
 
 .pointer { cursor: pointer;}
 
-@media all and (max-width: 1200px) {
-  .ad_left { display: none; }
-}
-
 .ad_left {
     position:fixed;
     left:0;
