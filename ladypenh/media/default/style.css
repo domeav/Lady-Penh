@@ -139,6 +139,6 @@ a.bigred, a.bigred:link, a.bigred:visited {color: #CC0000;}
 
 #bigwrap { width: 1240px; margin: auto; }
 
-.ad_left { float: left; margin-top: 180px; }
+.ad_left { float: left; margin-top: 180px; width: 220px; min-height: 2000px; }
 
-.ad_right { float: right; margin-top: 180px; }
+.ad_right { float: right; margin-top: 180px; width: 220px;  min-height: 2000px; }

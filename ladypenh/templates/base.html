@@ -13,16 +13,20 @@
 <body>
 
   <div id="bigwrap">
-  {% if ads.left %}
-    <a href="{{ ads.left.link }}" class="ad_left">
-      <img src="/image/{{ ads.left.image.name }}" alt="left_ad"/>
-    </a>
-  {% endif %}
-  {% if ads.right %}
-    <a href="{{ ads.right.link }}" class="ad_right">
-      <img src="/image/{{ ads.right.image.name }}" alt="right_ad"/>
-    </a>
-  {% endif %}
+      <span class="ad_left">
+	{% if ads.left %}
+	<a href="{{ ads.left.link|default:'#' }}">
+	  <img src="/image/{{ ads.left.image.name }}" alt="left_ad"/>
+	</a>
+	{% endif %}
+      </span>
+      <span class="ad_right">
+	{% if ads.right %}
+	<a href="{{ ads.right.link|default:'#' }}">
+	  <img src="/image/{{ ads.right.image.name }}" alt="right_ad"/>
+	</a>
+	{% endif %}
+      </span>
 
   {% if ads.banner %}
   <div class="center">
