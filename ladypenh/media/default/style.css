@@ -137,23 +137,8 @@ a.bigred, a.bigred:link, a.bigred:visited {color: #CC0000;}
 
 .pointer { cursor: pointer;}
 
-.ad_left {
-    position:fixed;
-    left:0;
-    right:0;
-    margin-left:auto;
-    margin-right:auto;
-    width: 1280px;
-    top: 180px;
-}
+#bigwrap { width: 1240px; margin: auto; }
 
-.ad_right {
-    position:fixed;
-    left:0;
-    right:0;
-    margin-left:auto;
-    margin-right:auto;
-    width: 1220px;
-    top: 180px;
-    text-align: right;
-}
+.ad_left { float: left; margin-top: 180px; }
+
+.ad_right { float: right; margin-top: 180px; }

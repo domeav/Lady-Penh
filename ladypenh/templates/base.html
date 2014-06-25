@@ -9,14 +9,21 @@
   <link rel="stylesheet" type="text/css" media="screen" href="{{ MEDIA_URL }}combined-ltr.css" />
   <script src="{{ MEDIA_URL }}combined-en.js" type="text/javascript"></script>
   {% block head %}{% endblock %}
-  <style>
-    {# MediaGenerator bug, this can't be in style.css #}
-    @media all and (max-width:1200px) {
-      .ad_left{display:none;}
-    }
-  </style>
 </head>
 <body>
+
+  <div id="bigwrap">
+  {% if ads.left %}
+    <a href="{{ ads.left.link }}" class="ad_left">
+      <img src="/image/{{ ads.left.image.name }}" alt="left_ad"/>
+    </a>
+  {% endif %}
+  {% if ads.right %}
+    <a href="{{ ads.right.link }}" class="ad_right">
+      <img src="/image/{{ ads.right.image.name }}" alt="right_ad"/>
+    </a>
+  {% endif %}
+
   {% if ads.banner %}
   <div class="center">
     <a href="{{ ads.banner.link }}">
@@ -62,22 +69,7 @@
     <div id="stamp" style="display: none;">{% now "r" %}</div>
   </div>
 
-  {% if ads.left %}
-  <div class="ad_left">
-    <a href="{{ ads.left.link }}">
-      <img src="/image/{{ ads.left.image.name }}" alt="left_ad"/>
-    </a>
-  </div>
-  {% endif %}
-  {% if ads.right %}
-  <div class="ad_right">
-    <a href="{{ ads.right.link }}">
-      <img src="/image/{{ ads.right.image.name }}" alt="right_ad"/>
-    </a>
-  </div>
-  {% endif %}
-
-
+</div>
 <!-- analytics -->
 <script type="text/javascript">
 var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
