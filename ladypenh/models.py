@@ -17,7 +17,7 @@ class AdImageLink(db.Model):
         return self.name
     name = db.StringProperty(required=True)
     image = db.ReferenceProperty(ImageFile, required=True)
-    link = db.StringProperty(default='')
+    link = db.StringProperty(required=True)
     
 
 class Venue(db.Model):
