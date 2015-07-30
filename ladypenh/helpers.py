@@ -33,7 +33,9 @@ def get_ads():
     adList = AdImageLink.gql("").fetch(1000)
     ads = {}
     for ad in adList:
-        ads[ad.name] = ad
+        if ad.name not in ads:
+            ads[ad.name] = []
+        ads[ad.name].append(ad)
     return ads
 
 
